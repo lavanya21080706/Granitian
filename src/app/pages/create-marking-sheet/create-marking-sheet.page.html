@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create New Marking Sheet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+
+  <!-- LOT-LEVEL DETAILS -->
+  <div class="form-section">
+    <h2 class="section-heading">Lot-Level Details</h2>
+
+    <ion-list class="styled-list">
+
+      <ion-item>
+        <ion-label position="stacked">Factory Name</ion-label>
+        <ion-input [(ngModel)]="lot.factoryName" placeholder="Enter factory name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Granite Color</ion-label>
+        <ion-input [(ngModel)]="lot.color" placeholder="Enter granite color"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Quality Type</ion-label>
+        <ion-input [(ngModel)]="lot.quality" placeholder="Enter quality"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Measurement Type</ion-label>
+        <ion-select interface="popover" [(ngModel)]="lot.measurementType" placeholder="Select type">
+          <ion-select-option value="flat">Flat</ion-select-option>
+          <ion-select-option value="3-multiple">3-Multiple</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="inline-inputs">
+        <ion-item class="half">
+          <ion-label position="stacked">Allowance Length</ion-label>
+          <ion-input type="number" [(ngModel)]="lot.allowanceLength" placeholder="Enter length"></ion-input>
+        </ion-item>
+
+        <ion-item class="half">
+          <ion-label position="stacked">Unit</ion-label>
+          <ion-select interface="popover" [(ngModel)]="lot.allowanceLengthUnit" placeholder="Select unit">
+            <ion-select-option value="cm">cm</ion-select-option>
+            <ion-select-option value="mm">mm</ion-select-option>
+            <ion-select-option value="inches">inches</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="inline-inputs">
+        <ion-item class="half">
+          <ion-label position="stacked">Allowance Height</ion-label>
+          <ion-input type="number" [(ngModel)]="lot.allowanceHeight" placeholder="Enter height"></ion-input>
+        </ion-item>
+
+        <ion-item class="half">
+          <ion-label position="stacked">Unit</ion-label>
+          <ion-select interface="popover" [(ngModel)]="lot.allowanceHeightUnit" placeholder="Select unit">
+            <ion-select-option value="cm">cm</ion-select-option>
+            <ion-select-option value="mm">mm</ion-select-option>
+            <ion-select-option value="inches">inches</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+    </ion-list>
+  </div>
+
+  <!-- SLAB-LEVEL DETAILS -->
+  <div class="form-section">
+    <h2 class="section-heading">Slab-Level Entries</h2>
+
+    <ion-grid class="slab-table">
+      <ion-row class="table-header">
+        <ion-col>Raw Length</ion-col>
+        <ion-col>Raw Height</ion-col>
+        <ion-col>Area</ion-col>
+        <ion-col>Image</ion-col>
+        <ion-col>Actions</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let slab of slabs; let i = index" class="table-row">
+        <ion-col><ion-input type="number" [(ngModel)]="slab.rawLength" (ionChange)="recalculate(i)" placeholder="Length"></ion-input></ion-col>
+        <ion-col><ion-input type="number" [(ngModel)]="slab.rawHeight" (ionChange)="recalculate(i)" placeholder="Height"></ion-input></ion-col>
+        <ion-col>{{ slab.area }} cm²</ion-col>
+        <ion-col><ion-icon name="camera-outline" size="large" class="icon-camera"></ion-icon></ion-col>
+        <ion-col class="action-icons"><ion-icon name="trash-outline" color="danger" size="large" (click)="deleteSlab(i)"></ion-icon></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="grand-total">
+      <b>Grand Total:</b> {{ grandTotal }} cm²
+    </div>
+
+    <ion-button expand="block" color="primary" (click)="addRow()">
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+      Add Row
+    </ion-button>
+  </div>
+
+  <div class="save-buttons">
+    <ion-button expand="block" color="medium" fill="outline" (click)="saveDraft()">Save Draft</ion-button>
+    <ion-button expand="block" color="primary" fill="solid">Save</ion-button>
+  </div>
+</ion-content>
