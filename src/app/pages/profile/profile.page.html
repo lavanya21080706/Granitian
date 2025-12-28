@@ -1,37 +1,77 @@
-<ion-header translucent="true">
+<ion-header translucent="true" class="profile-header-bar">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
+
     <ion-title>Profile</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleEdit()">
+        <ion-icon
+          [name]="isEdit ? 'checkmark-outline' : 'create-outline'">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding profile-container">
+<ion-content fullscreen class="profile-bg">
 
-  <div class="profile-header">
-    <ion-avatar class="profile-avatar">
+  <!-- TOP CARD -->
+  <div class="top-card">
+    <ion-avatar class="avatar">
       <img [src]="user.avatar" />
     </ion-avatar>
-    <h2>{{ user.fullName }}</h2>
+
+    <h2 class="name">{{ user.firstName }} {{ user.lastName }}</h2>
+    <p class="role">{{ user.role }}</p>
   </div>
 
-  <ion-list lines="full" class="profile-list">
-    <ion-item>
-      <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <ion-label>
-        <h3>Email</h3>
-        <p>{{ user.email }}</p>
-      </ion-label>
+  <!-- DETAILS CARD -->
+  <div class="details-card">
+
+    <!-- First Name -->
+    <ion-item lines="none" class="form-item">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label position="stacked">First Name</ion-label>
+      <ion-input [(ngModel)]="user.firstName" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-icon name="call-outline" slot="start"></ion-icon>
-      <ion-label>
-        <h3>Mobile Number</h3>
-        <p>{{ user.phone }}</p>
-      </ion-label>
+    <!-- Last Name -->
+    <ion-item lines="none" class="form-item">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label position="stacked">Last Name</ion-label>
+      <ion-input [(ngModel)]="user.lastName" [readonly]="!isEdit"></ion-input>
     </ion-item>
-  </ion-list>
 
+    <!-- Email -->
+    <ion-item lines="none" class="form-item">
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" [readonly]="!isEdit"></ion-input>
+    </ion-item>
+
+    <!-- Mobile -->
+    <ion-item lines="none" class="form-item">
+      <ion-icon slot="start" name="call-outline"></ion-icon>
+      <ion-label position="stacked">Mobile Number</ion-label>
+      <ion-input type="tel" [(ngModel)]="user.phone" [readonly]="!isEdit"></ion-input>
+    </ion-item>
+
+    <!-- Location -->
+    <ion-item lines="none" class="form-item">
+      <ion-icon slot="start" name="location-outline"></ion-icon>
+      <ion-label position="stacked">Location</ion-label>
+      <ion-input [(ngModel)]="user.location" [readonly]="!isEdit"></ion-input>
+    </ion-item>
+
+    <!-- SAVE BUTTON -->
+    <div class="save-wrapper">
+      <ion-button expand="block" class="save-btn" [disabled]="!isEdit">
+        SAVE CHANGES
+      </ion-button>
+    </div>
+
+  </div>
 </ion-content>

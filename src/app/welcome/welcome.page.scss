@@ -1,0 +1,90 @@
+/* ION CONTENT */
+.auth-container {
+  --background: #f4f5f7;
+}
+
+/* 🔥 THIS IS THE KEY FIX */
+.auth-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* IMAGE SECTION */
+.image-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-image {
+  width: 80%;
+  max-width: 26rem;
+}
+
+/* CARD */
+.content-card {
+  background: #1f2933;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5vh 6vw 4vh;
+  gap: 2vh;
+  border-radius: 2rem 2rem 0 0;
+  box-shadow: 0 -1.5rem 3rem rgba(31, 41, 51, 0.08);
+}
+
+/* TEXT */
+.title h1 {
+  color: #fff;
+  margin: 0;
+}
+
+.subtitle p {
+  color: #8b949e;
+  text-align: center;
+}
+
+/* BUTTONS */
+.primary-btn {
+  --background: #fff;
+  --color: #1f2933;
+  --border-radius: 1rem;
+  width: 100%;
+  height:50px;
+}
+
+.secondary-btn {
+  --border-color: #fff;
+  --color: #fff;
+  --border-radius: 1rem;
+  width: 100%;
+    height:50px;
+
+}
+
+@media (min-width: 1024px) {
+  .auth-layout {
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  /* LEFT SIDE */
+  .image-wrapper {
+    flex: 1;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* RIGHT SIDE — FULL HEIGHT */
+  .content-card {
+    // flex: 1;
+    height: 100vh;   
+    width:50vw;              
+    border-radius: 0;           
+    justify-content: center;    
+    padding: 4rem;              
+  }
+}

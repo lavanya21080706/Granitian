@@ -35,6 +35,6 @@ export class HomePage {
   }
 
   goToCreateSheet() {
-    this.router.navigate(['/create-marking-sheet']);
+    this.router.navigate(['/measurement']);
   }
 }

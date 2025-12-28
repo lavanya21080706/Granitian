@@ -1,0 +1,54 @@
+.slab-container {
+  --background: #f4f5f8;
+}
+
+.top-section {
+  width: 100%;
+  height: 260px;
+}
+
+.slab-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-card {
+  margin-top: -40px;
+  background: #fff;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.slab-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #23344C;
+}
+
+.slab-subtitle {
+  font-size: 14px;
+  color: #777;
+}
+
+.details-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.detail-box {
+  text-align: center;
+}
+
+.detail-box label {
+  font-size: 12px;
+  color: #555;
+}
+
+.detail-box p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #23344C;
+}

@@ -1,0 +1,235 @@
+/* PAGE BACKGROUND */
+ion-content.container {
+    --background: #f4f6fb;
+}
+
+/* CENTER CARD BOTH AXES */
+.center-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.required-field ion-label::after {
+    content: " *";
+    color: #23344c;
+    font-weight: 600;
+}
+
+.right-section {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 32px 24px;
+    border-radius: 22px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* TITLE */
+.title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #23344c;
+}
+
+/* INPUT GROUP */
+.input-wrapper {
+    margin-bottom: 18px;
+}
+
+/* LABEL */
+ion-label {
+    font-size: 0.85rem;
+    // color: #6b7280;
+    color: #23344c;
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
+}
+
+/* INPUT CONTAINER (ICON INSIDE BORDER) */
+.custom-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background: #ffffff;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+/* ICON */
+.input-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px;
+    color: #23344c;
+}
+
+ion-input {
+    // Removes borders for inputs with default, "flat" fill
+    --border-style: none;
+    border: none; // Fallback
+
+    // Removes borders for inputs with fill="outline" or fill="solid"
+    --border-color: transparent;
+    --border-width: 0px !important;
+
+    // Optional: removes the highlight line that appears on focus (Android/MD mode default)
+    --highlight-height: 0;
+
+    // Optional: removes the default focus outline
+    outline: none !important;
+    box-shadow: none !important;
+    caret-color: #23344c;
+}
+
+
+.signup-btn,
+.otp-btn {
+    --background: #23344c;
+    --border-radius: 30px;
+    height: 48px;
+    font-weight: 600;
+    margin-top: 24px;
+}
+
+.otp-btn {
+    --background: #fff;
+    --border-color: #23344c;
+    --color: #23344c;
+}
+
+/* TEXT LINKS */
+.agree-text,
+.forgot-text {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.9rem;
+}
+
+.forgot-text {
+    text-align: right;
+    color: #23344c;
+}
+
+.link {
+    color: #23344c;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* SMALL HEIGHT DEVICES */
+@media (max-height: 650px) {
+    .center-wrapper {
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+}
+
+ion-select {
+    --border-style: none;
+    border: none; // Fallback
+
+    // Removes borders for inputs with fill="outline" or fill="solid"
+    --border-color: transparent;
+    --border-width: 0px !important;
+
+    // Optional: removes the highlight line that appears on focus (Android/MD mode default)
+    --highlight-height: 0;
+
+    // Optional: removes the default focus outline
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* OTP CONTAINER */
+.otp-container {
+    text-align: center;
+}
+
+/* LABEL */
+.otp-label {
+    display: block;
+    margin: 16px 0 12px;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* OTP WRAPPER */
+.otp-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+/* OTP BOX */
+.otp-box {
+    width: 48px;
+    height: 56px;
+
+    border: 1.5px solid #d1d5db;
+    border-radius: 12px;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+
+    outline: none;
+    background: #fff;
+    color: #111827;
+
+    transition: all 0.2s ease;
+}
+
+/* FOCUS STATE (nice highlight) */
+.otp-box:focus {
+    border-color: #23344c;
+    box-shadow: 0 0 0 2px rgba(35, 52, 76, 0.15);
+}
+
+/* REMOVE NUMBER ARROWS */
+.otp-box::-webkit-inner-spin-button,
+.otp-box::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ERROR MESSAGE */
+.error-message {
+    color: #dc2626;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    padding-left: 10px;
+}
+
+.country-code {
+    padding-top: 4px;
+}
+
+ion-input-password-toggle ion-icon {
+  color: #23344c !important; 
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    color: #dc2626;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+.error-icon {
+    color: #dc2626;
+    margin-right: 6px;
+    font-size: 1rem;
+}

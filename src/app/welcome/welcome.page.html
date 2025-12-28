@@ -1,0 +1,77 @@
+<!-- <ion-content fullscreen class="auth-container">
+
+  <div class="image-wrapper">
+    <ion-img src="assets/data/logo1.png" class="header-image">
+    </ion-img>
+  </div>
+
+  <div class="content-card">
+    <div class="handle"></div>
+
+    <ion-text class="title">
+      <h1>Welcome</h1>
+    </ion-text>
+
+    <ion-text class="subtitle">
+      <p>
+        We're glad to see you. Pick up where you left off and
+        enjoy a seamless experience designed just for you
+      </p>
+    </ion-text>
+
+    <ion-button expand="block" class="primary-btn" (click)="openLogin()">
+      Sign In
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" class="secondary-btn" (click)="openSignup()">
+      Create an Account
+    </ion-button>
+
+  </div>
+
+</ion-content> -->
+
+
+<ion-content fullscreen class="auth-container">
+
+  <!-- ✅ REAL FLEX CONTROLLER -->
+  <div class="auth-layout">
+
+    <!-- LEFT: LOGO -->
+    <div class="image-wrapper">
+      <ion-img
+        src="assets/data/logo1.png"
+        class="header-image">
+      </ion-img>
+    </div>
+
+    <!-- RIGHT: CARD -->
+    <div class="content-card">
+      <div class="handle"></div>
+
+      <ion-text class="title">
+        <h1>Welcome</h1>
+      </ion-text>
+
+      <ion-text class="subtitle">
+        <p>
+          We're glad to see you. Pick up where you left off and
+          enjoy a seamless experience designed just for you
+        </p>
+      </ion-text>
+
+      <ion-button expand="block" class="primary-btn" (click)="openLogin()">
+        Sign In
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="secondary-btn"
+        (click)="openSignup()">
+        Create an Account
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

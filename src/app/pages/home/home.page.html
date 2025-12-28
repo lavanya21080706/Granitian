@@ -17,9 +17,15 @@
       <p>All your saved measurements in one place</p>
       <ion-icon name="document-text-outline"></ion-icon>
     </div>
+    <div class="action-card green" [routerLink]="['/signup']">
+      <h2>Signup Page</h2>
+      <p>Click here to view the Signup UI</p>
+      <ion-icon name="person-add-outline"></ion-icon>
+    </div>
+
   </div>
 
-   <h3 class="recent-title">Recent</h3>
+  <h3 class="recent-title">Recent</h3>
 
   <div *ngIf="recentData.length > 0; else noRecent">
     <div class="recent-card light-blue" *ngFor="let item of recentData">
@@ -38,7 +44,37 @@
     <p style="color: gray; text-align: center; margin-top: 10px;">No recent markings found.</p>
   </ng-template>
 
-  <ion-footer class="footer-nav">
+
+  <div class="bottom-nav">
+
+    <div class="nav-item active" routerLink="/home">
+      <ion-icon name="home"></ion-icon>
+      <span>Home</span>
+    </div>
+
+    <div class="nav-item" routerLink="/assistant">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      <span>AI Assistant</span>
+    </div>
+
+    <!-- CENTER ADD BUTTON -->
+    <div class="nav-add">
+      <ion-icon name="add"></ion-icon>
+    </div>
+
+    <div class="nav-item" routerLink="/resources">
+      <ion-icon name="reader-outline"></ion-icon>
+      <span>Resources</span>
+    </div>
+
+    <div class="nav-item" routerLink="/profile">
+      <ion-icon name="people-outline"></ion-icon>
+      <span>Profile</span>
+    </div>
+
+  </div>
+
+  <!-- <ion-footer class="footer-nav">
     <ion-tab-bar>
       <ion-tab-button>
         <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
@@ -52,7 +88,7 @@
         <ion-icon name="notifications-outline"></ion-icon>
       </ion-tab-button>
     </ion-tab-bar>
-  </ion-footer>
+  </ion-footer> -->
 
 
 </ion-content>

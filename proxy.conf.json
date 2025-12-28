@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://x2f6r9dz0i.execute-api.ap-south-1.amazonaws.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

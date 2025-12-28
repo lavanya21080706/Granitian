@@ -1,0 +1,73 @@
+<ion-content class="ion-padding">
+
+  <h2>Create Measurement Lot</h2>
+
+  <ion-item>
+    <ion-label>Factory Name</ion-label>
+    <ion-input [(ngModel)]="lot.factory_name"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Granite Color</ion-label>
+    <ion-input [(ngModel)]="lot.granite_color"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Quality Type</ion-label>
+    <ion-input [(ngModel)]="lot.quality_type"></ion-input>
+  </ion-item>
+
+  <ion-radio-group [(ngModel)]="lot.measurement_type">
+    <ion-item>
+      <ion-label>Flat</ion-label>
+      <ion-radio value="Flat"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>3-Multiple</ion-label>
+      <ion-radio value="3-Multiple"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+  <ion-item>
+    <ion-label>Allowance Length (in)</ion-label>
+    <ion-input type="number" [(ngModel)]="lot.allowance_length_in"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Allowance Height (in)</ion-label>
+    <ion-input type="number" [(ngModel)]="lot.allowance_height_in"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="createLot()">
+    Save & Add Slabs
+  </ion-button>
+
+  <hr />
+
+  <h2>Slabs</h2>
+
+  <div *ngFor="let slab of slabs" class="slabs">
+    <ion-item>
+      <ion-label>Raw Length</ion-label>
+      <ion-input type="number" [(ngModel)]="slab.raw_length_in" (ionInput)="calculate(slab)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Raw Height</ion-label>
+      <ion-input type="number" [(ngModel)]="slab.raw_height_in" (ionInput)="calculate(slab)"></ion-input>
+    </ion-item>
+
+    <p>Final: {{ slab.final_length }} × {{ slab.final_height }}</p>
+    <p>Sqft: {{ slab.square_feet }}</p>
+  </div>
+
+  <ion-button (click)="addSlab()">+ Add Slab</ion-button>
+  <ion-button fill="outline" (click)="addSlab(true)">Copy Above</ion-button>
+
+  <h3>Total Sqft: {{ lot.cumulative_sqft }}</h3>
+
+  <ion-button expand="block" color="success" (click)="saveSlabs()">
+    Save Slabs
+  </ion-button>
+
+</ion-content>

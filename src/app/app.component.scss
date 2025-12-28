@@ -1,37 +1,118 @@
-ion-header {
-  padding-top: env(safe-area-inset-top);
-  background: white;
-}
 
-ion-toolbar {
+.sidebar {
   --background: #ffffff;
-  --color: #000;
+  height: 100%;
+}
+
+
+.bg {
+  --background: #ffffff;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  position: relative;
+}
+
+
+.menu-header-card {
+  position: relative;
+  background: #1f2933;
+  padding: 20px 20px 20px;
+  border-radius: 0 0 28px 28px;
+  margin-bottom: 12px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.user-info {
+  margin-top: 12px;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
+.user-info p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
 
-ion-item {
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  --color: #ffffff;
+}
+
+.name-row {
+  display: flex;
+  gap: 2px;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
   --background: transparent;
-  --inner-padding-end: 0;
-  --inner-border-width: 0;
-  border: none;
-  box-shadow: none;
-  margin-bottom: 14px;
-}
-
-ion-input, ion-select {
-  background: #ffffff;
-  border: 1px solid #dcdde1;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 15px;
-  --highlight-color-focused: transparent; /* Removes Ionic blue focus underline */
-}
-
-ion-label {
+  --color: #374151;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: #333;
-  margin-bottom: 4px;
+  border-bottom: 1px solid #eef2f7;
 }
 
+.menu-item ion-icon {
+  color: #6b7280;
+}
+
+/* LABEL */
+.menu-item ion-label {
+  margin-left: 14px;
+}
+
+/* ACTIVE ROW (VERY SUBTLE) */
+.menu-item.active {
+  --background: #f8fafc;
+  --color: #111827;
+}
+
+.menu-item.active ion-icon {
+  color: #111827;
+}
+
+/* LOGOUT */
+.logout-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.logout-item {
+  --color: #ef4444;
+}
+
+.logout-item ion-icon {
+  color: #ef4444;
+}
+
+.menu-item {
+  --color: #374151;
+}
+
+.menu-item ion-icon {
+  --color: #374151;
+  // font-size: 22px;
+}
 
