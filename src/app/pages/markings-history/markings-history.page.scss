@@ -12,7 +12,7 @@
 }
 
 .history-card {
-  background: linear-gradient(135deg, #e9e4ff 0%, #d8f3ff 100%);
+  // background: linear-gradient(135deg, #e9e4ff 0%, #d8f3ff 100%);
   border-radius: 18px;
   padding: 22px 24px;
   display: flex;
@@ -28,7 +28,7 @@
 .history-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  background: linear-gradient(135deg, #e5deff 0%, #c9e8ff 100%);
+  // background: linear-gradient(135deg, #e5deff 0%, #c9e8ff 100%);
 }
 
 .history-info h2 {

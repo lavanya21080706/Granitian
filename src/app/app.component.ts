@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MenuController, Platform } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
+import { StatusBar } from '@capacitor/status-bar';
+
 
 import {
   IonApp,
@@ -14,6 +16,7 @@ import {
   IonLabel,
   IonAvatar,
   IonButton,
+  IonMenuToggle,
   IonRouterOutlet
 } from '@ionic/angular/standalone';
 
@@ -36,6 +39,7 @@ import {
     IonAvatar,
     IonRouterOutlet,
     IonButton,
+    IonMenuToggle,
     HttpClientModule
   ],
 })
@@ -45,32 +49,53 @@ export class AppComponent {
   constructor(
     private menuCtrl: MenuController,
     private platform: Platform,
-    private router: Router       
+    private router: Router
   ) {
     this.isMobile =
       this.platform.is('mobile') ||
       this.platform.is('android') ||
       this.platform.is('ios');
+
+    this.platform.ready().then(async () => {
+      await StatusBar.hide(); // 🔥 hides status bar
+    });
+    this.platform.ready().then(() => {
+      document.body.classList.remove('dark');
+    });
   }
 
-  async onMenuClick() {
-    await this.menuCtrl.close('mainMenu');
-  }
 
   async onSignOut() {
     localStorage.clear();
     sessionStorage.clear();
 
-    await this.router.navigateByUrl('/welcome', { replaceUrl: true });
-
-    if (this.isMobile) {
-      await this.menuCtrl.close('mainMenu');
-    }
-
+    await this.menuCtrl.close('mainMenu');   // 👈 CLOSE FIRST
+    await this.router.navigateByUrl('/welcome', { replaceUrl: true }); // 👈 THEN NAVIGATE
   }
-  closeMenu() {
-    this.menuCtrl.close('mainMenu');
+
+
+  // async onSignOut() {
+  //   localStorage.clear();
+  //   sessionStorage.clear();
+
+  //   await this.router.navigateByUrl('/welcome', { replaceUrl: true });
+  //   await this.menuCtrl.close('mainMenu');
+  //   setTimeout(() => {
+  //     this.menuCtrl.close('mainMenu');
+  //   }, 50);
+
+  // }
+
+
+  async closeMenu() {
+    await this.menuCtrl.close('mainMenu');
+    setTimeout(() => {
+      this.menuCtrl.close('mainMenu');
+    }, 50);
   }
+  // closeMenu() {
+  //   this.menuCtrl.close('mainMenu');
+  // }
 
   async goToProfile() {
     await this.router.navigate(['/profile']);

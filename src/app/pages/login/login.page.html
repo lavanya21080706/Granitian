@@ -8,13 +8,12 @@
 
           <div class="custom-input">
             <ion-icon name="briefcase-outline" class="input-icon"></ion-icon>
+            <ion-select placeholder="Select user type" [(ngModel)]="selectedUserTypeId">
 
-            <ion-select interface="popover" placeholder="Select user type" [(ngModel)]="userType">
-              <ion-select-option value="marker">Marker</ion-select-option>
-              <ion-select-option value="factory_owner">Factory Owner</ion-select-option>
-              <ion-select-option value="supervisor">Supervisor</ion-select-option>
-              <ion-select-option value="trader">Trader</ion-select-option>
-              <ion-select-option value="retailer">Retailer</ion-select-option>
+              <ion-select-option *ngFor="let type of userTypes" [value]="type.id">
+                {{ type.type_name }}
+              </ion-select-option>
+
             </ion-select>
 
           </div>
@@ -103,12 +102,11 @@
           </div>
         </div>
 
-        <div class="input-wrapper" [class.required-field]="isGroupB()" *ngIf="userType">
+        <div class="input-wrapper" [class.required-field]="isGroupB()" *ngIf="userTypes">
 
           <ion-label>
             Location
             <span *ngIf="isGroupB()"></span>
-            <!-- <span *ngIf="isGroupA()"> (Optional)</span> -->
           </ion-label>
 
           <div class="custom-input">
@@ -176,13 +174,18 @@
 
           <div *ngIf="!otpSent">
             <h2 class="title gradient-text">Sign In with OTP</h2>
-
             <div class="input-wrapper required-field">
               <ion-label>Mobile Number</ion-label>
 
               <div class="custom-input">
                 <ion-icon name="call-outline" class="input-icon"></ion-icon>
-                <ion-input type="tel" placeholder="Enter your mobile number"></ion-input>
+                <span class="country-code">+91</span>
+
+                <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"></ion-input>
+              </div>
+              <div class="error-message" *ngIf="errors.mobile">
+                <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
+                {{ errors.mobile }}
               </div>
             </div>
 
@@ -190,59 +193,86 @@
               Send OTP
             </ion-button>
           </div>
-          <div *ngIf="otpSent" class="otp-container">
+
+          <div *ngIf="otpSent && !openResetPasswordFields" class="otp-container">
 
             <h2 class="title gradient-text">Verify OTP</h2>
-
             <ion-label class="otp-label">Enter OTP</ion-label>
 
             <div class="otp-wrapper">
               <input *ngFor="let box of otpBoxes; let i = index" maxlength="1" class="otp-box" type="tel"
-                inputmode="numeric" autocomplete="one-time-code" (input)="moveNext($event, i)"
-                (keydown)="movePrev($event, i)" #otpInput />
+                inputmode="numeric" (input)="moveNext($event, i)" (keydown)="movePrev($event, i)" #otpInput />
             </div>
 
-            <ion-button expand="block" class="signup-btn" (click)="submitOtp()">
-              Submit OTP
+            <ion-button expand="block" class="signup-btn" (click)="submitOtp()" [disabled]="isOtpSubmitting">
+              SUBMIT OTP
+            </ion-button>
+          </div>
+
+          <div *ngIf="openResetPasswordFields" class="reset-password-section">
+
+            <div class="input-wrapper required-field">
+              <ion-label>New Password</ion-label>
+
+              <div class="custom-input">
+                <ion-icon src="/assets/data/lockIcon.svg" class="input-icon"></ion-icon>
+                <ion-input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Enter your password"
+                  [(ngModel)]="resetPassword.new">
+                  <ion-input-password-toggle slot="end" class="eye-icon"></ion-input-password-toggle>
+
+                </ion-input>
+              </div>
+              <div class="error-message" *ngIf="errors.confirmPassword">
+                <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
+
+                {{ errors.confirmPassword }}
+              </div>
+            </div>
+
+            <div class="input-wrapper required-field">
+              <ion-label>Confirm Password</ion-label>
+
+              <div class="custom-input">
+                <ion-icon src="/assets/data/lockIcon.svg" class="input-icon"></ion-icon>
+                <ion-input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Enter your password"
+                  [(ngModel)]="resetPassword.confirm">
+                  <ion-input-password-toggle slot="end" class="eye-icon"></ion-input-password-toggle>
+
+                </ion-input>
+              </div>
+              <div class="error-message" *ngIf="errors.confirmPassword">
+                <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
+
+                {{ errors.confirmPassword }}
+              </div>
+            </div>
+
+            <ion-button expand="block" class="signup-btn" (click)="resetPasswordSubmit()">
+              RESET PASSWORD
             </ion-button>
 
           </div>
-
-
         </div>
 
         <ng-template #loginContent>
 
           <h2 class="title gradient-text">Sign In</h2>
-
-           <div class="input-wrapper required-field">
-          <ion-label>Email</ion-label>
-
-          <div class="custom-input">
-            <ion-icon name="mail-outline" class="input-icon"></ion-icon>
-            <ion-input type="email" placeholder="Enter email" [(ngModel)]="loginData.email"></ion-input>
-          </div>
-          <div class="error-message" *ngIf="errors.email">
-            <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
-
-            {{ errors.email }}
-          </div>
-        </div>
-
-          <!-- <div class="input-wrapper required-field">
+          <div class="input-wrapper required-field">
             <ion-label>Mobile Number</ion-label>
 
             <div class="custom-input">
               <ion-icon name="call-outline" class="input-icon"></ion-icon>
               <span class="country-code">+91</span>
+              <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"
+                (ionInput)="onLoginMobileInput($event)"></ion-input>
 
-              <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"></ion-input>
             </div>
-            <div class="error-message" *ngIf="errors.mobile">
+            <div class="error-message" *ngIf="loginErrors.mobile">
               <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
-              {{ errors.mobile }}
+              {{ loginErrors.mobile }}
             </div>
-          </div> -->
+
+          </div>
 
           <div class="input-wrapper required-field">
             <ion-label>Password</ion-label>
@@ -250,9 +280,8 @@
             <div class="custom-input">
               <ion-icon src="/assets/data/lockIcon.svg" class="input-icon"></ion-icon>
               <ion-input [type]="showLoginPassword ? 'text' : 'password'" placeholder="Enter your password"
-                [(ngModel)]="loginData.password">
-                <ion-input-password-toggle slot="end" class="eye-icon"></ion-input-password-toggle>
-              </ion-input>
+                [(ngModel)]="loginData.password" (ionInput)="onLoginPasswordInput()">
+                <ion-input-password-toggle slot="end" class="eye-icon"></ion-input-password-toggle></ion-input>
             </div>
             <div class="error-message" *ngIf="loginErrors.password">
               <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
@@ -261,9 +290,10 @@
             </div>
           </div>
 
-          <ion-label class="forgot-text">
+          <ion-label class="forgot-text" (click)="startForgotPassword()">
             <span>Forgot Password?</span>
           </ion-label>
+
 
 
           <div class="button-row">

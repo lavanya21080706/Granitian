@@ -1,38 +1,48 @@
+<app-granitian-header></app-granitian-header>
 <ion-content class="ion-padding home-container">
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title>Actions</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <div class="actions-section">
-    <div class="action-card purple" (click)="goToCreateSheet()">
-      <h2>Create New Marking Sheet</h2>
-      <p>Measure, Calculate & Share Granite Layouts with Ease</p>
-      <ion-icon name="resize-outline"></ion-icon>
-    </div>
-
-    <div class="action-card blue" [routerLink]="['/markings-history']">
-      <h2>Markings History</h2>
-      <p>All your saved measurements in one place</p>
-      <ion-icon name="document-text-outline"></ion-icon>
-    </div>
-    <div class="action-card green" [routerLink]="['/signup']">
-      <h2>Signup Page</h2>
-      <p>Click here to view the Signup UI</p>
-      <ion-icon name="person-add-outline"></ion-icon>
-    </div>
+  <div *ngIf="!hasAnyMarkings" class="empty-state">
+    <ion-icon name="cube-outline"></ion-icon>
+    <h2>No Markings Yet</h2>
+    <p>Create your first slab to start tracking measurements.</p>
 
   </div>
 
-  <h3 class="recent-title">Recent</h3>
 
-  <div *ngIf="recentData.length > 0; else noRecent">
-    <div class="recent-card light-blue" *ngFor="let item of recentData">
-      <h2>{{ item.name }}</h2>
-      <p>{{ item.date }}</p>
+  <div *ngIf="hasAnyMarkings">
+
+    <div class="history-dashboard">
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <h3>{{ totalHistory }}</h3>
+          <p>Slabs History Count</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>{{ totalShared }}</h3>
+          <p>Shared History Count</p>
+        </div>
+      </div>
+
+      <div class="recent-header">
+        Recent 5 Records
+      </div>
+
+      <div class="recent-list">
+        <div class="recent-item" *ngFor="let item of recentData" (click)="openMeasurement(item.id)">
+          <!-- <div class="recent-item" *ngFor="let item of recentData | slice:0:5"> -->
+          <div class="item-left">
+            <h4>{{ item.name }}</h4>
+            <p>{{ item.color }}</p>
+          </div>
+          <div class="item-date">
+            {{ item.date }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
 
   <ng-template #noRecent>
     <p style="text-align: center; color: gray;">No recent data available.</p>
@@ -45,50 +55,8 @@
   </ng-template>
 
 
-  <div class="bottom-nav">
-
-    <div class="nav-item active" routerLink="/home">
-      <ion-icon name="home"></ion-icon>
-      <span>Home</span>
-    </div>
-
-    <div class="nav-item" routerLink="/assistant">
-      <ion-icon name="sparkles-outline"></ion-icon>
-      <span>AI Assistant</span>
-    </div>
-
-    <!-- CENTER ADD BUTTON -->
-    <div class="nav-add">
-      <ion-icon name="add"></ion-icon>
-    </div>
-
-    <div class="nav-item" routerLink="/resources">
-      <ion-icon name="reader-outline"></ion-icon>
-      <span>Resources</span>
-    </div>
-
-    <div class="nav-item" routerLink="/profile">
-      <ion-icon name="people-outline"></ion-icon>
-      <span>Profile</span>
-    </div>
-
-  </div>
-
-  <!-- <ion-footer class="footer-nav">
-    <ion-tab-bar>
-      <ion-tab-button>
-        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-      </ion-tab-button>
-
-      <ion-tab-button [routerLink]="['/profile']">
-        <ion-icon name="person-circle-outline" style="font-size: 32px;"></ion-icon>
-      </ion-tab-button>
-
-      <ion-tab-button>
-        <ion-icon name="notifications-outline"></ion-icon>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-footer> -->
+  <app-bottom-tabs [tabs]="homeTabs" activeRoute="/assistant" [showAddButton]="true" (addAction)="goToCreateSheet()">
+  </app-bottom-tabs>
 
 
 </ion-content>

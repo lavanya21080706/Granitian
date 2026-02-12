@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonInput, IonItem, IonLabel, IonButton, IonRadioGroup, IonRadio, IonTextarea, IonCard, IonCardContent, IonCardHeader,IonCardTitle } from '@ionic/angular/standalone';
+import { IonInput, IonLabel, IonButton, IonRadioGroup, IonRadio, IonCol, IonItem, IonRow, IonGrid, IonContent, IonIcon } from '@ionic/angular/standalone';
 import { MeasurementService } from 'src/app/services/measurement';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
+import { BottomTabsPage } from '../bottom-tabs/bottom-tabs.page';
+
 
 @Component({
   standalone: true,
@@ -12,89 +16,291 @@ import { MeasurementService } from 'src/app/services/measurement';
   imports: [
     CommonModule,
     FormsModule,
-    IonContent,
     IonInput,
-    IonItem,
     IonLabel,
     IonButton,
     IonRadioGroup,
     IonRadio,
-    IonTextarea,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle
+    IonCol,
+    IonItem,
+    IonRow, IonGrid,
+    IonContent,
+    IonIcon,
+    GranitianHeaderPage,
+    BottomTabsPage
   ]
 })
+
 export class MeasurementPage {
 
   measurementId!: number;
+  isLotLocked = false;
+  isViewMode = false;
+  isEditMode = false;
 
   lot = {
-    factory_name: '',
+    customer_name: '',
     granite_color: '',
     quality_type: '',
     measurement_type: 'Flat',
-    allowance_length_in: 0,
-    allowance_height_in: 0,
-    cumulative_sqft: 0
+
+    allowance_length_in: null as number | null,
+    allowance_height_in: null as number | null,
+
+    thickness: null as number | null,
+    location: '',
+    notes: '',
+
+    original_area_sqft: 0,
+    original_area_sqm: 0,
+    net_area_sqft: 0,
+    net_area_sqm: 0
   };
 
-  slabs: any[] = [];
 
-  constructor(private service: MeasurementService) {}
 
-  createLot() {
-    this.service.createMeasurement(this.lot).subscribe((res: any) => {
-      this.measurementId = res.measurement_id;
-      this.addSlab();
-    });
-  }
+  constructor(
+    private service: MeasurementService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
-  addSlab(copy = false) {
-    if (copy && this.slabs.length) {
-      this.slabs.push({ ...this.slabs[this.slabs.length - 1] });
-    } else {
-      this.slabs.push({
-        raw_length_in: 0,
-        raw_height_in: 0,
-        final_length: 0,
-        final_height: 0,
-        square_feet: 0,
-        notes: ''
-      });
-    }
-  }
+  allLocations: string[] = [
+    'Chennai',
+    'Bangalore',
+    'Hyderabad',
+    'Mumbai',
+    'Delhi',
+    'Jaipur',
+    'Mysore',
+    'Coimbatore'
+  ];
 
-  calculate(slab: any) {
-    let length = slab.raw_length_in - this.lot.allowance_length_in;
-    let height = slab.raw_height_in - this.lot.allowance_height_in;
+  filteredLocations: string[] = [];
 
-    if (this.lot.measurement_type === '3-Multiple') {
-      length = Math.floor(length / 3) * 3;
-      height = Math.floor(height / 3) * 3;
+  filterLocations(event: any) {
+    const value = event.target.value?.toLowerCase() || '';
+
+    if (!value) {
+      this.filteredLocations = [];
+      return;
     }
 
-    slab.final_length = length;
-    slab.final_height = height;
-    slab.square_feet = +(length * height / 144).toFixed(2);
-
-    this.lot.cumulative_sqft = this.slabs.reduce(
-      (sum, s) => sum + (s.square_feet || 0), 0
+    this.filteredLocations = this.allLocations.filter(loc =>
+      loc.toLowerCase().includes(value)
     );
   }
 
-  saveSlabs() {
+  sqftToSqm(sqft: number) {
+    return +(sqft * 0.092903).toFixed(2);
+  }
+
+
+  selectLocation(location: string) {
+    this.lot.location = location;
+    this.filteredLocations = [];
+  }
+
+
+  measurementTabs = [
+    { label: 'Home', icon: 'home-outline', route: '/dashboard', showBack: true },
+    { label: 'Measurement', icon: 'analytics-outline', route: '/assistant' },
+    { label: 'History', icon: 'reader-outline', route: '/resources' },
+    { label: 'Shared', icon: 'share-social-outline', route: '/profile' }
+  ];
+
+  // ngOnInit() {
+  //   this.route.queryParams.subscribe(params => {
+  //     const id = params['id'];
+  //     const edit = this.route.snapshot.queryParamMap.get('edit');
+  //     this.isViewMode = params['view'] === 'true';
+
+  //     if (id) {
+  //       this.loadMeasurementForView(id);
+  //       this.measurementId = +id;
+  //       this.isEditMode = true;
+  //     this.loadMeasurementById();
+  //     }
+  //   });
+  // }
+
+  ngOnInit() {
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('id');
+
+    if (id) {
+      this.measurementId = +id;
+      this.isEditMode = true;
+      this.loadMeasurementById();
+    }
+  });
+}
+
+
+  loadMeasurementById() {
+    this.service.getMeasurementById(this.measurementId)
+      .subscribe((res: any) => {
+        this.lot = {
+          customer_name: res.customer_name,
+          granite_color: res.granite_color,
+          quality_type: res.quality_type,
+          thickness: res.thickness,
+          location: res.location,
+          measurement_type: res.measurement_type,
+          allowance_length_in: res.allowance_length_in,
+          allowance_height_in: res.allowance_height_in,
+          notes: res.notes,
+
+          original_area_sqft: res.original_area_sqft || 0,
+          original_area_sqm: res.original_area_sqm || 0,
+          net_area_sqft: res.net_area_sqft || 0,
+          net_area_sqm: res.net_area_sqm || 0
+        };
+      });
+  }
+
+
+
+  inchesToMm(inches: number | null) {
+    return inches ? +(inches * 25.4).toFixed(2) : 0;
+  }
+
+  inchesToCm(inches: number | null) {
+    return inches ? +(inches * 2.54).toFixed(2) : 0;
+  }
+
+  loadMeasurementForView(id: number) {
+    this.service.getMeasurementById(id).subscribe((res: any) => {
+      console.log('📥 LOAD LOT RESPONSE:', res);
+
+      this.measurementId = res.measurement_id;
+
+      this.lot = {
+        customer_name: res.customer_name || '',
+        granite_color: res.granite_color || '',
+        quality_type: res.quality_type || '',
+        measurement_type: res.measurement_type || 'Flat',
+
+        allowance_length_in: res.allowance_length_in ?? null,
+        allowance_height_in: res.allowance_height_in ?? null,
+
+        thickness: res.thickness ?? null,
+        location: res.location || '',
+        notes: res.notes || '',
+
+        original_area_sqft: res.original_area_sqft || 0,
+        original_area_sqm: res.original_area_sqm || 0,
+        net_area_sqft: res.net_area_sqft || 0,
+        net_area_sqm: res.net_area_sqm || 0
+      };
+
+      this.isLotLocked = true;
+    });
+  }
+
+  createLot() {
     const payload = {
-      measurement_id: this.measurementId,
-      details: this.slabs.map((s, i) => ({
-        ...s,
-        cumulative_sqft: this.slabs
-          .slice(0, i + 1)
-          .reduce((a, b) => a + b.square_feet, 0)
-      }))
+      customer_name: this.lot.customer_name,
+      granite_color: this.lot.granite_color,
+      quality_type: this.lot.quality_type,
+      measurement_type: this.lot.measurement_type,
+
+      thickness: this.lot.thickness,
+      location: this.lot.location,
+      notes: this.lot.notes || '',
+
+
+      allowance_length_in: this.lot.allowance_length_in,
+      allowance_length_mm: this.inchesToMm(this.lot.allowance_length_in),
+      allowance_length_cm: this.inchesToCm(this.lot.allowance_length_in),
+
+      allowance_height_in: this.lot.allowance_height_in,
+      allowance_height_mm: this.inchesToMm(this.lot.allowance_height_in),
+      allowance_height_cm: this.inchesToCm(this.lot.allowance_height_in),
+
+      original_area_sqft: this.lot.original_area_sqft,
+      original_area_sqm: this.sqftToSqm(this.lot.original_area_sqft),
+
+      net_area_sqft: this.lot.net_area_sqft,
+      net_area_sqm: this.sqftToSqm(this.lot.net_area_sqft)
     };
 
-    this.service.addMeasurementDetails(payload).subscribe();
+    console.log('📤 CREATE LOT REQUEST:', payload);
+
+    this.service.createMeasurement(payload).subscribe({
+      next: (res: any) => {
+        console.log('✅ CREATE LOT SUCCESS:', res);
+
+        this.measurementId = res.measurement_id;
+        this.isLotLocked = true;
+        this.router.navigate(['/slabs'], {
+          queryParams: { id: this.measurementId },
+          replaceUrl: true
+        });
+
+
+        // this.router.navigate(['/slabs'], {
+        //   queryParams: { id: this.measurementId }
+        // });
+      },
+      error: err => {
+        console.error('❌ CREATE LOT ERROR:', err);
+      }
+    });
   }
+
+  updateLot() {
+    const payload = {
+      customer_name: this.lot.customer_name,
+      granite_color: this.lot.granite_color,
+      quality_type: this.lot.quality_type,
+      measurement_type: this.lot.measurement_type,
+
+      thickness: this.lot.thickness,
+      location: this.lot.location,
+      notes: this.lot.notes || '',
+
+
+      allowance_length_in: this.lot.allowance_length_in,
+      allowance_length_mm: this.inchesToMm(this.lot.allowance_length_in),
+      allowance_length_cm: this.inchesToCm(this.lot.allowance_length_in),
+
+      allowance_height_in: this.lot.allowance_height_in,
+      allowance_height_mm: this.inchesToMm(this.lot.allowance_height_in),
+      allowance_height_cm: this.inchesToCm(this.lot.allowance_height_in),
+
+      original_area_sqft: this.lot.original_area_sqft,
+      original_area_sqm: this.sqftToSqm(this.lot.original_area_sqft),
+
+      net_area_sqft: this.lot.net_area_sqft,
+      net_area_sqm: this.sqftToSqm(this.lot.net_area_sqft)
+    };
+
+  //   console.log('📤 UPDATE LOT REQUEST:', payload);
+
+  //   this.service.updateMeasurement(this.measurementId, payload).subscribe({
+  //     next: (res) => {
+  //       console.log('✅ UPDATE LOT SUCCESS:', payload);
+  //       this.isLotLocked = true;
+  //     },
+  //     error: err => console.error('❌ UPDATE LOT ERROR:', err)
+  //   });
+  // }
+
+  
+  this.service.updateMeasurement(this.measurementId, payload).subscribe({
+    next: (res) => {
+      console.log('✅ UPDATE LOT SUCCESS:', res);
+
+      this.router.navigate(['/slabs'], {
+        queryParams: { id: this.measurementId },
+        replaceUrl: true
+      });
+    },
+    error: err => console.error('❌ UPDATE LOT ERROR:', err)
+  });
+  // enableLotEdit() {
+  //   this.isLotLocked = false;
+  // }
+}
 }

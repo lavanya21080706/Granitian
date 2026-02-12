@@ -1,0 +1,58 @@
+<ion-content class="modal-content">
+
+  <div class="add-slab-card">
+
+    <h2 class="title">{{ isEdit ? 'Edit Slab' : 'Add Slab' }}</h2>
+
+    <div class="row two-col">
+      <ion-item class="stacked-field">
+        <ion-label position="stacked">Raw Length (in)</ion-label>
+        <ion-input type="number" [(ngModel)]="slab.rawLength" (ionInput)="calculate()"></ion-input>
+      </ion-item>
+
+      <ion-item class="stacked-field">
+        <ion-label position="stacked">Raw Width (in)</ion-label>
+        <ion-input type="number" [(ngModel)]="slab.rawWidth" (ionInput)="calculate()"></ion-input>
+      </ion-item>
+    </div>
+
+    <ion-item class="stacked-field full">
+      <ion-label position="stacked">Notes</ion-label>
+      <ion-textarea auto-grow="true" [(ngModel)]="slab.notes"></ion-textarea>
+    </ion-item>
+
+    <div class="row three-col align-center">
+      <div class="mini-box">
+        <span>Length After Allowance</span>
+        <h3>{{ slab.lengthAfter || '—' }}</h3>
+      </div>
+
+      <div class="mini-box">
+        <span>Width After Allowance</span>
+        <h3>{{ slab.widthAfter || '—' }}</h3>
+      </div>
+
+      <div class="camera-box" (click)="close()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div class="row two-col">
+      <div class="calc-box highlight">
+        <span>Original SFT</span>
+        <h3>{{ slab.originalSft | number:'1.2-2' }}</h3>
+      </div>
+
+      <div class="calc-box highlight">
+        <span>Net SFT</span>
+        <h3>{{ slab.netSft | number:'1.2-2' }}</h3>
+      </div>
+    </div>
+
+    <ion-button expand="block" class="save-btn" (click)="save()">
+      {{ isEdit ? 'Update Slab' : 'Save Slab' }}
+    </ion-button>
+
+  </div>
+
+</ion-content>

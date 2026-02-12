@@ -21,6 +21,8 @@ import {
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth';
 
+
+type AuthFlow = 'LOGIN_OTP' | 'FORGOT_PASSWORD';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -46,6 +48,12 @@ export class LoginPage implements OnInit {
   otpMode: boolean = false;
   otpSent: boolean = false;
   signupMode = false;
+  authFlow: AuthFlow = 'LOGIN_OTP';
+  openResetPasswordFields: boolean = false;
+
+
+  enteredOtp: string = '';
+  isOtpSubmitting = false;
 
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
@@ -64,14 +72,16 @@ export class LoginPage implements OnInit {
   };
 
   loginErrors = {
-    email: '',
+    mobile: '',
     password: ''
   };
 
+
   loginData = {
-    email: '',
+    mobile: '',
     password: ''
   };
+
 
 
   constructor(private router: Router,
@@ -81,7 +91,9 @@ export class LoginPage implements OnInit {
   ) { }
 
 
-  userType: string | null = null;
+  // userType: string | null = null;
+  userTypes: any[] = [];
+  selectedUserTypeId!: number;
 
   formData = {
     firstName: '',
@@ -95,14 +107,15 @@ export class LoginPage implements OnInit {
   };
 
   isGroupA(): boolean {
-    return this.userType === 'marker' || this.userType === 'supervisor';
+    return this.selectedUserTypeId === 1 || this.selectedUserTypeId === 2;
   }
+
 
   isGroupB(): boolean {
     return (
-      this.userType === 'factory_owner' ||
-      this.userType === 'trader' ||
-      this.userType === 'retailer'
+      this.selectedUserTypeId === 3 ||
+      this.selectedUserTypeId === 4 ||
+      this.selectedUserTypeId === 5
     );
   }
 
@@ -124,6 +137,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUserTypes();
     this.route.queryParams.subscribe(params => {
       const mode = params['mode'];
 
@@ -135,15 +149,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  getUserTypeId(): number {
-    switch (this.userType) {
-      case 'marker': return 1;
-      case 'supervisor': return 2;
-      case 'factory_owner': return 3;
-      case 'retailer': return 4;
-      case 'trader': return 5;
-      default: return 0;
-    }
+  loadUserTypes() {
+    this.authService.getUserTypes().subscribe((res: any) => {
+      this.userTypes = res.user_types; 
+    });
   }
 
   register() {
@@ -163,7 +172,11 @@ export class LoginPage implements OnInit {
     let hasError = false;
 
     // Validate userType
-    if (!this.userType) {
+    // if (!this.userTypes) {
+    //   this.errors.userType = 'Please select a user type';
+    //   hasError = true;
+    // }
+    if (!this.selectedUserTypeId) {
       this.errors.userType = 'Please select a user type';
       hasError = true;
     }
@@ -238,7 +251,7 @@ export class LoginPage implements OnInit {
       countryCode: '+91',
       password: this.formData.password,
       confirm_password: this.formData.confirmPassword,
-      user_type_id: this.getUserTypeId(),
+      user_type_id: this.selectedUserTypeId,
       is_parent: false,
       is_child: false
     };
@@ -305,25 +318,45 @@ export class LoginPage implements OnInit {
     }
   }
 
+  onLoginMobileInput(event: any) {
+    const value = event.target.value || '';
+
+    // Allow only digits
+    this.loginData.mobile = value.replace(/[^0-9]/g, '');
+
+    // Clear error as user types
+    if (this.loginData.mobile.length > 0) {
+      this.loginErrors.mobile = '';
+    }
+  }
+
+  onLoginPasswordInput() {
+    if (this.loginData.password.length > 0) {
+      this.loginErrors.password = '';
+    }
+  }
+
+
   goToDashboard() {
-    console.log("hi")
     // Reset errors
     this.loginErrors = {
-      email: '',
+      mobile: '',
       password: ''
     };
 
+
     let hasError = false;
 
+    // Validate mobile
+    if (!this.loginData.mobile.trim()) {
+      this.loginErrors.mobile = 'Please enter your mobile number';
 
-    // Validate email
-    if (!this.loginData.email.trim()) {
-      this.loginErrors.email = 'Please enter your email';
       hasError = true;
-    } else if (!this.validateEmail(this.loginData.email)) {
-      this.loginErrors.email = 'Please enter a valid email address';
+    } else if (!this.validateMobile(this.loginData.mobile)) {
+      this.loginErrors.mobile = 'Please enter a valid 10-digit mobile number';
       hasError = true;
     }
+
 
     if (!this.loginData.password.trim()) {
       this.loginErrors.password = 'Please enter your password';
@@ -335,14 +368,14 @@ export class LoginPage implements OnInit {
     }
 
     const payload = {
-      email: this.loginData.email,
+      mobile_number: `+91${this.loginData.mobile}`,
       password: this.loginData.password
     };
 
     this.authService.login(payload).subscribe({
       next: (res: any) => {
         this.showToast('Login successful');
-        localStorage.setItem('authToken', res.token); 
+        localStorage.setItem('authToken', res.token);
         this.router.navigate(['/dashboard']);
       },
       error: (err: any) => {
@@ -357,13 +390,141 @@ export class LoginPage implements OnInit {
     this.otpSent = false;
   }
 
+  startForgotPassword() {
+    this.otpMode = true;
+    this.otpSent = false;
+    this.authFlow = 'FORGOT_PASSWORD';
+  }
+
   sendOtp() {
-    // (Later: add API call)
-    this.otpSent = true;
+    if (!this.loginData.mobile) {
+      this.errors.mobile = 'Mobile number is required';
+      return;
+    }
+
+    const payload = {
+      phone: '+91' + this.loginData.mobile
+    };
+
+    if (this.authFlow === 'FORGOT_PASSWORD') {
+      this.authService.resetPassword(payload).subscribe({
+        next: () => {
+          this.otpSent = true;
+          this.showToast('OTP sent for password reset');
+        },
+        error: err => {
+          this.showToast(err?.error?.message || 'Failed to send OTP');
+        }
+      });
+    } else {
+      this.authService.requestOtp(payload).subscribe({
+        next: () => {
+          this.otpSent = true;
+          this.showToast('OTP sent successfully');
+        },
+        error: err => {
+          this.showToast(err?.error?.message || 'Failed to send OTP');
+        }
+      });
+    }
+  }
+
+
+
+
+  getOtpValue(): string {
+    return this.otpInputs
+      .toArray()
+      .map(input => input.nativeElement.value)
+      .join('');
   }
 
   submitOtp() {
-    this.router.navigate(['/dashboard']);
+  const otp = this.getOtpValue();
+
+  if (!otp || otp.length !== 6) {
+    this.showToast('Enter valid 6-digit OTP');
+    return;
+  }
+
+  this.isOtpSubmitting = true;
+
+  if (this.authFlow === 'LOGIN_OTP') {
+    const payload = {
+      phone: '+91' + this.loginData.mobile,
+      otp: otp
+    };
+
+    this.authService.verifyOtp(payload).subscribe({
+      next: (res: any) => {
+        this.isOtpSubmitting = false;
+
+        localStorage.setItem('authToken', res.token);
+
+        this.showToast('Login successful');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.isOtpSubmitting = false;
+        this.showToast(err?.error?.message || 'Invalid OTP');
+      }
+    });
+  }
+
+  else if (this.authFlow === 'FORGOT_PASSWORD') {
+    const payload = {
+      phone_number: '+91' + this.loginData.mobile,
+      otp: otp
+    };
+
+    this.authService.verifyOtp(payload).subscribe({
+      next: () => {
+        this.isOtpSubmitting = false;
+        this.openResetPasswordFields = true;
+        this.showToast('OTP verified. Set new password.');
+      },
+      error: (err) => {
+        this.isOtpSubmitting = false;
+        this.showToast(err?.error?.message || 'Invalid OTP');
+      }
+    });
+  }
+}
+  resetPassword = {
+    new: '',
+    confirm: ''
+  };
+  resetPasswordSubmit() {
+    if (this.resetPassword.new !== this.resetPassword.confirm) {
+      this.showToast('Passwords do not match');
+      return;
+    }
+
+    const payload = {
+      phone_number: '+91' + this.loginData.mobile,
+      otp: this.getOtpValue(),
+      new_password: this.resetPassword.new,
+      confirm_password: this.resetPassword.confirm
+    };
+
+    this.authService.resetPassword(payload).subscribe({
+      next: () => {
+        this.showToast('Password reset successful');
+        this.resetToLogin();
+      },
+      error: err => {
+        this.showToast(err?.error?.message || 'Reset failed');
+      }
+    });
+  }
+
+  resetToLogin() {
+    this.openResetPasswordFields = false;
+    this.otpMode = false;
+    this.otpSent = false;
+    this.authFlow = 'LOGIN_OTP';
+    this.loginData = { mobile: '', password: '' };
+    this.resetPassword = { new: '', confirm: '' };
   }
 
 
@@ -382,7 +543,6 @@ export class LoginPage implements OnInit {
 
   otpBoxes = Array(6).fill(0);
 
-  // Move to next box when typing
   moveNext(event: any, index: number) {
     const value = event.target.value;
 
@@ -391,7 +551,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // Move to previous box on backspace
   movePrev(event: KeyboardEvent, index: number) {
     if (event.key === 'Backspace' && index > 0) {
       const current = this.otpInputs.toArray()[index].nativeElement;

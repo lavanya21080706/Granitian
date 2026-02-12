@@ -1,125 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,500;1,14..32,500&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+
+:host {
+  ion-item {
+    --background: transparent;
+    --border-width: 0;
+    --inner-border-width: 0;
+    --highlight-height: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --min-height: auto;
+
+    box-shadow: none;
+  }
+
+  ion-input {
+    --background: transparent;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+
+  ion-button {
+    --box-shadow: none;
+  }
+}
+
+
 h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 18px 0 14px;
-  color: #1e293b;
-}
-
-h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 24px 0;
-  color: #1e293b;
   text-align: center;
-  background: #eef4ff;
-  padding: 14px;
-  border-radius: 14px;
+  color: #23344c;
 }
 
-ion-item {
-  --border-radius: 16px;
-  --inner-padding-start: 14px;
-  --inner-padding-end: 14px;
-
+.stacked-field {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 
-  margin-bottom: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  --border-width: 0;
+  --inner-border-width: 0;
+  gap: 0.4rem;
 }
 
-ion-item ion-label {
-  width: 100%;
-  font-size: 13px;
+.stacked-field ion-label {
+  font-size: 1.3rem;
   font-weight: 500;
-  color: #475569;
-  margin-bottom: 6px;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
-ion-item ion-input {
+.stacked-field ion-input {
   width: 100%;
-  font-size: 15px;
-  color: #0f172a;
-  --padding-top: 10px;
-  --padding-bottom: 10px;
-  --padding-start: 12px;
-  --padding-end: 12px;
-  border-radius: 10px;
+  font-size: 0.95rem;
+
+  --padding-start: 14px;   
+  --padding-end: 14px;    
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
 }
 
-ion-item ion-input.has-focus {
-  background: #eef4ff;
+/* Focus state */
+.stacked-field ion-input.has-focus {
+  color: #23344c;
 }
 
-ion-radio-group {
-  margin: 12px 0;
+.measurement-question {
+  margin: 1.5rem 0;
 
-  ion-item {
-    box-shadow: none;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 6px;
+  h4 {
+    font-size: 0.95rem;
+    color: #23344c;
+    margin-bottom: 0.75rem;
   }
+}
+
+.option-card {
+  --background: #ffffff;
+  --inner-padding-start: 1rem;
+  --inner-padding-end: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 
   ion-label {
-    margin-bottom: 0;
-    font-size: 14px;
+    margin: 0;
+
+    span {
+      display: block;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    p {
+      margin: 0.15rem 0 0;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
   }
 }
 
-hr {
-  margin: 30px 0;
-  border: none;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #cbd5e1, transparent);
+.option-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.slabs {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+.option-card {
+  --background: #ffffff;
+  --background-activated: transparent;
+  --background-focused: transparent;
+  --background-hover: transparent;
+  --ripple-color: transparent;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.9rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.slabs p {
-  margin: 6px 0;
+/* hide default radio */
+.option-card ion-radio {
+  display: none;
+}
+
+/* text */
+.option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.option-text .title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.option-text p {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* tick icon */
+.option-card .tick {
+  font-size: 1.3rem;
+  color: #131314;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+/* selected state */
+.option-card.selected {
+  border-color: #0d0d0d;
+}
+
+.option-card.selected .tick {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* hover */
+.option-card:hover {
+  border-color: #0a0a0a;
+}
+
+/* mobile spacing */
+@media (max-width: 768px) {
+  .option-card {
+    padding: 0.85rem;
+  }
+}
+
+
+
+.save , .slab-button {
+  --background:  #9B0C23;
+  --border-radius: 1rem;
+  width: 100%;
+  height: 50px;
+}
+
+.slab-button {
+  --border-color: #1f2933;
+  color: #1f2933;
+    --background: #fff;
+}
+
+
+.tick {
+  margin-left: auto
+}
+
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.sqrt{ 
+  display: flex;
+  gap:1rem;
+}
+
+.edit-icon {
+  font-size: 22px;
+  color: var(--ion-color-primary);
+  cursor: pointer;
+}
+
+.lot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.disabled-section {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.slab-header,
+.lot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-icon {
+  font-size: 22px;
+  color: var(--ion-color-primary);
+  cursor: pointer;
+}
+
+.disabled-option {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.autocomplete-list {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  margin-top: -10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.autocomplete-item {
+  padding: 12px 16px;
   font-size: 14px;
-  color: #334155;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
 }
 
-.slabs p:last-child {
-  font-weight: 600;
-  color: #2563eb;
+.autocomplete-item:hover {
+  background: #f5f7fa;
 }
 
-ion-button {
-  margin-top: 14px;
-  height: 48px;
-  font-weight: 600;
-  border-radius: 14px;
-}
-
-ion-button[fill="outline"] {
-  --border-color: #2563eb;
-  --color: #2563eb;
-}
-
-ion-button[color="success"] {
-  --background: linear-gradient(135deg, #22c55e, #16a34a);
-}
-
-@media (max-width: 767px) {
-  ion-content {
-    --padding-start: 14px;
-    --padding-end: 14px;
-  }
-}
-
-@media (min-width: 768px) {
-  ion-content {
-    --padding-start: 22%;
-    --padding-end: 22%;
-  }
+ion-content {
+  --padding-bottom: 200px;
 }

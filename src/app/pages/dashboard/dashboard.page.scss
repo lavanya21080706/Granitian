@@ -1,11 +1,12 @@
-/* Main Content */
+
 .header {
   --background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   padding: 0 1rem;
 }
+
 
 .page-title {
   font-weight: 700;
@@ -15,20 +16,22 @@
   text-align: center;
 }
 
-.grid-icon {
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
-  padding-right: clamp(0.5rem, 2vw, 0.9375rem);
-  color: #87ceeb; /* Moon blue color */
-}
+// .grid-icon {
+//   font-size: clamp(1.25rem, 3vw, 1.5rem);
+//   padding-right: clamp(0.5rem, 2vw, 0.9375rem);
+//   color: #87ceeb;
+// }
 
 /* Sidebar */
 .sidebar {
-  --background: #e0f6ff; /* Moon blue background for sidebar */
+  --background: #e0f6ff;
+  /* Moon blue background for sidebar */
 }
 
 /* Main Content */
 .main-content {
-  --background: #f0f8ff; /* Light moon blue background for main content */
+  --background: #f0f8ff;
+  /* Light moon blue background for main content */
 }
 
 /* Dashboard Grid */
@@ -140,4 +143,57 @@
   .small-card {
     height: 30vh;
   }
+}
+.main-content {
+  --padding-bottom: 90px;
+}
+
+/* Grid Layout */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Card Style */
+.feature-card {
+  height: 140px;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 15px;
+}
+
+/* Card Content Layout */
+.feature-card ion-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Icons */
+.feature-card ion-icon {
+  font-size: 36px;
+  color: #1f2328;
+}
+
+/* Text */
+.feature-card h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* Tap animation */
+.feature-card:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }

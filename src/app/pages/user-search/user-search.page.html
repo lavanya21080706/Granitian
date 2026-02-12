@@ -1,0 +1,91 @@
+<!-- src/app/pages/user-search/user-search.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Find People</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Search Bar -->
+  <div class="search-container">
+    <div class="custom-input">
+      <ion-icon name="search-outline" class="input-icon"></ion-icon>
+      <ion-input
+        type="text"
+        placeholder="Search by username (min 3 characters)"
+        [(ngModel)]="searchQuery"
+        (ionInput)="onSearchInput()"
+      ></ion-input>
+      <ion-spinner *ngIf="isLoading" name="crescent" class="search-spinner"></ion-spinner>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="results-container" *ngIf="showResults">
+    <div class="results-header">
+      <ion-label class="results-count">{{ searchResults.length }} users found</ion-label>
+    </div>
+
+    <div *ngIf="searchResults.length === 0" class="no-results">
+      <ion-icon name="people-outline"></ion-icon>
+      <h3>No users found</h3>
+      <p>Try searching with a different username</p>
+    </div>
+
+    <ion-list class="user-list" *ngIf="searchResults.length > 0">
+      <ion-item-sliding *ngFor="let user of searchResults" #slidingItem>
+        <ion-item class="user-item">
+          <ion-avatar slot="start" class="user-avatar">
+            <div class="avatar-placeholder" [ngStyle]="{'background': getAvatarColor(user.user_id)}">
+              {{ getInitials(user.first_name + ' ' + user.last_name) }}
+            </div>
+          </ion-avatar>
+
+          <ion-label>
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="username">@{{ user.user_name }}</p>
+            <div class="user-type-badge">
+              <ion-badge [color]="getUserTypeColor(user.user_type_id)">
+                {{ getUserTypeName(user.user_type_id) }}
+              </ion-badge>
+            </div>
+          </ion-label>
+
+          <div class="request-status" slot="end">
+            <ion-badge *ngIf="user.requestStatus" [color]="getStatusColor(user.requestStatus)">
+              {{ user.requestStatus }}
+            </ion-badge>
+          </div>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option 
+            *ngIf="!sentRequests.has(user.user_id) && !user.requestStatus"
+            color="primary"
+            (click)="sendRequest(user.user_id); slidingItem.close()">
+            <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+            Add
+          </ion-item-option>
+          
+          <ion-item-option 
+            *ngIf="user.requestStatus === 'PENDING'"
+            color="danger"
+            (click)="cancelRequest(user.requestId, user.user_id); slidingItem.close()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            Cancel
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <!-- Initial State -->
+  <div class="initial-state" *ngIf="!showResults">
+    <ion-icon name="search-circle-outline"></ion-icon>
+    <h3>Find People</h3>
+    <p>Search for users by their username to send connection requests</p>
+  </div>
+</ion-content>

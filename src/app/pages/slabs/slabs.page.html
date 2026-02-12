@@ -1,0 +1,220 @@
+<app-granitian-header></app-granitian-header>
+
+<ion-content class="ion-padding">
+  <div class="lot-summary card">
+    <ion-accordion-group [value]="[]">
+
+      <ion-accordion value="lot">
+        <ion-item slot="header" lines="none" class="summary-header">
+          <ion-label>
+            <h2>Lot Summary</h2>
+            <p class="subtitle">
+              {{ lot.customer_name }} • {{ lot.granite_color }} • {{ lot.quality_type }}
+            </p>
+          </ion-label>
+          <ion-icon *ngIf="!isViewMode" name="create-outline" slot="end" class="edit-icon" (click)="editLot()">
+          </ion-icon>
+        </ion-item>
+
+        <div slot="content" class="summary-grid compact">
+          <div class="item">
+            <span>Customer</span>
+            <strong>{{ lot.customer_name }}</strong>
+          </div>
+
+          <div class="item">
+            <span>Color</span>
+            <strong>{{ lot.granite_color }}</strong>
+          </div>
+
+          <div class="item">
+            <span>Location</span>
+            <strong>{{ lot.location }}</strong>
+          </div>
+
+          <div class="item">
+            <span>Quality</span>
+            <strong>{{ lot.quality_type }}</strong>
+          </div>
+
+          <div class="item">
+            <span>Type</span>
+            <strong>{{ lot.measurement_type }}</strong>
+          </div>
+
+          <div class="item">
+            <span>Thickness</span>
+            <strong>{{ lot.thickness }} mm</strong>
+          </div>
+          <div class="item">
+            <span>Allowance Length</span>
+            <strong>
+              {{ lot.allowance_length_in }}
+            </strong>
+          </div>
+
+          <div class="item">
+            <span>Allowance height</span>
+            <strong>
+              {{ lot.allowance_height_in }}
+            </strong>
+          </div>
+        </div>
+
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+  <div class="add-slab card" *ngIf="!isViewMode">
+    <ion-label class="heading">
+      <h2>Add Slab</h2>
+    </ion-label>
+    <ion-grid>
+      <ion-row class="align-center">
+        <ion-col size="5">
+          <ion-item class="stacked-field">
+            <ion-label position="stacked" class="raw">Raw Length (in)</ion-label>
+            <ion-input type="number" [(ngModel)]="currentSlab.rawLength" (ionInput)="calculateCurrent()">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="5">
+          <ion-item class="stacked-field">
+            <ion-label position="stacked" class="raw">Raw Width (in)</ion-label>
+            <ion-input type="number" [(ngModel)]="currentSlab.rawWidth" (ionInput)="calculateCurrent()">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="2" class="camera-col">
+          <div class="camera-box" (click)="addPhoto()">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="notes-allowance-row align-center">
+        <ion-col size="7">
+          <ion-item class="stacked-field compact-item">
+            <ion-label position="stacked" class="raw">Notes</ion-label>
+            <ion-textarea rows="2" auto-grow="false" [(ngModel)]="currentSlab.notes">
+            </ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="5" class="after-stack">
+          <div class="mini-box">
+            <span>Length After Allowance(LAA)</span>
+            <h3>{{ currentSlab.lengthAfter || '—' }}</h3>
+          </div>
+
+          <div class="mini-box">
+            <span>Width After Allowance(WAA)</span>
+            <h3>{{ currentSlab.widthAfter || '—' }}</h3>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <div class="calc-box highlight">
+            <span>Original SFT</span>
+            <h3>{{ currentSlab.allowanceSft | number:'1.2-2' }}</h3>
+          </div>
+        </ion-col>
+
+        <ion-col size="6">
+          <div class="calc-box highlight">
+            <span>Net SFT</span>
+            <h3>{{ currentSlab.fullSft | number:'1.2-2' }}</h3>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="button-row">
+        <ion-col size="6">
+          <ion-button expand="block" (click)="saveSlab()" class="save">
+            Save & Add
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button expand="block" (click)="copyLastSlab()" class="copy">
+            Copy Last Slab
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid class="totals-grid compact">
+    <ion-row>
+      <!-- Slab Count -->
+      <ion-col size="4">
+        <div class="total-pill highlight">
+          <span>Slabs</span>
+          <strong>{{ slabs.length }}</strong>
+        </div>
+      </ion-col>
+
+      <!-- Total Original -->
+      <ion-col size="4">
+        <div class="total-pill highlight">
+          <span>Org SFT</span>
+          <strong>{{ totals.original | number:'1.2-2' }}</strong>
+        </div>
+      </ion-col>
+
+      <!-- Total Net -->
+      <ion-col size="4">
+        <div class="total-pill highlight">
+          <span>Net SFT</span>
+          <strong>{{ totals.net | number:'1.2-2' }}</strong>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="slab-list card" *ngIf="slabs.length">
+    <ion-label class="heading">
+      <h2>Slab Entries</h2>
+    </ion-label>
+    <ion-grid class="table-grid header">
+      <ion-row>
+        <ion-col>LAA</ion-col>
+        <ion-col>WAA</ion-col>
+        <ion-col>Org SFT</ion-col>
+        <ion-col>Net SFT</ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="table-grid row" *ngFor="let slab of slabs; let i = index">
+      <ion-row class="table-row">
+
+        <ion-col>{{ slab.lengthAfter }}</ion-col>
+
+        <ion-col>{{ slab.widthAfter }}</ion-col>
+
+        <ion-col>{{ slab.originalSft | number:'1.2-2' }}</ion-col>
+        <ion-col>{{ slab.netSft | number:'1.2-2' }}</ion-col>
+
+
+        <ion-col size="2" class="actions">
+          <ion-icon name="create-outline" (click)="editSlab(i)"></ion-icon>
+          <ion-icon name="trash-outline" (click)="deleteSlab(i)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div class="save-lot-wrapper" *ngIf="!isViewMode">
+    <ion-button expand="block" size="large" class="save-lot-btn" (click)="saveLot()">
+      Save Lot
+    </ion-button>
+  </div>
+
+
+</ion-content>
+
+<app-bottom-tabs [tabs]="slabTabs" activeRoute="/slabs" [showAddButton]="false"></app-bottom-tabs>

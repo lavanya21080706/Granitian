@@ -1,0 +1,46 @@
+<app-granitian-header></app-granitian-header>
+<ion-content fullscreen>
+  <ion-list class="history-list">
+    <ion-item
+      button
+      detail="false"
+      lines="none"
+      class="history-item"
+      *ngFor="let m of measurements"
+      (click)="openMeasurement(m.measurement_id)"
+    >
+      <ion-label class="history-label">
+        <h2 class="lot-id">LOT-{{ m.measurement_id }}</h2>
+
+        <p class="lot-title">
+          {{ m.granite_color || m.customer_name }}
+          <span *ngIf="m.length && m.width">
+            | {{ m.length }} × {{ m.width }}
+          </span>
+        </p>
+
+        <p class="lot-meta">
+          By: {{ m.customer_name || '—' }}
+        </p>
+
+        <p class="lot-date">
+          {{ m.created_at || m.created_date | date:'dd MMM yyyy' }}
+        </p>
+      </ion-label>
+
+      <ion-icon
+        slot="end"
+        name="chevron-forward-outline"
+        class="chevron-icon"
+      ></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <app-bottom-tabs
+    [tabs]="measurementTabs"
+    activeRoute="/measurement"
+    [showAddButton]="false"
+  ></app-bottom-tabs>
+</ion-footer>

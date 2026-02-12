@@ -1,0 +1,73 @@
+/* ===== LIST RESET ===== */
+.history-list {
+  padding: 12px;
+  background: transparent;
+}
+
+/* ===== ITEM CARD ===== */
+.history-item {
+  --background: #ffffff;
+  --border-radius: 16px;
+  --padding-start: 16px;
+  --padding-end: 12px;
+  --inner-padding-end: 0;
+
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Remove Ionic default hover */
+.history-item::part(native) {
+  background: #ffffff;
+}
+
+/* ===== TEXT STYLES ===== */
+.history-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* LOT ID */
+.lot-id {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+/* Granite / size */
+.lot-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+/* Meta */
+.lot-meta {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* Date */
+.lot-date {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ===== CHEVRON ===== */
+.chevron-icon {
+  font-size: 20px;
+  color: #9ca3af;
+}
+ion-content {
+    --padding-bottom: 80px;
+    }
+//   border: 2px solid red;
+
+
+
+
