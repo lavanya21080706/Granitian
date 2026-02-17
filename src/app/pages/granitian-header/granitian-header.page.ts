@@ -1,18 +1,26 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { 
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
+  IonTitle
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-granitian-header',
   templateUrl: './granitian-header.page.html',
   styleUrls: ['./granitian-header.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule]
+  imports: [CommonModule, FormsModule, IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonMenuButton,
+    IonTitle]
 })
 export class GranitianHeaderPage implements OnInit {
-  // isDesktop = false;
 
   navLinks = [
     { label: 'Measurement', route: '/measurement' },
@@ -26,18 +34,5 @@ export class GranitianHeaderPage implements OnInit {
   ngOnInit(): void {
       
   }
-
-  // constructor() {
-  //   this.checkScreen();
-  //   window.addEventListener('resize', () => this.checkScreen());
-  // }
-
-  // checkScreen() {
-  //   this.isDesktop = window.innerWidth >= 1024;
-  // }
-    // ngOnInit() {
-    //   this.checkScreen();
-    // }
-
 
 }

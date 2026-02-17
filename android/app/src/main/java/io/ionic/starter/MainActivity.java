@@ -17,7 +17,6 @@ public class MainActivity extends BridgeActivity {
   public void onCreate(Bundle savedInstanceState) {
     // Force light mode for entire app
     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-    
     super.onCreate(savedInstanceState);
   }
 }

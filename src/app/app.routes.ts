@@ -104,7 +104,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/user-search/user-search.page').then( m => m.UserSearchPage)
   },
   {
-    path: 'friend-request',
+    path: 'friend-requests',
     loadComponent: () => import('./pages/friend-requests/friend-requests.page').then( m => m.FriendRequestsPage)
   }
 ];

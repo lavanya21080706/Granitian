@@ -1,134 +1,10 @@
-// // src/app/pages/user-search/user-search.page.ts
-// import { Component, OnInit } from '@angular/core';
-// import { UserRequestService } from 'src/app/services/request';
-// import { ToastController } from '@ionic/angular';
-// import { IonicModule } from '@ionic/angular';
-// import { FormsModule } from '@angular/forms';
-// import { CommonModule } from '@angular/common';
-// @Component({
-//   selector: 'app-user-search',
-//   templateUrl: './user-search.page.html',
-//   styleUrls: ['./user-search.page.scss'],
-//   standalone: true,
-//   imports: [IonicModule, CommonModule, FormsModule]
-// })
-// export class UserSearchPage implements OnInit {
-//   searchQuery: string = '';
-//   searchResults: any[] = [];
-//   isLoading: boolean = false;
-//   showResults: boolean = false;
-//   sentRequests: Set<number> = new Set(); // Track sent requests
-
-//   constructor(
-//     private userRequestService: UserRequestService,
-//     private toastCtrl: ToastController
-//   ) { }
-
-//   ngOnInit() { }
-
-//   onSearchInput() {
-//     if (this.searchQuery.length >= 3) {
-//       this.searchUsers();
-//     } else {
-//       this.searchResults = [];
-//       this.showResults = false;
-//     }
-//   }
-
-//   searchUsers() {
-//     this.isLoading = true;
-//     this.userRequestService.searchUsers(this.searchQuery).subscribe({
-//       next: (response: any) => {
-//         this.searchResults = response.users || [];
-//         this.showResults = true;
-//         this.isLoading = false;
-//       },
-//       error: (error) => {
-//         console.error('Search error:', error);
-//         this.showToast('Error searching users');
-//         this.isLoading = false;
-//       }
-//     });
-//   }
-
-//   sendRequest(userId: number) {
-//     this.userRequestService.sendUserRequest(userId).subscribe({
-//       next: (response: any) => {
-//         this.sentRequests.add(userId);
-//         this.showToast('Request sent successfully');
-
-//         // Update the user's request status in results
-//         const user = this.searchResults.find(u => u.user_id === userId);
-//         if (user) {
-//           user.requestStatus = 'PENDING';
-//           user.requestId = response.request_id;
-//         }
-//       },
-//       error: (error) => {
-//         console.error('Send request error:', error);
-//         this.showToast(error?.error?.message || 'Failed to send request');
-//       }
-//     });
-//   }
-
-//   async showToast(message: string) {
-//     const toast = await this.toastCtrl.create({
-//       message,
-//       duration: 2500,
-//       position: 'bottom'
-//     });
-//     await toast.present();
-//   }
-
-//   cancelRequest(requestId: number, userId: number) {
-//     this.userRequestService.cancelRequest(requestId).subscribe({
-//       next: () => {
-//         this.sentRequests.delete(userId);
-//         const user = this.searchResults.find(u => u.user_id === userId);
-//         if (user) {
-//           user.requestStatus = 'CANCELLED';
-//         }
-//         this.showToast('Request cancelled');
-//       },
-//       error: (error) => {
-//         console.error('Cancel error:', error);
-//         this.showToast(error?.error?.message || 'Failed to cancel request');
-//       }
-//     });
-//   }
-
-//   getInitials(name: string): string {
-//     if (!name) return 'U';
-//     return name.charAt(0).toUpperCase();
-//   }
-// }
-
-// src/app/pages/user-search/user-search.page.ts
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';  // Required for ngModel
-import { CommonModule } from '@angular/common'; // Required for ngStyle
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { UserRequestService } from 'src/app/services/request';
-// import { UserRequestService } from '../../services/user-request.service';
 import { ToastController } from '@ionic/angular';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonInput,
-  IonIcon,
-  IonSpinner,
-  IonLabel,
-  IonList,
-  IonItem,
-  IonAvatar,
-  IonBadge,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
 
 @Component({
   selector: 'app-user-search',
@@ -136,25 +12,10 @@ import {
   styleUrls: ['./user-search.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,      // For ngStyle, ngIf, ngFor
-    FormsModule,       // For ngModel
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonInput,
-    IonIcon,
-    IonSpinner,
-    IonLabel,
-    IonList,
-    IonItem,
-    IonAvatar,
-    IonBadge,
-    IonItemSliding,
-    IonItemOptions,
-    IonItemOption
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    GranitianHeaderPage
   ]
 })
 export class UserSearchPage implements OnInit {
@@ -167,41 +28,83 @@ export class UserSearchPage implements OnInit {
   constructor(
     private userRequestService: UserRequestService,
     private toastCtrl: ToastController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSearchInput() {
-    if (this.searchQuery.length >= 3) {
+    if (this.searchQuery.length >= 4) {
       this.searchUsers();
     } else {
       this.searchResults = [];
       this.showResults = false;
     }
   }
-
   searchUsers() {
     this.isLoading = true;
-    this.userRequestService.searchUsers(this.searchQuery).subscribe({
-      next: (response: any) => {
-        this.searchResults = response.users || [];
-        this.showResults = true;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Search error:', error);
-        this.showToast('Error searching users');
-        this.isLoading = false;
-      }
-    });
+
+    // ⏳ simulate API delay
+    setTimeout(() => {
+
+      this.searchResults = [
+        {
+          user_id: 1,
+          first_name: 'John',
+          last_name: 'Doe',
+          user_name: 'M0007',
+          user_type_id: 1,
+          requestStatus: null
+        },
+        {
+          user_id: 2,
+          first_name: 'Sarah',
+          last_name: 'Arjun',
+          user_name: 'S0003',
+          user_type_id: 2,
+          requestStatus: 'PENDING',
+          requestId: 101
+        },
+        {
+          user_id: 3,
+          first_name: 'Raj',
+          last_name: 'Kyla',
+          user_name: 'T0012',
+          user_type_id: 5,
+          requestStatus: 'ACCEPTED'
+        }
+      ];
+
+      this.showResults = true;
+      this.isLoading = false;
+
+    }, 800); // simulate network delay
   }
+
+
+  // searchUsers() {
+  //   console.log('Searching for:', this.searchQuery);
+  //   this.isLoading = true;
+  //   this.userRequestService.searchUsers(this.searchQuery).subscribe({
+  //     next: (response: any) => {
+  //       this.searchResults = response.users || [];
+  //       this.showResults = true;
+  //       this.isLoading = false;
+  //     },
+  //     error: (error) => {
+  //       console.log('Status:', error.status);
+  //       console.log('Backend Response:', error.error);
+  //       this.isLoading = false;
+  //     }
+
+  //   });
+  // }
 
   sendRequest(userId: number) {
     this.userRequestService.sendUserRequest(userId).subscribe({
       next: (response: any) => {
         this.sentRequests.add(userId);
         this.showToast('Request sent successfully');
-        
+
         const user = this.searchResults.find(u => u.user_id === userId);
         if (user) {
           user.requestStatus = 'PENDING';
@@ -221,7 +124,8 @@ export class UserSearchPage implements OnInit {
         this.sentRequests.delete(userId);
         const user = this.searchResults.find(u => u.user_id === userId);
         if (user) {
-          user.requestStatus = 'CANCELLED';
+          user.requestStatus = null;  
+          user.requestId = null;
         }
         this.showToast('Request cancelled');
       },

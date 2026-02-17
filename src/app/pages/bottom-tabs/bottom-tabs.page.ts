@@ -1,4 +1,4 @@
-import { Component, Input, Output,OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class BottomTabsPage implements OnInit {
 
   @Output() addAction = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   navigate(tab: any) {
     if (tab.route) {
@@ -29,14 +29,19 @@ export class BottomTabsPage implements OnInit {
   }
 
   get leftTabs() {
-  return this.tabs.slice(0, 2);
-}
+    return this.tabs.slice(0, 2);
+  }
 
-get rightTabs() {
-  return this.tabs.slice(2);
-}
+  goToMeasurement() {
+    this.router.navigate(['/measurement']);
+  }
+
+  get rightTabs() {
+    return this.tabs.slice(2);
+  }
   ngOnInit() {
   }
+
 
 }
 

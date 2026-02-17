@@ -39,70 +39,38 @@ export class SlabsPage {
   isLotLocked = false;
   isViewMode = false;
 
-  // ionViewWillEnter() {
-  //   this.route.queryParams.subscribe(params => {
-  //     this.measurementId = +params['id'];
-  //     this.isViewMode = params['view'] === 'true';
-
-  //     if (this.measurementId) {
-  //       this.loadLot();
-  //       // this.loadSlabs(); 
-  //     }
-  //   });
-  // }
-
 ionViewWillEnter() {
-  // Get both route params and query params
   this.route.paramMap.subscribe(params => {
-    const id = params.get('id');
-    
+    const routeId = params.get('id');
     this.route.queryParamMap.subscribe(qp => {
+      const queryId = qp.get('id');
+
       this.isViewMode = qp.get('view') === 'true';
-      console.log('VIEW MODE:', this.isViewMode);
-      
-      if (id) {
-        this.measurementId = +id;
+      const finalId = routeId || queryId;
+
+      console.log('Route ID:', routeId);
+      console.log('Query ID:', queryId);
+      console.log('Final ID:', finalId);
+
+      if (finalId) {
+        this.measurementId = +finalId;
         this.loadLot();
-        // this.loadSlabs(); // loadSlabs is called inside loadLot() already
       }
     });
   });
+
 }
 
-// Remove or comment out ngOnInit or ensure it doesn't conflict
+
 ngOnInit() {
-  // Either remove this completely or keep it minimal
   console.log('SlabsPage initialized');
 }
-
-
-
-
-  // ngOnInit() {
-  //   this.route.paramMap.subscribe(params => {
-  //     const id = params.get('id');
-
-  //     if (!id) {
-  //       console.error('❌ No measurement ID received');
-  //       return;
-  //     }
-
-  //     this.measurementId = +id;
-  //     console.log('📦 Measurement ID:', this.measurementId);
-
-  //     // opened from history → view mode
-  //     // this.isViewMode = true;
-
-  //     this.loadLot();
-  //     this.loadSlabs();
-  //   });
-  // }
 
 
   loadSlabsFromResponse(details: any[]) {
     this.slabs = details.map(d => {
 
-      const originalSft = +(d.raw_length_in * d.raw_height_in / 144).toFixed(2);
+      const originalSft = +(d.raw_length_in * d.raw_height_in / 144).toFixed(3);
 
       const netSft = d.net_area_sqft
         ? d.net_area_sqft
@@ -112,13 +80,13 @@ ngOnInit() {
         detail_id: d.detail_id,
         rawLength: d.raw_length_in,
         rawWidth: d.raw_height_in,
-        lengthAfter:
-          d.final_height_in,
+        lengthAfter: d.final_height_in,
         widthAfter: d.final_length_in,
         originalSft,
         netSft,
         notes: d.notes || '',
-        photo: d.slab_photo_url || null
+        photo: d.slab_photo_url || null,
+        showRawInfo: false
       };
 
     });
@@ -126,57 +94,6 @@ ngOnInit() {
 
     this.updateTotals();
   }
-
-
-
-  // loadSlabsFromResponse(details: any[]) {
-
-  //   this.slabs = details.map(d => ({
-
-  //     detail_id: d.detail_id,
-
-  //     rawLength: d.raw_length_in,
-  //     rawWidth: d.raw_height_in,
-
-  //     lengthAfter: d.final_length,
-  //     widthAfter: d.final_height,
-
-  //     // netSft: d.square_feet,
-  //     netSft: +(d.final_length * d.final_height / 144).toFixed(2),
-
-  //     // calculate original sqft from raw
-  //     originalSft: +(d.raw_length_in * d.raw_height_in / 144).toFixed(2),
-
-  //     notes: d.notes || '',
-  //     photo: d.slab_photo_url || null
-  //   }));
-
-  //   console.log('DETAILS FROM API:', details);
-
-
-  //   this.updateTotals();
-  // }
-
-
-  loadSlabs() {
-    this.service.getMeasurementById(this.measurementId).subscribe((res: any) => {
-      if (res.details && res.details.length) {
-        this.loadSlabsFromResponse(res.details);
-      }
-      console.log('FULL RESPONSE:', res);
-
-
-    });
-  }
-
-
-
-  // loadSlabs() {
-  //   this.service.getMeasurementById(this.measurementId).subscribe((res: any) => {
-  //     this.slabs = res.details || [];
-  //     this.updateTotals();
-  //   });
-  // }
 
   loadLot() {
       this.slabs = [];
@@ -195,7 +112,6 @@ ngOnInit() {
         allowance_height_in: res.allowance_height_in
       };
 
-      // 👇 THIS WAS MISSING
       if (res.details && res.details.length) {
         this.loadSlabsFromResponse(res.details);
       }
@@ -255,7 +171,7 @@ ngOnInit() {
     const AL = this.lot.allowance_length_in || 0;
     const AW = this.lot.allowance_height_in || 0;
 
-    const originalSft = +(rawL * rawW / 144).toFixed(2);
+    const originalSft = +(rawL * rawW / 144).toFixed(3);
 
     let finalL = rawL - AL;
     let finalW = rawW - AW;
@@ -268,17 +184,17 @@ ngOnInit() {
     finalL = Math.max(0, finalL);
     finalW = Math.max(0, finalW);
 
-    const netSft = +(finalL * finalW / 144).toFixed(2);
+    const netSft = +(finalL * finalW / 144).toFixed(3);
 
     return { finalL, finalW, originalSft, netSft };
   }
 
   inchesToMm(inches: number) {
-    return +(inches * 25.4).toFixed(2);
+    return +(inches * 25.4).toFixed(3);
   }
 
   inchesToCm(inches: number) {
-    return +(inches * 2.54).toFixed(2);
+    return +(inches * 2.54).toFixed(3);
   }
 
 
@@ -303,8 +219,8 @@ ngOnInit() {
     const full = (finalL * finalW) / 144;
     const raw = (L * W) / 144;
 
-    this.currentSlab.fullSft = +full.toFixed(2);
-    this.currentSlab.allowanceSft = +(raw - full).toFixed(2);
+    this.currentSlab.fullSft = +full.toFixed(3);
+    this.currentSlab.allowanceSft = +(raw - full).toFixed(3);
   }
 
 
@@ -374,14 +290,12 @@ ngOnInit() {
 
   deleteSlab(index: number) {
     const slab = this.slabs[index];
-    // this.totals.full -= slab.fullSft;   
     this.totals.original -= slab.originalSft;
     this.slabs.splice(index, 1);
   }
 
   addPhoto() {
     console.log('Open camera or gallery here');
-    // Later have to integrate Capacitor Camera plugin
   }
 
   resetCurrentSlab() {
@@ -413,7 +327,8 @@ ngOnInit() {
       originalSft,
       netSft,
       notes: this.currentSlab.notes,
-      photo: this.currentSlab.photo || null
+      photo: this.currentSlab.photo || null,
+      showRawInfo: false
     };
 
     this.slabs.push(newSlab);
@@ -441,30 +356,24 @@ ngOnInit() {
         detail_id: slab.detail_id || null,
 
         raw_length_in: slab.rawLength,
-        raw_length_mm: +(slab.rawLength * 25.4).toFixed(2),
-        raw_length_cm: +(slab.rawLength * 2.54).toFixed(2),
+        raw_length_mm: +(slab.rawLength * 25.4).toFixed(3),
+        raw_length_cm: +(slab.rawLength * 2.54).toFixed(3),
 
         raw_height_in: slab.rawWidth,
-        raw_height_mm: +(slab.rawWidth * 25.4).toFixed(2),
-        raw_height_cm: +(slab.rawWidth * 2.54).toFixed(2),
+        raw_height_mm: +(slab.rawWidth * 25.4).toFixed(3),
+        raw_height_cm: +(slab.rawWidth * 2.54).toFixed(3),
+        final_height_in: slab.lengthAfter,
+        final_height_mm: +(slab.lengthAfter * 25.4).toFixed(3),
+        final_height_cm: +(slab.lengthAfter * 2.54).toFixed(3),
 
-        // final_length: slab.lengthAfter,
-        // final_height: slab.widthAfter,
+        final_length_in: slab.widthAfter,
+        final_length_mm: +(slab.widthAfter * 25.4).toFixed(3),
+        final_length_cm: +(slab.widthAfter * 2.54).toFixed(3),
 
-        final_length_in: slab.lengthAfter,
-        final_length_mm: +(slab.lengthAfter * 25.4).toFixed(2),
-        final_length_cm: +(slab.lengthAfter * 2.54).toFixed(2),
-
-        final_height_in: slab.widthAfter,
-        final_height_mm: +(slab.widthAfter * 25.4).toFixed(2),
-        final_height_cm: +(slab.widthAfter * 2.54).toFixed(2),
-
-
-        // square_feet: slab.netSft,
         net_area_sqft: slab.netSft,
         original_area_sqft: slab.originalSft,
 
-        cumulative_sqft: +cumulative.toFixed(2),
+        cumulative_sqft: +cumulative.toFixed(3),
 
         slab_photo_url: slab.photo || null,
         file_verification_status_id: 1,

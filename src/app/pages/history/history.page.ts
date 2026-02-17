@@ -36,10 +36,6 @@ export class HistoryPage implements OnInit {
     });
   }
 
-  // openMeasurement(measurementId: number) {
-  //   this.router.navigate(['/slabs', measurementId]);
-  //   view: true
-  // }
 
   openMeasurement(measurementId: number) {
   this.router.navigate(['/slabs', measurementId], {

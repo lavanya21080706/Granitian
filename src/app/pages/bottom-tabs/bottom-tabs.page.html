@@ -1,25 +1,26 @@
 <ion-footer>
-<div class="bottom-tab-bar">
+  <div class="bottom-tab-bar">
 
-  <div class="tab-item" *ngFor="let tab of leftTabs" [class.active]="tab.route === activeRoute" (click)="navigate(tab)">
-    <div class="icon-wrapper">
-      <ion-icon *ngIf="tab.showBack" name="arrow-back-outline" class="home-arrow"></ion-icon>
-      <ion-icon [name]="tab.icon"></ion-icon>
+    <div class="tab-item" *ngFor="let tab of leftTabs" [class.active]="tab.route === activeRoute"
+      (click)="navigate(tab)">
+      <div class="icon-wrapper">
+        <ion-icon *ngIf="tab.showBack" name="arrow-back-outline" class="home-arrow"></ion-icon>
+        <ion-icon [name]="tab.icon"></ion-icon>
+      </div>
+      <span>{{ tab.label }}</span>
+
     </div>
-    <span>{{ tab.label }}</span>
+
+    <div class="tab-add" *ngIf="showAddButton" (click)="goToMeasurement()">
+
+      <ion-icon name="add"></ion-icon>
+    </div>
+
+    <div class="tab-item" *ngFor="let tab of rightTabs" [class.active]="tab.route === activeRoute"
+      (click)="navigate(tab)">
+      <ion-icon [name]="tab.icon"></ion-icon>
+      <span>{{ tab.label }}</span>
+    </div>
 
   </div>
-
-  <div class="tab-add" *ngIf="showAddButton" (click)="addAction.emit()">
-    <ion-icon name="add"></ion-icon>
-  </div>
-
-  <div class="tab-item" *ngFor="let tab of rightTabs" [class.active]="tab.route === activeRoute"
-    (click)="navigate(tab)">
-    <ion-icon [name]="tab.icon"></ion-icon>
-    <span>{{ tab.label }}</span>
-  </div>
-
-</div>
 </ion-footer>
-

@@ -14,19 +14,24 @@ export class UserRequestService {
     private authService: AuthService
   ) {}
 
-  // Search users by username (partial match)
-  // searchUsers(username: string): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/users/search?username=${username}`);
-  // }
+  searchUsers(username: string): Observable<any> {
+  return this.http.get(
+    `${this.baseUrl}/users/search?username=${username}`
+  );
+}
 
-   searchUsers(username: string): Observable<any> {
-    const token = localStorage.getItem('authToken'); // Get token from storage
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+  //  searchUsers(username: string): Observable<any> {
+  //   const token = localStorage.getItem('authToken') || localStorage.getItem('token');
+  //   if(token) {
+  //     console.log('Decoded JWT Payload:', JSON.parse(atob(token.split('.')[1])));
+  //   }
+
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
     
-    return this.http.get(`${this.baseUrl}/users/search?username=${username}`, { headers });
-  }
+  //   return this.http.get(`${this.baseUrl}/users/search?username=${username}`, { headers });
+  // }
 
   // Get user details by ID
   getUserById(userId: number): Observable<any> {

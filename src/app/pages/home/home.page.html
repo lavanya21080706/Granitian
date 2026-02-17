@@ -30,7 +30,6 @@
 
       <div class="recent-list">
         <div class="recent-item" *ngFor="let item of recentData" (click)="openMeasurement(item.id)">
-          <!-- <div class="recent-item" *ngFor="let item of recentData | slice:0:5"> -->
           <div class="item-left">
             <h4>{{ item.name }}</h4>
             <p>{{ item.color }}</p>

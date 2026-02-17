@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonInput, IonLabel, IonButton, IonRadioGroup, IonRadio, IonCol, IonItem, IonRow, IonGrid, IonContent, IonIcon } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { MeasurementService } from 'src/app/services/measurement';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
@@ -16,18 +16,9 @@ import { BottomTabsPage } from '../bottom-tabs/bottom-tabs.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonInput,
-    IonLabel,
-    IonButton,
-    IonRadioGroup,
-    IonRadio,
-    IonCol,
-    IonItem,
-    IonRow, IonGrid,
-    IonContent,
-    IonIcon,
     GranitianHeaderPage,
-    BottomTabsPage
+    BottomTabsPage,
+    IonicModule
   ]
 })
 
@@ -108,21 +99,6 @@ export class MeasurementPage {
     { label: 'History', icon: 'reader-outline', route: '/resources' },
     { label: 'Shared', icon: 'share-social-outline', route: '/profile' }
   ];
-
-  // ngOnInit() {
-  //   this.route.queryParams.subscribe(params => {
-  //     const id = params['id'];
-  //     const edit = this.route.snapshot.queryParamMap.get('edit');
-  //     this.isViewMode = params['view'] === 'true';
-
-  //     if (id) {
-  //       this.loadMeasurementForView(id);
-  //       this.measurementId = +id;
-  //       this.isEditMode = true;
-  //     this.loadMeasurementById();
-  //     }
-  //   });
-  // }
 
   ngOnInit() {
   this.route.paramMap.subscribe(params => {
@@ -237,11 +213,6 @@ export class MeasurementPage {
           queryParams: { id: this.measurementId },
           replaceUrl: true
         });
-
-
-        // this.router.navigate(['/slabs'], {
-        //   queryParams: { id: this.measurementId }
-        // });
       },
       error: err => {
         console.error('❌ CREATE LOT ERROR:', err);
@@ -275,18 +246,6 @@ export class MeasurementPage {
       net_area_sqft: this.lot.net_area_sqft,
       net_area_sqm: this.sqftToSqm(this.lot.net_area_sqft)
     };
-
-  //   console.log('📤 UPDATE LOT REQUEST:', payload);
-
-  //   this.service.updateMeasurement(this.measurementId, payload).subscribe({
-  //     next: (res) => {
-  //       console.log('✅ UPDATE LOT SUCCESS:', payload);
-  //       this.isLotLocked = true;
-  //     },
-  //     error: err => console.error('❌ UPDATE LOT ERROR:', err)
-  //   });
-  // }
-
   
   this.service.updateMeasurement(this.measurementId, payload).subscribe({
     next: (res) => {
@@ -299,8 +258,5 @@ export class MeasurementPage {
     },
     error: err => console.error('❌ UPDATE LOT ERROR:', err)
   });
-  // enableLotEdit() {
-  //   this.isLotLocked = false;
-  // }
 }
 }

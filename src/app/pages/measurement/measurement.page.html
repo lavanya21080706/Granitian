@@ -1,127 +1,124 @@
 <app-granitian-header></app-granitian-header>
-<ion-content class="ion-padding">
-  <div class="lot-header">
-    <h2>Create Measurement Lot</h2>
-  </div>
-
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Customer Name</ion-label>
-    <ion-input [(ngModel)]="lot.customer_name" [disabled]="isLotLocked || isViewMode"></ion-input>
-  </ion-item>
-
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Granite Color</ion-label>
-    <ion-input [(ngModel)]="lot.granite_color" [disabled]="isLotLocked || isViewMode"></ion-input>
-  </ion-item>
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Quality Type</ion-label>
-    <ion-input [(ngModel)]="lot.quality_type" [disabled]="isLotLocked || isViewMode"></ion-input>
-  </ion-item>
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Thickness(mm)</ion-label>
-    <ion-input [(ngModel)]="lot.thickness"></ion-input>
-  </ion-item>
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Location</ion-label>
-    <ion-input [(ngModel)]="lot.location" (ionInput)="filterLocations($event)" placeholder="Start typing location..."
-      [disabled]="isLotLocked || isViewMode">
-    </ion-input>
-  </ion-item>
-
-  <div class="autocomplete-list" *ngIf="filteredLocations.length && !isLotLocked && !isViewMode">
-    <div class="autocomplete-item" *ngFor="let loc of filteredLocations" (click)="selectLocation(loc)">
-      {{ loc }}
+  <ion-content class="ion-padding">
+    <div class="lot-header">
+      <h2>Create Measurement Lot</h2>
     </div>
-  </div>
-
-
-  <ion-item class="stacked-field">
-    <ion-label position="stacked">Notes</ion-label>
-    <ion-textarea [(ngModel)]="lot.notes" auto-grow="true" placeholder="Add any additional details..."
-      [disabled]="isLotLocked || isViewMode">
-    </ion-textarea>
-  </ion-item>
 
 
 
-  <div class="measurement-question">
-    <h4>How should the measurement be calculated?</h4>
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Customer Name</ion-label>
+      <ion-input name="customer_name" [(ngModel)]="lot.customer_name" [ngModelOptions]="{ standalone: true }"
+        [disabled]="isLotLocked || isViewMode"></ion-input>
+    </ion-item>
 
-    <ion-radio-group [(ngModel)]="lot.measurement_type">
-      <div class="option-wrapper">
 
-        <ion-item button lines="none" class="option-card" [class.selected]="lot.measurement_type === 'Flat'"
-          [class.disabled-option]="isLotLocked || isViewMode"
-          (click)="!(isLotLocked || isViewMode) && (lot.measurement_type = 'Flat')">
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Granite Color</ion-label>
+      <ion-input name="granite_color" [(ngModel)]="lot.granite_color" [ngModelOptions]="{ standalone: true }"
+        [disabled]="isLotLocked || isViewMode"></ion-input>
+    </ion-item>
 
-          <div class="option-text">
-            <span class="title">Flat</span>
-            <p>Use exact length and height values</p>
-          </div>
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Quality Type</ion-label>
+      <ion-input name="quality_type" [(ngModel)]="lot.quality_type" [ngModelOptions]="{ standalone: true }"
+        [disabled]="isLotLocked || isViewMode"></ion-input>
+    </ion-item>
 
-          <ion-radio value="Flat" [disabled]="isLotLocked || isViewMode">
-          </ion-radio>
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Thickness(mm)</ion-label>
+      <ion-input name="thickness" [(ngModel)]="lot.thickness" [ngModelOptions]="{ standalone: true }"></ion-input>
+    </ion-item>
 
-          <ion-icon name="checkmark-circle-outline" class="tick"></ion-icon>
-        </ion-item>
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Location</ion-label>
+      <ion-input name="location" [(ngModel)]="lot.location" [ngModelOptions]="{ standalone: true }"
+        (ionInput)="filterLocations($event)" placeholder="Start typing location..."
+        [disabled]="isLotLocked || isViewMode">
+      </ion-input>
+    </ion-item>
 
-        <ion-item button lines="none" class="option-card" [class.selected]="lot.measurement_type === '3-Multiple'"
-          [class.disabled-option]="isLotLocked || isViewMode"
-          (click)="!(isLotLocked || isViewMode) && (lot.measurement_type = '3-Multiple')">
-
-          <div class="option-text">
-            <span class="title">3-Multiple</span>
-            <p>Round dimensions down to nearest multiple of 3</p>
-          </div>
-
-          <ion-radio value="3-Multiple" [disabled]="isLotLocked || isViewMode">
-          </ion-radio>
-
-          <ion-icon name="checkmark-circle-outline" class="tick"></ion-icon>
-        </ion-item>
-
+    <div class="autocomplete-list" *ngIf="filteredLocations.length && !isLotLocked && !isViewMode">
+      <div class="autocomplete-item" *ngFor="let loc of filteredLocations" (click)="selectLocation(loc)">
+        {{ loc }}
       </div>
-    </ion-radio-group>
-  </div>
+    </div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item class="stacked-field">
-          <ion-label position="stacked">Allowance Length (in)</ion-label>
-          <ion-input type="number" placeholder="___" [(ngModel)]="lot.allowance_length_in"
-            [disabled]="isLotLocked || isViewMode">
-          </ion-input>
-        </ion-item>
-      </ion-col>
 
-      <ion-col>
-        <ion-item class="stacked-field">
-          <ion-label position="stacked">Allowance width (in)</ion-label>
-          <ion-input type="number" placeholder="___" [(ngModel)]="lot.allowance_height_in"
-            [disabled]="isLotLocked || isViewMode">
-          </ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-    <!-- <ion-button  class="save" expand="block" (click)="measurementId ? updateLot() : createLot()">
-    Save & Add Slabs
-  </ion-button> -->
-  <ion-button expand="block"
-            class="save"
-            (click)="isEditMode ? updateLot() : createLot()">
+    <ion-item class="stacked-field">
+      <ion-label position="stacked">Notes</ion-label>
+      <ion-textarea name="notes" [(ngModel)]="lot.notes" [ngModelOptions]="{ standalone: true }" auto-grow="true"
+        placeholder="Add any additional details..." [disabled]="isLotLocked || isViewMode">
+      </ion-textarea>
+    </ion-item>
 
-  {{ isEditMode ? 'Update Lot' : 'Save & Add Slabs' }}
 
-</ion-button>
 
-</ion-content>
+    <div class="measurement-question">
+      <h4>How should the measurement be calculated?</h4>
+
+      <ion-radio-group [(ngModel)]="lot.measurement_type" [ngModelOptions]="{ standalone: true }"
+        name="measurement_type">
+        <div class="option-wrapper">
+
+          <ion-item button lines="none" class="option-card" [class.selected]="lot.measurement_type === 'Flat'"
+            [class.disabled-option]="isLotLocked || isViewMode"
+            (click)="!(isLotLocked || isViewMode) && (lot.measurement_type = 'Flat')">
+
+            <div class="option-text">
+              <span class="title">Flat</span>
+              <p>Use exact length and height values</p>
+            </div>
+
+            <ion-radio value="Flat" [disabled]="isLotLocked || isViewMode">
+            </ion-radio>
+
+            <ion-icon name="checkmark-circle-outline" class="tick"></ion-icon>
+          </ion-item>
+
+          <ion-item button lines="none" class="option-card" [class.selected]="lot.measurement_type === '3-Multiple'"
+            [class.disabled-option]="isLotLocked || isViewMode"
+            (click)="!(isLotLocked || isViewMode) && (lot.measurement_type = '3-Multiple')">
+            <div class="option-text">
+              <span class="title">3-Multiple</span>
+              <p>Round dimensions down to nearest multiple of 3</p>
+            </div>
+            <ion-radio value="3-Multiple" [disabled]="isLotLocked || isViewMode">
+            </ion-radio>
+            <ion-icon name="checkmark-circle-outline" class="tick"></ion-icon>
+          </ion-item>
+        </div>
+      </ion-radio-group>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item class="stacked-field">
+            <ion-label position="stacked">Allowance Length (in)</ion-label>
+            <ion-input name="allowance_length_in" type="number" placeholder="___" [(ngModel)]="lot.allowance_length_in"
+              [ngModelOptions]="{ standalone: true }" [disabled]="isLotLocked || isViewMode">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item class="stacked-field">
+            <ion-label position="stacked">Allowance width (in)</ion-label>
+            <ion-input name="allowance_height_in" type="number" placeholder="___" [(ngModel)]="lot.allowance_height_in"
+              [ngModelOptions]="{ standalone: true }" [disabled]="isLotLocked || isViewMode">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="block" class="save" (click)="isEditMode ? updateLot() : createLot()">
+
+      {{ isEditMode ? 'Update Lot' : 'Save & Add Slabs' }}
+
+    </ion-button>
+
+  </ion-content>
 
 <app-bottom-tabs [tabs]="measurementTabs" activeRoute="/measurement" [showAddButton]="false">
 </app-bottom-tabs>

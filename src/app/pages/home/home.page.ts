@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BottomTabsPage } from '../bottom-tabs/bottom-tabs.page';
@@ -9,7 +10,7 @@ import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule, HttpClientModule, BottomTabsPage, GranitianHeaderPage],
+  imports: [CommonModule,FormsModule, IonicModule, RouterModule, HttpClientModule, BottomTabsPage, GranitianHeaderPage],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -56,7 +57,6 @@ export class HomePage {
           this.totalHistory = 0;
           return;
         }
-               // Total count
         this.totalHistory = data.length;
 
           const sorted = data.sort((a: any, b: any) =>
@@ -65,7 +65,6 @@ export class HomePage {
 
           this.recentData = sorted.slice(0, 5).map((item: any) => ({
             id: item.measurement_id,
-            // name: `${item.factory_name} - ${item.granite_color}`,
             name: `${item.customer_name} - ${item.granite_color}`,
 
             date: new Date(item.created_at).toLocaleDateString()

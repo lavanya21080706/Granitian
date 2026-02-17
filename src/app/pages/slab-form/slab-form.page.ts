@@ -48,10 +48,10 @@ ngOnInit() {
   this.slab.widthAfter = finalW;
 
   // ORIGINAL SFT (RAW)
-  this.slab.originalSft = +((RL * RW) / 144).toFixed(2);
+  this.slab.originalSft = +((RL * RW) / 144).toFixed(3);
 
   // NET SFT (FINAL)
-  this.slab.netSft = +((finalL * finalW) / 144).toFixed(2);
+  this.slab.netSft = +((finalL * finalW) / 144).toFixed(3);
 }
 
 ionViewWillEnter() {

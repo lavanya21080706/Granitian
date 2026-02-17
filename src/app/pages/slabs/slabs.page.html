@@ -1,6 +1,6 @@
 <app-granitian-header></app-granitian-header>
 
-<ion-content class="ion-padding">
+<ion-content fullscreen class="ion-padding">
   <div class="lot-summary card">
     <ion-accordion-group [value]="[]">
 
@@ -12,7 +12,9 @@
               {{ lot.customer_name }} • {{ lot.granite_color }} • {{ lot.quality_type }}
             </p>
           </ion-label>
-          <ion-icon *ngIf="!isViewMode" name="create-outline" slot="end" class="edit-icon" (click)="editLot()">
+          <ion-icon name="create-outline" slot="end" class="edit-icon" (click)="editLot()">
+
+            <!-- <ion-icon *ngIf="!isViewMode" name="create-outline" slot="end" class="edit-icon" (click)="editLot()"> -->
           </ion-icon>
         </ion-item>
 
@@ -180,35 +182,53 @@
     </ion-label>
     <ion-grid class="table-grid header">
       <ion-row>
-        <ion-col>LAA</ion-col>
-        <ion-col>WAA</ion-col>
-        <ion-col>Org SFT</ion-col>
-        <ion-col>Net SFT</ion-col>
-        <ion-col size="2"></ion-col>
+        <ion-col size="2">LAA</ion-col>
+        <ion-col size="2">WAA</ion-col>
+        <ion-col size="2">Org SFT</ion-col>
+        <ion-col size="2">Net SFT</ion-col>
+        <ion-col size="4">Actions</ion-col>
       </ion-row>
     </ion-grid>
 
     <ion-grid class="table-grid row" *ngFor="let slab of slabs; let i = index">
+      <!-- MAIN ROW -->
       <ion-row class="table-row">
+        <ion-col size="2">{{ slab.lengthAfter }}</ion-col>
+        <ion-col size="2">{{ slab.widthAfter }}</ion-col>
+        <ion-col size="2">{{ slab.originalSft | number:'1.2-2' }}</ion-col>
+        <ion-col size="2">{{ slab.netSft | number:'1.2-2' }}</ion-col>
 
-        <ion-col>{{ slab.lengthAfter }}</ion-col>
+        <ion-col size="4" class="actions">
 
-        <ion-col>{{ slab.widthAfter }}</ion-col>
-
-        <ion-col>{{ slab.originalSft | number:'1.2-2' }}</ion-col>
-        <ion-col>{{ slab.netSft | number:'1.2-2' }}</ion-col>
-
-
-        <ion-col size="2" class="actions">
           <ion-icon name="create-outline" (click)="editSlab(i)"></ion-icon>
           <ion-icon name="trash-outline" (click)="deleteSlab(i)"></ion-icon>
+          <!-- Toggle Icon -->
+          <ion-icon name="chevron-down-outline" class="expand-icon" [class.rotate]="slab.showRawInfo"
+            (click)="slab.showRawInfo = !slab.showRawInfo" color="danger">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <!-- EXPANDABLE RAW ROW -->
+      <ion-row class="raw-expand-row" [class.expanded]="slab.showRawInfo">
+        <ion-col size="12">
+          <div class="raw-info-box">
+            <div class="raw-item">
+              <span>Raw Length</span>
+              <strong>{{ slab.rawLength }} in</strong>
+            </div>
+            <div class="raw-item">
+              <span>Raw Width</span>
+              <strong>{{ slab.rawWidth }} in</strong>
+            </div>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
 
   </div>
 
-  <div class="save-lot-wrapper" *ngIf="!isViewMode">
+  <div class="save-lot-wrapper">
     <ion-button expand="block" size="large" class="save-lot-btn" (click)="saveLot()">
       Save Lot
     </ion-button>

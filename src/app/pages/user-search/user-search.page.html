@@ -1,24 +1,20 @@
-<!-- src/app/pages/user-search/user-search.page.html -->
-<ion-header>
+ <app-granitian-header></app-granitian-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Find People</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content class="ion-padding">
   <!-- Search Bar -->
   <div class="search-container">
     <div class="custom-input">
       <ion-icon name="search-outline" class="input-icon"></ion-icon>
-      <ion-input
-        type="text"
-        placeholder="Search by username (min 3 characters)"
-        [(ngModel)]="searchQuery"
-        (ionInput)="onSearchInput()"
-      ></ion-input>
+      <ion-input type="text" placeholder="Search by username (min 3 characters)" [(ngModel)]="searchQuery"
+        (ionInput)="onSearchInput()"></ion-input>
       <ion-spinner *ngIf="isLoading" name="crescent" class="search-spinner"></ion-spinner>
     </div>
   </div>
@@ -36,49 +32,58 @@
     </div>
 
     <ion-list class="user-list" *ngIf="searchResults.length > 0">
-      <ion-item-sliding *ngFor="let user of searchResults" #slidingItem>
-        <ion-item class="user-item">
-          <ion-avatar slot="start" class="user-avatar">
-            <div class="avatar-placeholder" [ngStyle]="{'background': getAvatarColor(user.user_id)}">
-              {{ getInitials(user.first_name + ' ' + user.last_name) }}
-            </div>
-          </ion-avatar>
+      <ion-item *ngFor="let user of searchResults" class="user-item">
 
-          <ion-label>
-            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-            <p class="username">@{{ user.user_name }}</p>
-            <div class="user-type-badge">
-              <ion-badge [color]="getUserTypeColor(user.user_type_id)">
-                {{ getUserTypeName(user.user_type_id) }}
-              </ion-badge>
-            </div>
-          </ion-label>
-
-          <div class="request-status" slot="end">
-            <ion-badge *ngIf="user.requestStatus" [color]="getStatusColor(user.requestStatus)">
-              {{ user.requestStatus }}
-            </ion-badge>
+        <ion-avatar slot="start" class="user-avatar">
+          <div class="avatar-placeholder" [ngStyle]="{'background': getAvatarColor(user.user_id)}">
+            {{ getInitials(user.first_name + ' ' + user.last_name) }}
           </div>
-        </ion-item>
+        </ion-avatar>
 
-        <ion-item-options side="end">
-          <ion-item-option 
-            *ngIf="!sentRequests.has(user.user_id) && !user.requestStatus"
-            color="primary"
-            (click)="sendRequest(user.user_id); slidingItem.close()">
-            <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+        <ion-label>
+          <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+          <p class="username">@{{ user.user_name }}</p>
+
+          <ion-badge [color]="getUserTypeColor(user.user_type_id)">
+            {{ getUserTypeName(user.user_type_id) }}
+          </ion-badge>
+        </ion-label>
+
+        <!-- RIGHT SIDE ACTION AREA -->
+        <div slot="end" class="action-area">
+
+          <!-- Add Button -->
+          <!-- <ion-button
+      size="small"
+      fill="solid"
+      color="primary"
+      *ngIf="!sentRequests.has(user.user_id) && !user.requestStatus"
+      (click)="sendRequest(user.user_id)">
+      Add
+    </ion-button> -->
+          <ion-button class="add-btn" size="small" *ngIf="!sentRequests.has(user.user_id) && !user.requestStatus"
+            (click)="sendRequest(user.user_id)">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
             Add
-          </ion-item-option>
-          
-          <ion-item-option 
-            *ngIf="user.requestStatus === 'PENDING'"
-            color="danger"
-            (click)="cancelRequest(user.requestId, user.user_id); slidingItem.close()">
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+
+
+          <!-- Cancel Button -->
+          <ion-button class="action-btn cancel-btn" size="small" *ngIf="user.requestStatus === 'PENDING'"
+            (click)="cancelRequest(user.requestId, user.user_id)">
+            <ion-icon name="close-outline" slot="start"></ion-icon>
             Cancel
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+          </ion-button>
+
+          <!-- Connected -->
+          <div class="action-btn connected-badge" *ngIf="user.requestStatus === 'ACCEPTED'">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            Connected
+          </div>
+
+        </div>
+
+      </ion-item>
     </ion-list>
   </div>
 

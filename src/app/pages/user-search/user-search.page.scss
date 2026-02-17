@@ -49,6 +49,7 @@
     border-radius: 12px;
     --background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    
 
     h2 {
       font-size: 16px;
@@ -71,6 +72,7 @@
 
 .user-avatar {
   width: 48px;
+  // padding-left:5px;
   height: 48px;
 }
 
@@ -87,7 +89,8 @@
   background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
 }
 
-.initial-state, .no-results {
+.initial-state,
+.no-results {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -125,7 +128,7 @@
     --indicator-height: 3px;
     --color: #64748b;
     --color-checked: var(--ion-color-primary);
-    
+
     ion-badge {
       margin-left: 6px;
       border-radius: 12px;
@@ -219,4 +222,111 @@
 .spinner-center {
   display: block;
   margin: 48px auto;
+}
+
+ion-input {
+  --border-style: none;
+  border: none;
+  --border-color: transparent;
+  --border-width: 0px !important;
+  --highlight-height: 0;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.user-item {
+  --border-radius: 16px;
+  margin-bottom: 12px;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+}
+
+.action-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-btn {
+  --background: linear-gradient(135deg, #3b82f6, #2563eb);
+  --border-radius: 20px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+/* Press Effect */
+.add-btn:active {
+  transform: scale(0.95);
+  --box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+
+
+/* Base style for all buttons */
+// .action-btn {
+//   border-radius: 20px;
+//   padding: 6px 14px;
+//   font-weight: 600;
+//   letter-spacing: 0.3px;
+//   text-transform: none;
+//   font-size: 13px;
+//   display: flex;
+//   align-items: center;
+//   gap: 6px;
+//   transition: all 0.2s ease;
+// }
+.add-btn {
+  --background: linear-gradient(135deg, #3b82f6, #2563eb);
+  --box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+  color: white;
+}
+
+.cancel-btn {
+  --background: linear-gradient(135deg, #ef4444, #dc2626);
+  --box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+  color: white;
+}
+
+.connected-badge {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.35);
+  color: white;
+}
+
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;   /* ensures vertical alignment */
+}
+
+.action-area ion-button {
+  height: 36px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --border-radius: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.connected-badge {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  gap:2px;
 }

@@ -37,7 +37,10 @@ import {
   shareSocialOutline,
   receiptOutline,
   arrowBackCircleOutline,
-chevronForwardOutline
+chevronForwardOutline,
+chevronDownCircleOutline,
+searchOutline,
+menuOutline,
 } from 'ionicons/icons';
 
 
@@ -70,7 +73,10 @@ addIcons({
   'share-social-outline': shareSocialOutline,
   'arrow-back-circle-outline': arrowBackCircleOutline,
 'arrow-back-outline': arrowBackOutline,
-'chevron-forward-outline': chevronForwardOutline
+'chevron-forward-outline': chevronForwardOutline,
+'chevron-down-outline': chevronDownCircleOutline
+  , 'search-outline': searchOutline,
+  'menu-outline': menuOutline
 });
 
 

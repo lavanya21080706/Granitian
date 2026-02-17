@@ -9,25 +9,35 @@
 </ion-header>
 
 <ion-content>
-  <!-- Segments -->
-  <ion-segment [value]="activeSegment" (ionChange)="segmentChanged($event)" class="custom-segment">
+  <ion-segment mode="md" [value]="activeSegment" (ionChange)="segmentChanged($event)"
+    class="custom-segment">
+    <!-- <ion-segment [value]="activeSegment" mode="md" (ionChange)="segmentChanged($event)" class="custom-segment"> -->
     <ion-segment-button value="pending">
-      <ion-label>Pending</ion-label>
-      <ion-badge color="danger" *ngIf="pendingRequests.length > 0">{{ pendingRequests.length }}</ion-badge>
+      <div class="segment-btn-inner">
+        <span class="segment-text">Pending</span>
+        <span class="segment-count" *ngIf="pendingRequests.length > 0">
+          {{ pendingRequests.length }}
+        </span>
+      </div>
+      <!-- <ion-label>Pending</ion-label>
+      <ion-badge color="danger" *ngIf="pendingRequests.length > 0">{{ pendingRequests.length }}</ion-badge> -->
     </ion-segment-button>
     <ion-segment-button value="accepted">
-      <ion-label>Accepted</ion-label>
+      <div class="segment-btn-inner">
+        <span class="segment-text">Accepted</span>
+      </div>
+      <!-- <ion-label>Accepted</ion-label> -->
     </ion-segment-button>
-    <ion-segment-button value="sent">
+    <!-- <ion-segment-button value="sent">
       <ion-label>Sent</ion-label>
-    </ion-segment-button>
+    </ion-segment-button> -->
   </ion-segment>
 
   <!-- Pending Requests -->
   <div *ngIf="activeSegment === 'pending'" class="segment-content">
-    <div class="section-header" *ngIf="pendingRequests.length > 0">
+    <!-- <div class="section-header" *ngIf="pendingRequests.length > 0">
       <ion-label class="section-title">Incoming Requests</ion-label>
-    </div>
+    </div> -->
 
     <ion-spinner name="crescent" *ngIf="isLoading.pending" class="spinner-center"></ion-spinner>
 
@@ -42,21 +52,27 @@
         <ion-item class="request-item">
           <ion-avatar slot="start">
             <div class="avatar-placeholder">
-              {{ request.sender_name?.charAt(0) || 'U' }}
+              {{ request.requested_by_first_name?.charAt(0) || 'U' }}
             </div>
           </ion-avatar>
 
           <ion-label>
-            <h2>{{ request.sender_name || 'Unknown User' }}</h2>
-            <p class="username">@{{ request.sender_username || 'username' }}</p>
+            <h2>
+              {{ request.requested_by_first_name }} {{ request.requested_by_last_name }}
+            </h2>
+
+            <p class="username">
+              @{{ request.requested_by_user_name }}
+            </p>
+
             <p class="time">{{ getTimeAgo(request.created_at) }}</p>
           </ion-label>
 
           <div class="request-actions" slot="end">
-            <ion-button fill="clear" color="success" (click)="acceptRequest(request); slidingItem.close()">
-              <ion-icon name="checkmark-outline" slot="icon-only"></ion-icon>
+            <ion-button class="accept-btn" size="small" (click)="acceptRequest(request); slidingItem.close()">
+              <ion-icon name="checkmark-circle-outline" slot="icon-only"></ion-icon>
             </ion-button>
-            <ion-button fill="clear" color="danger" (click)="rejectRequest(request); slidingItem.close()">
+            <ion-button class="reject-btn" size="small" (click)="rejectRequest(request); slidingItem.close()">
               <ion-icon name="close-outline" slot="icon-only"></ion-icon>
             </ion-button>
           </div>
@@ -80,25 +96,25 @@
       <ion-item *ngFor="let request of acceptedRequests">
         <ion-avatar slot="start">
           <div class="avatar-placeholder accepted">
-            {{ request.sender_name?.charAt(0) || 'U' }}
+            {{ request.requested_by_first_name?.charAt(0) || 'U' }}
           </div>
         </ion-avatar>
 
         <ion-label>
-          <h2>{{ request.sender_name || 'Unknown User' }}</h2>
-          <p class="username">@{{ request.sender_username || 'username' }}</p>
+          <h2>{{ request.requested_by_first_name }} {{ request.requested_by_last_name }}</h2>
+          <p class="username">@{{ request.requested_by_user_name || 'username' }}</p>
           <ion-badge color="success" class="status-badge">Connected</ion-badge>
         </ion-label>
 
-       <ion-button slot="end" fill="clear" routerLink="/messages" [queryParams]="{userId: request.sender_id}">
-  <ion-icon name="chatbubble-outline"></ion-icon>
-</ion-button>
+        <ion-button slot="end" fill="clear" routerLink="/messages" [queryParams]="{userId: request.sender_id}">
+          <ion-icon name="chatbubble-outline"></ion-icon>
+        </ion-button>
       </ion-item>
     </ion-list>
   </div>
 
   <!-- Sent Requests -->
-  <div *ngIf="activeSegment === 'sent'" class="segment-content">
+  <!-- <div *ngIf="activeSegment === 'sent'" class="segment-content">
     <ion-spinner name="crescent" *ngIf="isLoading.sent" class="spinner-center"></ion-spinner>
 
     <div *ngIf="!isLoading.sent && sentRequests.length === 0" class="empty-state">
@@ -130,5 +146,5 @@
         </ion-item>
       </ion-item-sliding>
     </ion-list>
-  </div>
+  </div> -->
 </ion-content>
