@@ -33,6 +33,7 @@ export class MeasurementPage {
     customer_name: '',
     granite_color: '',
     quality_type: '',
+    polish_type: '',
     measurement_type: 'Flat',
 
     allowance_length_in: null as number | null,
@@ -101,16 +102,24 @@ export class MeasurementPage {
   ];
 
   ngOnInit() {
-  this.route.paramMap.subscribe(params => {
-    const id = params.get('id');
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
 
-    if (id) {
-      this.measurementId = +id;
-      this.isEditMode = true;
-      this.loadMeasurementById();
-    }
-  });
-}
+      if (id) {
+        this.measurementId = +id;
+        this.isEditMode = true;
+        this.loadMeasurementById();
+      }
+    });
+  }
+
+  polishTypes: string[] = [
+    'Diamond Polish',
+    'Line Polish',
+    'Flamed Finish',
+    'Leather Finish',
+    'Lapatro Finish'
+  ];
 
 
   loadMeasurementById() {
@@ -120,6 +129,7 @@ export class MeasurementPage {
           customer_name: res.customer_name,
           granite_color: res.granite_color,
           quality_type: res.quality_type,
+          polish_type: res.polish_type || '',
           thickness: res.thickness,
           location: res.location,
           measurement_type: res.measurement_type,
@@ -155,6 +165,7 @@ export class MeasurementPage {
         customer_name: res.customer_name || '',
         granite_color: res.granite_color || '',
         quality_type: res.quality_type || '',
+        polish_type: res.polish_type || '',
         measurement_type: res.measurement_type || 'Flat',
 
         allowance_length_in: res.allowance_length_in ?? null,
@@ -179,6 +190,7 @@ export class MeasurementPage {
       customer_name: this.lot.customer_name,
       granite_color: this.lot.granite_color,
       quality_type: this.lot.quality_type,
+      polish_type: this.lot.polish_type,
       measurement_type: this.lot.measurement_type,
 
       thickness: this.lot.thickness,
@@ -220,6 +232,8 @@ export class MeasurementPage {
     });
   }
 
+  
+
   updateLot() {
     const payload = {
       customer_name: this.lot.customer_name,
@@ -246,17 +260,17 @@ export class MeasurementPage {
       net_area_sqft: this.lot.net_area_sqft,
       net_area_sqm: this.sqftToSqm(this.lot.net_area_sqft)
     };
-  
-  this.service.updateMeasurement(this.measurementId, payload).subscribe({
-    next: (res) => {
-      console.log('✅ UPDATE LOT SUCCESS:', res);
 
-      this.router.navigate(['/slabs'], {
-        queryParams: { id: this.measurementId },
-        replaceUrl: true
-      });
-    },
-    error: err => console.error('❌ UPDATE LOT ERROR:', err)
-  });
-}
+    this.service.updateMeasurement(this.measurementId, payload).subscribe({
+      next: (res) => {
+        console.log('✅ UPDATE LOT SUCCESS:', res);
+
+        this.router.navigate(['/slabs'], {
+          queryParams: { id: this.measurementId },
+          replaceUrl: true
+        });
+      },
+      error: err => console.error('❌ UPDATE LOT ERROR:', err)
+    });
+  }
 }

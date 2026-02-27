@@ -1,0 +1,189 @@
+
+ion-input {
+    --border-style: none;
+    border: none;
+    --border-color: transparent;
+    --border-width: 0px !important;
+    --highlight-height: 0;
+    outline: none !important;
+    --background:none;
+}
+
+/* Make it identical to password wrapper */
+.phone-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Remove Ionic grey background */
+.phone-field ion-input {
+  --background: transparent !important;
+  --border-style: none;
+  --highlight-height: 0;
+  --padding-start: 0;
+  flex: 1;
+}
+
+/* Country section */
+.country-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 10px;
+  border-right: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+/* Flag */
+.flag {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Dial code */
+.dial-code {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Chevron */
+.chevron {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.input-icon{
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px;
+    color: #9B0C23;
+}
+
+.flag{
+    margin-top: auto;
+    margin-bottom: 6.5px;
+    // padding-left: 10px;
+    padding-top: 5px;
+}
+.dial-code, .chevron{
+       margin-top: auto;
+    margin-bottom: auto;
+    // padding-left: 10px;
+    padding-top: 5px;
+
+}
+::ng-deep .country-popup {
+  --width: 420px;
+  --max-width: 90%;
+  --height: 520px;
+  --border-radius: 18px;
+  --box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+::ng-deep .country-popup .modal-wrapper {
+  border-radius: 18px !important;
+  overflow: hidden;
+}
+.popup-content {
+  --background: #ffffff;
+}
+
+/* Header */
+.popup-header {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+
+.search-box {
+  padding: 16px;
+}
+
+.search-box ion-input {
+  --background: #f3f4f6;
+  --border-radius: 14px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  height: 44px;
+}
+
+ion-list {
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --background: transparent;
+  --border-color: transparent;
+  height: 60px;
+}
+
+.country-code-left {
+  width: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.country-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.country-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.country-dial {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.selected {
+  --background: #fde8ec !important;
+  border-left: 4px solid #9B0C23;
+}
+
+.selected-icon {
+  color: #9B0C23;
+  font-size: 20px;
+}
+
+.country-flag {
+  width: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-item {
+  --padding-start: 18px;
+  --inner-padding-end: 18px;
+  --background: transparent;
+  --border-color: transparent;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.selected {
+  --background: #fde8ec !important;
+  border-left: 4px solid #9B0C23;
+}
+
+.selected-icon {
+  color: #9B0C23;
+  font-size: 20px;
+}

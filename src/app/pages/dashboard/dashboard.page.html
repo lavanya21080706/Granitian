@@ -8,7 +8,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card button class="feature-card">
+    <ion-card button class="feature-card" (click)="openInventory()">
       <ion-card-content>
         <ion-icon name="cube-outline"></ion-icon>
         <h2>Inventory</h2>
@@ -30,8 +30,13 @@
     </ion-card>
   </div>
 
-  <app-bottom-tabs [tabs]="dashboardTabs" activeRoute="/dashboard">
-  </app-bottom-tabs>
+  <!-- <app-bottom-tabs [tabs]="dashboardTabs" activeRoute="/dashboard">
+  </app-bottom-tabs> -->
+  <app-bottom-tabs
+  [tabs]="dashboardTabs"
+  activeRoute="/dashboard"
+  [showDivider]="false">
+</app-bottom-tabs>
 
 </ion-content>
 

@@ -37,9 +37,7 @@
             ],
             "styles": [
               "src/global.scss",
-              "src/theme/variables.scss",
-              "node_modules/intl-tel-input/build/css/intlTelInput.css"
-
+              "src/theme/variables.scss"
             ],
             "scripts": [],
             "browser": "src/main.ts"
@@ -119,8 +117,7 @@
             ],
             "styles": [
               "src/global.scss",
-              "src/theme/variables.scss",
-              "node_modules/intl-tel-input/build/css/intlTelInput.css"
+              "src/theme/variables.scss"
             ],
             "scripts": []
           },

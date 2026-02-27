@@ -67,7 +67,7 @@ export class UserSearchPage implements OnInit {
         {
           user_id: 3,
           first_name: 'Raj',
-          last_name: 'Kyla',
+          last_name: 'Kumar',
           user_name: 'T0012',
           user_type_id: 5,
           requestStatus: 'ACCEPTED'

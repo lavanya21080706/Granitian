@@ -1,0 +1,216 @@
+.inventory-content {
+    --background: #f4f6f9;
+    padding: 20px 16px 100px;
+}
+
+/* ===== HEADER ===== */
+.page-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 18px;
+}
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 26px;
+}
+
+.filter-bar ion-select,
+.filter-bar ion-datetime-button {
+    flex: 1;
+    --background: #ffffff;
+    --border-radius: 14px;
+    --padding-start: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== LOT CARD ===== */
+.lot-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.05);
+    transition: all 0.2s ease;
+}
+
+.lot-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(17, 24, 39, 0.08);
+}
+
+/* ===== CARD TOP ===== */
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-top h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.material {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.status-badge {
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Status Colors */
+.status-badge.saved {
+    background: #eef2f7;
+    color: #475569;
+}
+
+.status-badge.shared {
+    background: #e0ecff;
+    color: #2563eb;
+}
+
+.status-badge.sold {
+    background: #d1fae5;
+    color: #15803d;
+}
+
+/* ===== CARD FOOTER ===== */
+.card-bottom {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+
+
+.enterprise-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-section {
+    background: #ffffff;
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+ion-searchbar,
+ion-select,
+ion-datetime-button {
+    --background: #f9fafb;
+    --border-radius: 6px;
+    --box-shadow: none;
+    --border-color: #d1d5db;
+    font-size: 13px;
+}
+
+.enterprise-card {
+    background: #ffffff;
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lot-number {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.material {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.card-body {
+    display: flex;
+    gap: 32px;
+    margin-top: 12px;
+}
+
+.meta label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 2px;
+}
+
+.meta span {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.status-badge.saved {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.status-badge.shared {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.status-badge.sold {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.filter-bar ion-select,
+.filter-bar ion-datetime-button {
+    box-shadow: none;
+    border: none;
+}
+
+.filter-bar ion-select,
+.filter-bar ion-datetime-button {
+    padding: 0%;
+}
+
+.filter-bar {
+    margin: 0%;
+    padding: 0%;
+}
+
+ion-select {
+    padding: 0%;
+}

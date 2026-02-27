@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar class="modal-toolbar">
+    <ion-title>Share History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+
+  <!-- Lot Info -->
+  <div class="share-card">
+    <h3>LOT-{{ measurement?.measurement_id }}</h3>
+    <p>{{ measurement?.granite_color }}</p>
+  </div>
+
+  <!-- Search -->
+  <div class="search-box">
+    <ion-icon name="search-outline"></ion-icon>
+    <ion-input
+      placeholder="Search by username or ID"
+      [(ngModel)]="searchQuery">
+    </ion-input>
+  </div>
+
+  <!-- Results -->
+  <div class="user-list" *ngIf="filteredUsers().length">
+    <div
+      class="user-item"
+      *ngFor="let user of filteredUsers()"
+      [class.selected]="selectedUser?.id === user.id"
+      (click)="selectUser(user)"
+    >
+      <div class="avatar">
+        {{ user.name.charAt(0) }}
+      </div>
+
+      <div class="user-info">
+        <h4>{{ user.name }}</h4>
+        <span>@{{ user.username }}</span>
+      </div>
+
+      <ion-icon
+        name="checkmark-circle"
+        *ngIf="selectedUser?.id === user.id"
+        color="primary">
+      </ion-icon>
+    </div>
+  </div>
+
+  <!-- Warning -->
+  <div class="warning-box" *ngIf="selectedUser">
+    <ion-icon name="lock-closed-outline"></ion-icon>
+    <span>This lot will become read-only after sharing.</span>
+  </div>
+
+  <!-- Share Button -->
+  <ion-button
+    expand="block"
+    class="share-btn"
+    [disabled]="!selectedUser"
+    (click)="share()"
+  >
+    Share
+  </ion-button>
+
+</ion-content>

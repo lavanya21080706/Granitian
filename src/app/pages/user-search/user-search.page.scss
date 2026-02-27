@@ -1,4 +1,3 @@
-/* src/app/pages/user-search/user-search.page.scss */
 .search-container {
   margin-bottom: 24px;
 
@@ -12,7 +11,8 @@
     min-height: 56px;
 
     &:focus-within {
-      border-color: var(--ion-color-primary);
+      // border-color: var(--ion-color-primary);
+      border-color:#991b1b;
       background: white;
       box-shadow: 0 0 0 3px rgba(var(--ion-color-primary-rgb), 0.1);
     }
@@ -40,54 +40,21 @@
 
 .user-list {
   background: transparent;
-  margin-top: 8px;
-
-  .user-item {
-    --padding-start: 0;
-    --inner-padding-end: 0;
-    margin-bottom: 8px;
-    border-radius: 12px;
-    --background: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    
-
-    h2 {
-      font-size: 16px;
-      font-weight: 600;
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-
-    .username {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 4px;
-    }
-
-    .user-type-badge {
-      margin-top: 4px;
-    }
-  }
 }
 
 .user-avatar {
   width: 48px;
-  // padding-left:5px;
   height: 48px;
 }
 
 .avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  font-size: 16px;
   font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
 }
+
 
 .initial-state,
 .no-results {
@@ -118,7 +85,7 @@
   }
 }
 
-/* Friend Requests Styles */
+
 .custom-segment {
   padding: 12px 16px;
   background: white;
@@ -234,68 +201,15 @@ ion-input {
   box-shadow: none !important;
 }
 
-.user-item {
-  --border-radius: 16px;
-  margin-bottom: 12px;
-  --padding-start: 12px;
-  --inner-padding-end: 12px;
-}
-
 .action-area {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.add-btn {
-  --background: linear-gradient(135deg, #3b82f6, #2563eb);
-  --border-radius: 20px;
-  --padding-start: 14px;
-  --padding-end: 14px;
-  --box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  text-transform: none;
-  transition: all 0.2s ease;
-}
-
-/* Press Effect */
 .add-btn:active {
   transform: scale(0.95);
   --box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-}
-
-
-
-/* Base style for all buttons */
-// .action-btn {
-//   border-radius: 20px;
-//   padding: 6px 14px;
-//   font-weight: 600;
-//   letter-spacing: 0.3px;
-//   text-transform: none;
-//   font-size: 13px;
-//   display: flex;
-//   align-items: center;
-//   gap: 6px;
-//   transition: all 0.2s ease;
-// }
-.add-btn {
-  --background: linear-gradient(135deg, #3b82f6, #2563eb);
-  --box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-  color: white;
-}
-
-.cancel-btn {
-  --background: linear-gradient(135deg, #ef4444, #dc2626);
-  --box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
-  color: white;
-}
-
-.connected-badge {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.35);
-  color: white;
 }
 
 
@@ -307,26 +221,209 @@ ion-input {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;   /* ensures vertical alignment */
+  min-height: 40px;  
+}
+
+.action-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.cancel-btn {
+  --background: #fef2f2;
+  --color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.connected-badge {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+.add-btn {
+  --border-radius: 8px;
+  --box-shadow: none;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+.add-btn{
+  --background-color: #2563EB;
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
+.page-header {
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+.custom-input {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 48px;
+  transition: all 0.2s ease;
+
+  &:focus-within {
+    border-color: #d1d5db;
+    background: #ffffff;
+  }
+
+  .input-icon {
+    font-size: 18px;
+    color: #9ca3af;
+    margin-right: 8px;
+  }
+
+  ion-input {
+    font-size: 15px;
+  }
+}
+
+.role-badge {
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 11px;
+  padding: 2px 6px;
 }
 
 .action-area ion-button {
-  height: 36px;
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --border-radius: 50px;
+  --background: transparent;
+  --color: #374151;
+  --border-radius: 8px;
+  --box-shadow: none;
+  border: 1px solid #e5e7eb;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 12px;
+}
+
+.cancel-btn {
+  --color: #6b7280;
+}
+
+.connected-badge {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 12px;
+  height: 32px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.user-item h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.username {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+ion-content {
+  --background: #f3f4f6;
+}
+.results-count {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.user-item {
+  --background: #ffffff;
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.added-badge {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
   display: flex;
   align-items: center;
 }
 
 .connected-badge {
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 50px;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.avatar-minimal {
+  width: 40px;
+  height: 40px;
+  border:1px solid #991b1b;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
   font-weight: 600;
+  border-radius:50%;
+  margin-right:10px;
+}
+.user-item h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.username {
   font-size: 13px;
-  gap:2px;
+  color: #6b7280;
 }

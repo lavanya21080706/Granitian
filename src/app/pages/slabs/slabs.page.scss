@@ -573,3 +573,49 @@ ion-item.stacked-field ion-input {
 .expand-icon.rotate {
     transform: rotate(180deg);
 }
+
+.table-grid {
+    padding: 0 !important;
+    margin:10px;
+}
+
+.table-row {
+    padding: 6px 0;   /* reduced from 8 */
+}
+
+.raw-info-box {
+  background: #f8fafc;
+  border-left: 3px solid var(--ion-color-danger);
+  border-radius: 8px;
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* each side */
+.raw-inline {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.raw-inline span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.raw-inline strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* middle divider */
+.divider {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+}

@@ -89,11 +89,15 @@
           <ion-label>Mobile Number</ion-label>
 
           <div class="custom-input">
-            <ion-icon name="call-outline" class="input-icon"></ion-icon>
+            <app-phone-input label="Mobile Number" (phoneChange)="loginData.mobile = $event"
+              (validityChange)="isMobileValid = $event">
+            </app-phone-input>
+
+            <!-- <ion-icon name="call-outline" class="input-icon"></ion-icon>
             <span class="country-code">+91</span>
             <ion-input type="tel" inputmode="numeric" maxlength="10" placeholder="Enter phone number"
               [(ngModel)]="formData.mobile" (ionInput)="onMobileInput($event)" (ionBlur)="onMobileBlur()">
-            </ion-input>
+            </ion-input> -->
           </div>
 
           <div class="error-message" *ngIf="errors.mobile">
@@ -176,12 +180,14 @@
             <h2 class="title gradient-text">Sign In with OTP</h2>
             <div class="input-wrapper required-field">
               <ion-label>Mobile Number</ion-label>
-
               <div class="custom-input">
-                <ion-icon name="call-outline" class="input-icon"></ion-icon>
+                <app-phone-input label="Mobile Number" (phoneChange)="loginData.mobile = $event"
+                  (validityChange)="isMobileValid = $event">
+                </app-phone-input>
+                <!-- <ion-icon name="call-outline" class="input-icon"></ion-icon>
                 <span class="country-code">+91</span>
 
-                <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"></ion-input>
+                <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"></ion-input> -->
               </div>
               <div class="error-message" *ngIf="errors.mobile">
                 <ion-icon name="close-circle-outline" class="error-icon"></ion-icon>
@@ -261,10 +267,14 @@
             <ion-label>Mobile Number</ion-label>
 
             <div class="custom-input">
-              <ion-icon name="call-outline" class="input-icon"></ion-icon>
+              <app-phone-input label="Mobile Number" (phoneChange)="loginData.mobile = $event"
+                (validityChange)="isMobileValid = $event">
+              </app-phone-input>
+
+              <!-- <ion-icon name="call-outline" class="input-icon"></ion-icon>
               <span class="country-code">+91</span>
               <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="loginData.mobile"
-                (ionInput)="onLoginMobileInput($event)"></ion-input>
+                (ionInput)="onLoginMobileInput($event)"></ion-input> -->
 
             </div>
             <div class="error-message" *ngIf="loginErrors.mobile">

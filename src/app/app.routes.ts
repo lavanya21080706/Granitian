@@ -106,5 +106,17 @@ export const routes: Routes = [
   {
     path: 'friend-requests',
     loadComponent: () => import('./pages/friend-requests/friend-requests.page').then( m => m.FriendRequestsPage)
-  }
+  },
+  {
+    path: 'inventory',
+    loadComponent: () => import('./pages/inventory/inventory.page').then( m => m.InventoryPage)
+  },
+  // {
+  //   path: 'phone-input',
+  //   loadComponent: () => import('./pages/phone-input/phone-input.page').then( m => m.PhoneInputPage)
+  // },
+  // {
+  //   path: 'share-history-modal',
+  //   loadComponent: () => import('./pages/share-history-modal/share-history-modal.page').then( m => m.ShareHistoryModalComponent)
+  // }
 ];

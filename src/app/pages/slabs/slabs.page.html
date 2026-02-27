@@ -14,7 +14,6 @@
           </ion-label>
           <ion-icon name="create-outline" slot="end" class="edit-icon" (click)="editLot()">
 
-            <!-- <ion-icon *ngIf="!isViewMode" name="create-outline" slot="end" class="edit-icon" (click)="editLot()"> -->
           </ion-icon>
         </ion-item>
 
@@ -151,7 +150,7 @@
   <ion-grid class="totals-grid compact">
     <ion-row>
       <!-- Slab Count -->
-      <ion-col size="4">
+      <ion-col size="3">
         <div class="total-pill highlight">
           <span>Slabs</span>
           <strong>{{ slabs.length }}</strong>
@@ -159,7 +158,7 @@
       </ion-col>
 
       <!-- Total Original -->
-      <ion-col size="4">
+      <ion-col size="3">
         <div class="total-pill highlight">
           <span>Org SFT</span>
           <strong>{{ totals.original | number:'1.2-2' }}</strong>
@@ -167,13 +166,21 @@
       </ion-col>
 
       <!-- Total Net -->
-      <ion-col size="4">
+      <ion-col size="3">
         <div class="total-pill highlight">
           <span>Net SFT</span>
           <strong>{{ totals.net | number:'1.2-2' }}</strong>
         </div>
       </ion-col>
+      <ion-col size="3">
+        <div class="total-pill highlight">
+          <span>(Org SFT - Net SFT)</span>
+          <strong>{{ differenceSft | number:'1.2-2' }}</strong>
+        </div>
+      </ion-col>
     </ion-row>
+
+
   </ion-grid>
 
   <div class="slab-list card" *ngIf="slabs.length">
@@ -182,23 +189,27 @@
     </ion-label>
     <ion-grid class="table-grid header">
       <ion-row>
+        <ion-col size="1"></ion-col>
         <ion-col size="2">LAA</ion-col>
         <ion-col size="2">WAA</ion-col>
         <ion-col size="2">Org SFT</ion-col>
         <ion-col size="2">Net SFT</ion-col>
-        <ion-col size="4">Actions</ion-col>
+        <ion-col size="3">Actions</ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-grid class="table-grid row" *ngFor="let slab of slabs; let i = index">
+    <ion-grid class="table-grid" *ngFor="let slab of slabs; let i = index">
       <!-- MAIN ROW -->
       <ion-row class="table-row">
+        <ion-col size="1" class="serial">
+          {{ i + 1 }}
+        </ion-col>
         <ion-col size="2">{{ slab.lengthAfter }}</ion-col>
         <ion-col size="2">{{ slab.widthAfter }}</ion-col>
         <ion-col size="2">{{ slab.originalSft | number:'1.2-2' }}</ion-col>
         <ion-col size="2">{{ slab.netSft | number:'1.2-2' }}</ion-col>
 
-        <ion-col size="4" class="actions">
+        <ion-col size="3" class="actions">
 
           <ion-icon name="create-outline" (click)="editSlab(i)"></ion-icon>
           <ion-icon name="trash-outline" (click)="deleteSlab(i)"></ion-icon>
@@ -213,6 +224,19 @@
       <ion-row class="raw-expand-row" [class.expanded]="slab.showRawInfo">
         <ion-col size="12">
           <div class="raw-info-box">
+            <div class="raw-inline">
+              <span>Raw Length: </span>
+              <strong>{{ slab.rawLength }} in</strong>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="raw-inline">
+              <span>Raw Width: </span>
+              <strong>{{ slab.rawWidth }} in</strong>
+            </div>
+          </div>
+          <!-- <div class="raw-info-box">
             <div class="raw-item">
               <span>Raw Length</span>
               <strong>{{ slab.rawLength }} in</strong>
@@ -221,7 +245,7 @@
               <span>Raw Width</span>
               <strong>{{ slab.rawWidth }} in</strong>
             </div>
-          </div>
+          </div> -->
         </ion-col>
       </ion-row>
     </ion-grid>

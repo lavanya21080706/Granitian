@@ -16,7 +16,7 @@
     box-shadow: none;
   }
 
-  ion-input {
+  ion-input, ion-select {
     --background: transparent;
     --padding-start: 0;
     --padding-end: 0;
@@ -285,3 +285,94 @@ h2 {
 ion-content {
   --padding-bottom: 200px;
 }
+
+.stacked-field ion-select {
+  width: 100%;
+
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 0.95rem;
+}
+
+/* Polish Select wrapper */
+.polish-select ion-select {
+  width: 100%;
+
+  // --padding-start: 14px;
+  // --padding-end: 14px;
+  // --padding-top: 12px;
+  // --padding-bottom: 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 0.95rem;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover effect (desktop) */
+.polish-select ion-select:hover {
+  border-color: #94a3b8;
+}
+
+/* Focus effect */
+.polish-select ion-select.select-expanded {
+  border-color: #9B0C23;
+  box-shadow: 0 0 0 2px rgba(155, 12, 35, 0.08);
+}
+
+/* Make select look exactly like ion-input */
+.polish-select {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.polish-select ion-select {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  height: 44px; /* Match input height */
+
+  --padding-start: 14px;
+  --padding-end: 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+/* Fix internal select text alignment */
+.polish-select ion-select::part(text) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Fix placeholder alignment */
+.polish-select ion-select::part(placeholder) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+ color: #1c2026; 
+}
+
+ion-select{
+  padding-left: 0%;
+}
+
+
+
+
+

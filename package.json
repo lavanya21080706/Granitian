@@ -30,9 +30,9 @@
     "@capacitor/status-bar": "7.0.3",
     "@ionic/angular": "^8.0.0",
     "@ionic/storage-angular": "^4.0.0",
-    "google-libphonenumber": "^3.2.44",
-    "intl-tel-input": "^26.3.1",
+    "i18n-iso-countries": "^7.14.0",
     "ionicons": "^7.0.0",
+    "libphonenumber-js": "^1.12.37",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

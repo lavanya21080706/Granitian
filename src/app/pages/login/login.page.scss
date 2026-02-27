@@ -79,7 +79,6 @@ ion-input {
 
 .signup-btn,
 .otp-btn {
-    // --background: #23344c;
     --background: #9B0C23;
     --border-radius: 30px;
     height: 48px;
@@ -219,4 +218,8 @@ input{
      border: none !important;
     outline: none !important;
     z-index:10
+}
+
+ion-select{
+    padding-left: 0%;
 }

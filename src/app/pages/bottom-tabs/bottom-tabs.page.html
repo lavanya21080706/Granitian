@@ -1,8 +1,10 @@
 <ion-footer>
   <div class="bottom-tab-bar">
 
-    <div class="tab-item" *ngFor="let tab of leftTabs" [class.active]="tab.route === activeRoute"
-      (click)="navigate(tab)">
+    <!-- <div class="tab-item" *ngFor="let tab of leftTabs" [class.active]="tab.route === activeRoute"
+      (click)="navigate(tab)"> -->
+    <div class="tab-item" *ngFor="let tab of leftTabs; let i = index" [class.active]="tab.route === activeRoute"
+      [class.no-divider]="!showDivider && i === 0" (click)="navigate(tab)">
       <div class="icon-wrapper">
         <ion-icon *ngIf="tab.showBack" name="arrow-back-outline" class="home-arrow"></ion-icon>
         <ion-icon [name]="tab.icon"></ion-icon>

@@ -1,0 +1,71 @@
+<div class="input-wrapper required-field">
+
+
+  <div class="custom-input phone-field">
+
+    <!-- Phone Icon -->
+    <ion-icon name="call-outline" class="input-icon"></ion-icon>
+
+    <!-- Country Selector -->
+    <div class="country-section" (click)="showModal = true">
+      <span class="flag">{{ selectedCountry.flag }}</span>
+      <span class="dial-code">{{ selectedCountry.dialCode }}</span>
+      <ion-icon name="chevron-down-outline" class="chevron"></ion-icon>
+    </div>
+
+    <!-- Phone Input -->
+    <ion-input type="tel" placeholder="Enter phone number" [(ngModel)]="phoneNumber" (ionInput)="onPhoneInput($event)">
+    </ion-input>
+
+  </div>
+
+  <!-- COUNTRY MODAL -->
+  <ion-modal [isOpen]="showModal" (didDismiss)="showModal = false" cssClass="country-popup">
+
+    <ng-template>
+
+      <ion-content class="popup-content">
+
+        <div class="popup-header">
+          Select Country
+        </div>
+
+        <div class="search-box">
+          <ion-input placeholder="Search country..." [(ngModel)]="searchText">
+          </ion-input>
+        </div>
+
+        <ion-list>
+          <ion-item *ngFor="let country of filteredCountries; trackBy: trackByCountry" (click)="selectCountry(country)"
+            [class.selected]="country.code === selectedCountry.code">
+
+            <!-- <div class="country-code-left">
+            {{ country.code }}
+          </div> -->
+
+            <div class="country-flag">
+              {{ country.flag }}
+            </div>
+
+
+            <div class="country-info">
+              <div class="country-name">{{ country.name }}</div>
+              <div class="country-dial">{{ country.dialCode }}</div>
+            </div>
+
+            <ion-icon *ngIf="country.code === selectedCountry.code" name="checkmark-circle" class="selected-icon">
+            </ion-icon>
+
+          </ion-item>
+        </ion-list>
+
+      </ion-content>
+
+    </ng-template>
+
+  </ion-modal>
+
+
+
+
+</div>

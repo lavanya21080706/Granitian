@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
+import { PhoneInputComponent } from 'src/app/shared/phone-input/phone-input.component';
 
 
 import {
@@ -41,6 +42,8 @@ type AuthFlow = 'LOGIN_OTP' | 'FORGOT_PASSWORD';
     IonSelectOption,
     IonInputPasswordToggle,
     HttpClientModule,
+    PhoneInputComponent
+
   ]
 })
 export class LoginPage implements OnInit {
@@ -50,6 +53,8 @@ export class LoginPage implements OnInit {
   signupMode = false;
   authFlow: AuthFlow = 'LOGIN_OTP';
   openResetPasswordFields: boolean = false;
+  isMobileValid: boolean = false;
+
 
 
   enteredOtp: string = '';
@@ -310,13 +315,13 @@ export class LoginPage implements OnInit {
     }
   }
 
-  onMobileBlur() {
-    if (!this.formData.mobile) {
-      this.errors.mobile = 'Please enter your mobile number';
-    } else if (!this.validateMobile(this.formData.mobile)) {
-      this.errors.mobile = 'Please enter a valid 10-digit mobile number';
-    }
-  }
+  // onMobileBlur() {
+  //   if (!this.formData.mobile) {
+  //     this.errors.mobile = 'Please enter your mobile number';
+  //   } else if (!this.validateMobile(this.formData.mobile)) {
+  //     this.errors.mobile = 'Please enter a valid 10-digit mobile number';
+  //   }
+  // }
 
   onLoginMobileInput(event: any) {
     const value = event.target.value || '';
@@ -348,14 +353,15 @@ export class LoginPage implements OnInit {
     let hasError = false;
 
     // Validate mobile
-    if (!this.loginData.mobile.trim()) {
-      this.loginErrors.mobile = 'Please enter your mobile number';
+    // if (!this.loginData.mobile.trim()) {
+    //   this.loginErrors.mobile = 'Please enter your mobile number';
 
-      hasError = true;
-    } else if (!this.validateMobile(this.loginData.mobile)) {
-      this.loginErrors.mobile = 'Please enter a valid 10-digit mobile number';
-      hasError = true;
-    }
+    //   hasError = true;
+    // } else if (!this.validateMobile(this.loginData.mobile)) {
+    //   // this.loginErrors.mobile = 'Please enter a valid 10-digit mobile number';
+    //   this.loginErrors.mobile = 'Please';
+    //   hasError = true;
+    // }
 
 
     if (!this.loginData.password.trim()) {
@@ -428,9 +434,6 @@ export class LoginPage implements OnInit {
       });
     }
   }
-
-
-
 
   getOtpValue(): string {
     return this.otpInputs

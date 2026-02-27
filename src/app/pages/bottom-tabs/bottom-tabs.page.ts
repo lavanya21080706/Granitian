@@ -17,6 +17,7 @@ export class BottomTabsPage implements OnInit {
   @Input() tabs: any[] = [];
   @Input() activeRoute: string = '';
   @Input() showAddButton: boolean = false;
+  @Input() showDivider: boolean = true;
 
   @Output() addAction = new EventEmitter<void>();
 

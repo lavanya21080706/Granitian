@@ -1,0 +1,103 @@
+<ion-content class="inventory-content">
+  <div class="page-header">
+    <h2>Inventory</h2>
+  </div>
+
+  <div class="filter-bar">
+    <ng-container *ngIf="currentRole === UserRole.FACTORY_OWNER">
+
+      <ion-select placeholder="All Factories" [(ngModel)]="selectedFactory" (ionChange)="onFactoryChange()">
+
+        <ion-select-option *ngFor="let f of factories" [value]="f.factoryId">
+          {{ f.factoryName }}
+        </ion-select-option>
+
+      </ion-select>
+
+      <ion-select placeholder="All Users" [(ngModel)]="selectedUser" (ionChange)="applyFilters()">
+
+        <ion-select-option *ngFor="let u of users" [value]="u.userId">
+          {{ u.userName }}
+        </ion-select-option>
+
+      </ion-select>
+
+      <ion-select placeholder="Material" [(ngModel)]="selectedMaterial" (ionChange)="applyFilters()">
+
+        <ion-select-option *ngFor="let lot of lots" [value]="lot.material">
+          {{ lot.material }}
+        </ion-select-option>
+
+      </ion-select>
+
+      <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
+        <ion-select-option value="Saved">Saved</ion-select-option>
+        <ion-select-option value="Shared">Shared</ion-select-option>
+        <ion-select-option value="Sold">Sold</ion-select-option>
+      </ion-select>
+
+    </ng-container>
+
+    <ng-container *ngIf="currentRole === UserRole.FACTORY_OWNER">
+
+      <ion-select placeholder="User" [(ngModel)]="selectedUser" (ionChange)="applyFilters()">
+        <ion-select-option *ngFor="let u of users" [value]="u.userId">
+          {{ u.userName }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
+        <ion-select-option value="Saved">Saved</ion-select-option>
+        <ion-select-option value="Shared">Shared</ion-select-option>
+        <ion-select-option value="Sold">Sold</ion-select-option>
+      </ion-select>
+
+    </ng-container> -->
+
+
+    <!-- 🔹 SUPERVISOR -->
+    <ng-container *ngIf="currentRole === UserRole.SUPERVISOR">
+
+      <ion-select placeholder="Factory" [(ngModel)]="selectedFactory" (ionChange)="applyFilters()">
+        <ion-select-option *ngFor="let f of factories" [value]="f.factoryId">
+          {{ f.factoryName }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select placeholder="User" [(ngModel)]="selectedUser" (ionChange)="applyFilters()">
+        <ion-select-option *ngFor="let u of users" [value]="u.userId">
+          {{ u.userName }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
+        <ion-select-option value="Saved">Saved</ion-select-option>
+        <ion-select-option value="Shared">Shared</ion-select-option>
+        <ion-select-option value="Sold">Sold</ion-select-option>
+      </ion-select>
+
+    </ng-container>
+
+    <!-- Common Date Filter -->
+    <ion-datetime-button datetime="inventoryDate"></ion-datetime-button>
+
+    <ion-modal #dateModal keepContentsMounted="true">
+      <ng-template>
+        <ion-datetime id="inventoryDate" presentation="date" [(ngModel)]="selectedDate"
+          (ionChange)="onDateChange(dateModal)">
+        </ion-datetime>
+      </ng-template>
+    </ion-modal>
+
+  </div>
+  <!-- LOT CARDS -->
+  <div *ngFor="let lot of filteredLots" class="lot-card">
+    <div class="card-top">
+      <div>
+        <h3>{{ lot.lotNumber }}</h3>
+        <p class="material"> {{ lot.material }} | {{ lot.size }} </p>
+      </div> <span class="status-badge" [ngClass]="lot.status.toLowerCase()"> {{ lot.status }} </span>
+    </div>
+    <div class="card-bottom"> <span>{{ lot.factoryName }}</span> <span>By {{ lot.userName }}</span> </div>
+  </div>
+</ion-content>

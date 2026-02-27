@@ -21,7 +21,7 @@
   font-size: 11px;
   color: #6b7280;
   min-width: 60px;
-   transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .tab-item ion-icon {
@@ -31,24 +31,24 @@
 }
 
 .tab-item.active {
-  color: #111827; /* darker text */
+  color: #111827;
 }
+
 .tab-item span {
   transition: all 0.2s ease;
 }
 
 .tab-item.active ion-icon {
-  color:  #1f2328;
+  color: #1f2328;
   transform: scale(1.15);
 }
 
 .tab-item.active span {
-  font-weight: 700; /* BOLD LABEL */
+  font-weight: 700;
   font-size: 12px;
 }
 
 
-/* CENTER FLOATING BUTTON */
 .tab-add {
   position: absolute;
   left: 50%;
@@ -81,23 +81,28 @@
 
 .home-arrow {
   font-size: 16px;
-  margin-right: -2px; /* pulls arrow closer to home */
+  margin-right: -2px;
 }
 
 
-.tab-item:first-child {
+// .tab-item:first-child {
+//   border-right: 1px solid #d1d5db;
+//   padding-right: 18px;
+//   margin-right: 8px;
+// }
+
+.tab-item:first-child:not(.no-divider) {
   border-right: 1px solid #d1d5db;
   padding-right: 18px;
   margin-right: 8px;
 }
+
 .tab-item:first-child::after {
   content: "";
   position: absolute;
   right: 0;
-  top: 0;        /* start at top */
-  bottom: 0;     /* stretch to bottom */
+  top: 0;
+  bottom: 0;
   width: 2.5px;
-  background-color: #d1d5db; /* light grey */
+  background-color: #d1d5db;
 }
-
-

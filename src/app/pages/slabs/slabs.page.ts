@@ -33,38 +33,44 @@ export class SlabsPage {
     private service: MeasurementService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    const nav = this.router.getCurrentNavigation();
+    if (nav?.extras?.state) {
+      this.isViewMode = nav.extras.state['isViewMode'];
+    }
+
+  }
 
 
   isLotLocked = false;
   isViewMode = false;
 
-ionViewWillEnter() {
-  this.route.paramMap.subscribe(params => {
-    const routeId = params.get('id');
-    this.route.queryParamMap.subscribe(qp => {
-      const queryId = qp.get('id');
+  ionViewWillEnter() {
+    this.route.paramMap.subscribe(params => {
+      const routeId = params.get('id');
+      this.route.queryParamMap.subscribe(qp => {
+        const queryId = qp.get('id');
 
-      this.isViewMode = qp.get('view') === 'true';
-      const finalId = routeId || queryId;
+        this.isViewMode = qp.get('view') === 'true';
+        const finalId = routeId || queryId;
 
-      console.log('Route ID:', routeId);
-      console.log('Query ID:', queryId);
-      console.log('Final ID:', finalId);
+        console.log('Route ID:', routeId);
+        console.log('Query ID:', queryId);
+        console.log('Final ID:', finalId);
 
-      if (finalId) {
-        this.measurementId = +finalId;
-        this.loadLot();
-      }
+        if (finalId) {
+          this.measurementId = +finalId;
+          this.loadLot();
+        }
+      });
     });
-  });
 
-}
+  }
 
 
-ngOnInit() {
-  console.log('SlabsPage initialized');
-}
+  ngOnInit() {
+    console.log('SlabsPage initialized');
+  }
 
 
   loadSlabsFromResponse(details: any[]) {
@@ -96,7 +102,7 @@ ngOnInit() {
   }
 
   loadLot() {
-      this.slabs = [];
+    this.slabs = [];
     this.service.getMeasurementById(this.measurementId).subscribe((res: any) => {
       console.log('📥 LOT DATA:', res);
 
@@ -222,6 +228,10 @@ ngOnInit() {
     this.currentSlab.fullSft = +full.toFixed(3);
     this.currentSlab.allowanceSft = +(raw - full).toFixed(3);
   }
+
+  get differenceSft(): number {
+  return +(this.totals.original - this.totals.net).toFixed(3);
+}
 
 
   addSlab() {
