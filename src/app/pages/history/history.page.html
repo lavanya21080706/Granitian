@@ -1,99 +1,30 @@
 <app-granitian-header></app-granitian-header>
 
 <ion-content fullscreen class="ion-padding">
-
-  <!-- Segment -->
-  <ion-segment mode="md" [(ngModel)]="activeTab" class="history-segment">
-    <ion-segment-button value="all">
-      <ion-label>All</ion-label>
-    </ion-segment-button>
-
-    <ion-segment-button value="sharedByMe">
-      <ion-label>Shared By Me</ion-label>
-    </ion-segment-button>
-
-    <ion-segment-button value="sharedWithMe">
-      <ion-label>Shared With Me</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
-  <!-- History List -->
-  <div *ngFor="let item of filteredHistory()" class="history-card card">
-
-    <div class="history-header">
-      <div>
-        <h3>LOT-{{ item.measurement_id }}</h3>
-        <p class="color">{{ item.granite_color }}</p>
-      </div>
-
-      <!-- STATUS BADGE -->
-      <div>
-        <span *ngIf="item.isSharedByMe" class="status-pill shared">
-          Shared
-        </span>
-
-        <span *ngIf="item.isSharedWithMe" class="status-pill received">
-          Received
-        </span>
-
-        <span *ngIf="item.isEditable" class="status-pill editable">
-          Editable
-        </span>
-      </div>
+  <div class="page-header">
+    <div class="page-title">
+      {{ mode === 'all' ? 'History' : 'Shared Lots' }}
     </div>
 
-    <div class="history-body">
-      <div class="meta">
-        <span>Quality</span>
-        <strong>{{ item.quality_type }}</strong>
-      </div>
+    <!-- Segment -->
+    <ion-segment *ngIf="mode === 'shared'" mode="md" [(ngModel)]="activeTab" class="history-segment">
+      <ion-segment-button value="sharedByMe">
+        <ion-label>Shared</ion-label>
+      </ion-segment-button>
 
-      <div class="meta">
-        <span>Slabs</span>
-        <strong>{{ item.total_slabs }}</strong>
-      </div>
+      <ion-segment-button value="sharedWithMe">
+        <ion-label>Received</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-      <div class="meta">
-        <span>Net SFT</span>
-        <strong>{{ item.total_net_sft }}</strong>
-      </div>
-    </div>
-
-    <div class="history-footer">
-
-      <div class="share-info" *ngIf="item.isSharedByMe">
-        Shared with {{ item.sharedWithUser }}
-      </div>
-
-      <div class="share-info" *ngIf="item.isSharedWithMe">
-        Shared by {{ item.sharedByUser }}
-      </div>
-
-      <div class="actions">
-
-        <!-- Share Button -->
-        <ion-icon
-          name="share-social-outline"
-          *ngIf="item.isEditable"
-          (click)="openShareModal(item)">
-        </ion-icon>
-
-        <!-- Lock Icon -->
-        <ion-icon
-          name="lock-closed-outline"
-          *ngIf="!item.isEditable"
-          color="medium">
-        </ion-icon>
-
-        <ion-icon
-          name="chevron-forward-outline"
-          (click)="openMeasurement(item)">
-        </ion-icon>
-
-      </div>
-
-    </div>
+    <ion-searchbar placeholder="Search by LOT ID" (ionInput)="onSearch($event)" class="history-search"
+      show-clear-button="focus">
+    </ion-searchbar>
 
   </div>
+
+  <app-lot-card *ngFor="let item of filteredHistory()" [item]="item" (share)="openShareModal($event)"
+    (open)="openMeasurement($event)" [showStatus]="true" [showActions]="true">
+  </app-lot-card>
 
 </ion-content>

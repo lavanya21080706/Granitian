@@ -4,6 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
+interface tabs {
+  label: string;
+  icon: string;
+  route: string;
+  mode?: string;
+  showBack?: boolean;
+}
+
 @Component({
   selector: 'app-bottom-tabs',
   templateUrl: './bottom-tabs.page.html',
@@ -11,22 +19,28 @@ import { IonicModule } from '@ionic/angular';
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })
+
+
 export class BottomTabsPage implements OnInit {
-
-
-  @Input() tabs: any[] = [];
+  @Input() tabs: tabs[] = [];
   @Input() activeRoute: string = '';
   @Input() showAddButton: boolean = false;
   @Input() showDivider: boolean = true;
-
   @Output() addAction = new EventEmitter<void>();
 
   constructor(private router: Router) { }
 
   navigate(tab: any) {
-    if (tab.route) {
+
+    if (!tab.route) return;
+    if (tab.mode) {
+      this.router.navigate([tab.route], {
+        queryParams: { mode: tab.mode }
+      });
+    } else {
       this.router.navigate([tab.route]);
     }
+
   }
 
   get leftTabs() {
@@ -34,12 +48,13 @@ export class BottomTabsPage implements OnInit {
   }
 
   goToMeasurement() {
-    this.router.navigate(['/measurement']);
+    this.router.navigate(['/home']);
   }
 
   get rightTabs() {
     return this.tabs.slice(2);
   }
+
   ngOnInit() {
   }
 

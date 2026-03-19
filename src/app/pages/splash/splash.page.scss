@@ -1,0 +1,114 @@
+.splash-container {
+    background: #9B0C23;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+}
+
+.logo-icon {
+    width: 230px;
+    margin-bottom: 18px;
+    animation: logoReveal 1.2s ease;
+}
+
+.brand-area {
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s ease;
+}
+
+.logo {
+    width: 230px;
+    margin-bottom: 18px;
+    animation: logoReveal 1.2s ease;
+}
+
+.tagline {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: .8s;
+}
+
+.action-area {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #F8F9FB;
+    border-radius: 28px 28px 0 0;
+    padding: 36px 24px;
+    animation: slideUp .8s ease;
+}
+
+.start-btn {
+    --background: #9B0C23;
+    --border-radius: 12px;
+    height: 50px;
+    width: 80%;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.signin {
+    font-size: 14px;
+    color: #8A94A6;
+}
+
+.signin span {
+    color: #9B0C23;
+    font-weight: 600;
+}
+
+
+.splash-footer {
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+@keyframes logoReveal {
+    0% {
+        transform: scale(.7);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(80px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

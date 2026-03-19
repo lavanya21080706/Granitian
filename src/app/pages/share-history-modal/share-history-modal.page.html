@@ -11,13 +11,11 @@
 
 <ion-content class="modal-content">
 
-  <!-- Lot Info -->
   <div class="share-card">
     <h3>LOT-{{ measurement?.measurement_id }}</h3>
     <p>{{ measurement?.granite_color }}</p>
   </div>
 
-  <!-- Search -->
   <div class="search-box">
     <ion-icon name="search-outline"></ion-icon>
     <ion-input
@@ -26,7 +24,6 @@
     </ion-input>
   </div>
 
-  <!-- Results -->
   <div class="user-list" *ngIf="filteredUsers().length">
     <div
       class="user-item"
@@ -51,13 +48,11 @@
     </div>
   </div>
 
-  <!-- Warning -->
   <div class="warning-box" *ngIf="selectedUser">
     <ion-icon name="lock-closed-outline"></ion-icon>
     <span>This lot will become read-only after sharing.</span>
   </div>
 
-  <!-- Share Button -->
   <ion-button
     expand="block"
     class="share-btn"

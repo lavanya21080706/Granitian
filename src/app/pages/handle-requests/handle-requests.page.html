@@ -1,0 +1,105 @@
+<app-granitian-header title="Friend Requests" show-back-button="true"></app-granitian-header>
+
+<ion-content>
+  <ion-segment mode="md" [value]="activeSegment" (ionChange)="segmentChanged($event)" class="custom-segment">
+    <ion-segment-button value="pending">
+      <div class="segment-btn-inner">
+        <span class="segment-text">Pending</span>
+        <span class="segment-count" *ngIf="pendingRequests.length > 0">
+          {{ pendingRequests.length }}
+        </span>
+      </div>
+    </ion-segment-button>
+    <ion-segment-button value="accepted">
+      <div class="segment-btn-inner">
+        <span class="segment-text">Accepted</span>
+        <span class="segment-count" *ngIf="acceptedRequests.length > 0">
+          {{ acceptedRequests.length }}
+        </span>
+      </div>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="activeSegment === 'pending'" class="segment-content">
+    <ion-spinner name="crescent" *ngIf="isLoading.pending" class="spinner-center"></ion-spinner>
+
+    <div *ngIf="!isLoading.pending && pendingRequests.length === 0" class="empty-state">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <h3>All Clear!</h3>
+      <p>No pending friend requests</p>
+    </div>
+
+    <div class="request-list">
+      <div class="request-card" *ngFor="let request of pendingRequests ; trackBy: trackByRequest">
+
+        <div class="card-header">
+          <div class="left">
+            <div class="avatar-placeholder">
+              {{ request.requested_by_first_name?.charAt(0) || 'U' }}
+            </div>
+
+            <div class="user-info">
+              <h2>{{ request.requested_by_first_name }} {{ request.requested_by_last_name }}</h2>
+              <p class="username">
+                @{{ request.requested_by_user_name }}
+                · Trader
+              </p>
+            </div>
+          </div>
+
+          <div class="time">
+            {{ getTimeAgo(request.created_at) }}
+          </div>
+        </div>
+        <div class="action-buttons">
+
+          <ion-button fill="clear" class="accept-btn" [disabled]="request.processing" (click)="acceptRequest(request)">
+            Accept
+          </ion-button>
+          <ion-button fill="clear" class="reject-btn" [disabled]="request.processing" (click)="rejectRequest(request)">
+            Reject
+          </ion-button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="activeSegment === 'accepted'" class="segment-content">
+    <div class="accepted-card" *ngFor="let request of acceptedRequests">
+
+      <div class="card-wrapper">
+
+        <div class="left-section">
+
+          <div class="avatar">
+            {{ request.requested_by_first_name?.charAt(0) || 'U' }}
+          </div>
+
+          <div class="text-block">
+            <h2 class="name">
+              {{ request.requested_by_first_name }}
+              {{ request.requested_by_last_name }}
+            </h2>
+
+            <p class="username1">
+              @{{ request.requested_by_user_name }}
+              · {{ getUserTypeName(request.user_type_id) }}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="right-section">
+          <ion-button fill="clear" class="remove-btn" (click)="removeConnection(request)">
+            Remove
+          </ion-button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</ion-content>

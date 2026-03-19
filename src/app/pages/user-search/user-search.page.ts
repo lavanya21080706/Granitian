@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserRequestService } from 'src/app/services/request';
+import { UserRequestService } from 'src/app/core/services/request';
 import { ToastController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
+import { Subject } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-search',
@@ -24,26 +26,91 @@ export class UserSearchPage implements OnInit {
   isLoading: boolean = false;
   showResults: boolean = false;
   sentRequests: Set<number> = new Set();
+  searchSubject = new Subject<string>();
 
   constructor(
     private userRequestService: UserRequestService,
     private toastCtrl: ToastController
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
 
+    this.searchSubject
+      .pipe(
+        debounceTime(400),
+        switchMap(query => {
+
+          if (query.length < 4) {
+            this.showResults = false;
+            this.searchResults = [];
+            return [];
+          }
+
+          this.isLoading = true;
+
+          return this.mockSearch(query);
+
+        })
+      )
+      .subscribe((results: any) => {
+
+        this.searchResults = results;
+        this.showResults = true;
+        this.isLoading = false;
+
+      });
+
+  }
+
+  mockSearch(query: string) {
+
+    return new Promise<any>((resolve) => {
+
+      setTimeout(() => {
+
+        resolve([
+          {
+            user_id: 1,
+            first_name: 'John',
+            last_name: 'Doe',
+            user_name: 'M0007',
+            user_type_id: 1,
+            requestStatus: null
+          },
+          {
+            user_id: 2,
+            first_name: 'Sarah',
+            last_name: 'Arjun',
+            user_name: 'S0003',
+            user_type_id: 2,
+            requestStatus: 'PENDING',
+            requestId: 101
+          },
+          {
+            user_id: 3,
+            first_name: 'Raj',
+            last_name: 'Kumar',
+            user_name: 'T0012',
+            user_type_id: 5,
+            requestStatus: 'ACCEPTED'
+          }
+        ]);
+
+      }, 800);
+
+    });
+
+  }
   onSearchInput() {
-    if (this.searchQuery.length >= 4) {
-      this.searchUsers();
-    } else {
-      this.searchResults = [];
-      this.showResults = false;
-    }
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  trackByUser(index: number, user: any) {
+    return user.user_id;
   }
   searchUsers() {
     this.isLoading = true;
 
-    // ⏳ simulate API delay
     setTimeout(() => {
 
       this.searchResults = [
@@ -77,27 +144,8 @@ export class UserSearchPage implements OnInit {
       this.showResults = true;
       this.isLoading = false;
 
-    }, 800); // simulate network delay
+    }, 800); 
   }
-
-
-  // searchUsers() {
-  //   console.log('Searching for:', this.searchQuery);
-  //   this.isLoading = true;
-  //   this.userRequestService.searchUsers(this.searchQuery).subscribe({
-  //     next: (response: any) => {
-  //       this.searchResults = response.users || [];
-  //       this.showResults = true;
-  //       this.isLoading = false;
-  //     },
-  //     error: (error) => {
-  //       console.log('Status:', error.status);
-  //       console.log('Backend Response:', error.error);
-  //       this.isLoading = false;
-  //     }
-
-  //   });
-  // }
 
   sendRequest(userId: number) {
     this.userRequestService.sendUserRequest(userId).subscribe({
@@ -124,7 +172,7 @@ export class UserSearchPage implements OnInit {
         this.sentRequests.delete(userId);
         const user = this.searchResults.find(u => u.user_id === userId);
         if (user) {
-          user.requestStatus = null;  
+          user.requestStatus = null;
           user.requestId = null;
         }
         this.showToast('Request cancelled');
@@ -141,52 +189,18 @@ export class UserSearchPage implements OnInit {
     return name.charAt(0).toUpperCase();
   }
 
-  // ADD THESE MISSING METHODS
-  getAvatarColor(userId: number): string {
-    const colors = [
-      'linear-gradient(135deg, #667eea, #764ba2)',
-      'linear-gradient(135deg, #f093fb, #f5576c)',
-      'linear-gradient(135deg, #4facfe, #00f2fe)',
-      'linear-gradient(135deg, #43e97b, #38f9d7)',
-      'linear-gradient(135deg, #fa709a, #fee140)',
-      'linear-gradient(135deg, #30cfd0, #330867)'
-    ];
-    return colors[userId % colors.length];
-  }
-
-  getUserTypeColor(typeId: number): string {
-    const colorMap: { [key: number]: string } = {
-      0: 'medium',   // General User
-      1: 'primary',  // Marker
-      2: 'success',  // Supervisor
-      3: 'warning',  // Factory Owner
-      4: 'danger',   // Retailer
-      5: 'tertiary'  // Trader
-    };
-    return colorMap[typeId] || 'medium';
-  }
 
   getUserTypeName(typeId: number): string {
     const typeMap: { [key: number]: string } = {
-      0: 'General User',
+      0: 'Trader',
       1: 'Marker',
       2: 'Supervisor',
       3: 'Factory Owner',
       4: 'Retailer',
-      5: 'Trader'
     };
     return typeMap[typeId] || 'Unknown';
   }
 
-  getStatusColor(status: string): string {
-    const colorMap: { [key: string]: string } = {
-      'PENDING': 'warning',
-      'ACCEPTED': 'success',
-      'REJECTED': 'danger',
-      'CANCELLED': 'medium'
-    };
-    return colorMap[status] || 'medium';
-  }
 
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({

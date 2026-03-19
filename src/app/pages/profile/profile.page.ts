@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth';
+import { AuthService } from 'src/app/core/services/auth';
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -25,7 +26,7 @@ export class ProfilePage {
 loadProfile() {
   this.authService.getProfile().subscribe({
     next: (res) => {
-      console.log('👤 Profile data:', res);
+      console.log('Profile data:', res);
 
       this.user = {
         firstName: res.first_name,
@@ -57,14 +58,14 @@ toggleEdit() {
       user_photo: this.user.avatar
     };
 
-    console.log('📤 Updating profile:', payload);
+    console.log('Updating profile:', payload);
 
     this.authService.updateProfile(payload).subscribe({
       next: () => {
-        console.log('✅ Profile updated successfully');
+        console.log('Profile updated successfully');
       },
       error: (err) => {
-        console.error('❌ Profile update failed', err);
+        console.error('Profile update failed', err);
       }
     });
   }

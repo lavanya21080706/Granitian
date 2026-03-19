@@ -8,9 +8,7 @@ import {
   IonModal,
   IonList,
   IonItem,
-  IonLabel,
   IonContent,
-  IonButton
 } from '@ionic/angular/standalone';
 
 import {
@@ -43,9 +41,7 @@ interface Country {
     IonModal,
     IonList,
     IonItem,
-    IonLabel,
     IonContent,
-    IonButton
   ],
   templateUrl: './phone-input.component.html',
   styleUrls: ['./phone-input.component.scss']
@@ -71,7 +67,7 @@ export class PhoneInputComponent implements OnInit {
   const countryCodes = getCountries();
 
   this.countries = countryCodes
-    .filter(code => isoCountries.getName(code, 'en')) // remove invalid ones
+    .filter(code => isoCountries.getName(code, 'en')) 
     .map((code) => {
       const dialCode = '+' + getCountryCallingCode(code);
       const countryName = isoCountries.getName(code, 'en')!;
@@ -88,36 +84,13 @@ export class PhoneInputComponent implements OnInit {
   this.selectedCountry = defaultCountry || this.countries[0];
 }
 
-
-  // loadCountries() {
-  //   const countryCodes = getCountries();
-
-  //   this.countries = countryCodes.map((code) => {
-  //     const dialCode = '+' + getCountryCallingCode(code);
-  //     const countryName =
-  //       isoCountries.getName(code, 'en') || code;
-
-  //     return {
-  //       name: countryName,
-  //       code: code,
-  //       dialCode: dialCode,
-  //       flag: this.getFlagEmoji(code)
-  //     };
-  //   });
-
-  //   console.log('Countries loaded:', this.countries.length);
-
-  //   const defaultCountry = this.countries.find(c => c.code === 'IN');
-  //   this.selectedCountry = defaultCountry || this.countries[0];
-  // }
-
   trackByCountry(index: number, country: Country) {
   return country.code;
 }
 
 getFlagEmoji(countryCode: string): string {
   if (!countryCode || countryCode.length !== 2) {
-    return '🌍'; // fallback globe
+    return '🌍'; 
   }
 
   const code = countryCode.toUpperCase();
@@ -128,22 +101,6 @@ getFlagEmoji(countryCode: string): string {
   );
 }
 
-
-
-  // // ===============================
-  // // Convert Country Code to Flag
-  // // ===============================
-  // getFlagEmoji(countryCode: string): string {
-  //   return countryCode
-  //     .toUpperCase()
-  //     .replace(/./g, char =>
-  //       String.fromCodePoint(127397 + char.charCodeAt(0))
-  //     );
-  // }
-
-  // ===============================
-  // Filter Countries (Search)
-  // ===============================
   get filteredCountries(): Country[] {
     if (!this.searchText) return this.countries;
 
@@ -153,30 +110,18 @@ getFlagEmoji(countryCode: string): string {
     );
   }
 
-  // ===============================
-  // Select Country
-  // ===============================
   selectCountry(country: Country) {
     this.selectedCountry = country;
     this.showModal = false;
     this.validate();
   }
 
-  // ===============================
-  // Handle Input
-  // ===============================
   onPhoneInput(event: any) {
     const value = event.target.value || '';
-
-    // Allow only digits
     this.phoneNumber = value.replace(/[^0-9]/g, '');
-
     this.validate();
   }
 
-  // ===============================
-  // Validate Phone Number
-  // ===============================
   validate() {
     if (!this.phoneNumber) {
       this.validityChange.emit(false);
@@ -188,7 +133,6 @@ getFlagEmoji(countryCode: string): string {
     const phone = parsePhoneNumberFromString(fullNumber);
 
     if (phone && phone.isValid()) {
-      // Emit E.164 format
       this.phoneChange.emit(phone.format('E.164'));
       this.validityChange.emit(true);
     } else {

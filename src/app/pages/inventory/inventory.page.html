@@ -1,3 +1,4 @@
+<app-granitian-header title="Inventory" show-back-button="true"></app-granitian-header>
 <ion-content class="inventory-content">
   <div class="page-header">
     <h2>Inventory</h2>
@@ -33,7 +34,6 @@
       <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
         <ion-select-option value="Saved">Saved</ion-select-option>
         <ion-select-option value="Shared">Shared</ion-select-option>
-        <ion-select-option value="Sold">Sold</ion-select-option>
       </ion-select>
 
     </ng-container>
@@ -49,13 +49,12 @@
       <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
         <ion-select-option value="Saved">Saved</ion-select-option>
         <ion-select-option value="Shared">Shared</ion-select-option>
-        <ion-select-option value="Sold">Sold</ion-select-option>
       </ion-select>
 
-    </ng-container> -->
+    </ng-container>
 
 
-    <!-- 🔹 SUPERVISOR -->
+    <!--SUPERVISOR -->
     <ng-container *ngIf="currentRole === UserRole.SUPERVISOR">
 
       <ion-select placeholder="Factory" [(ngModel)]="selectedFactory" (ionChange)="applyFilters()">
@@ -73,7 +72,6 @@
       <ion-select placeholder="Status" [(ngModel)]="selectedStatus" (ionChange)="applyFilters()">
         <ion-select-option value="Saved">Saved</ion-select-option>
         <ion-select-option value="Shared">Shared</ion-select-option>
-        <ion-select-option value="Sold">Sold</ion-select-option>
       </ion-select>
 
     </ng-container>
@@ -91,13 +89,15 @@
 
   </div>
   <!-- LOT CARDS -->
-  <div *ngFor="let lot of filteredLots" class="lot-card">
-    <div class="card-top">
-      <div>
-        <h3>{{ lot.lotNumber }}</h3>
-        <p class="material"> {{ lot.material }} | {{ lot.size }} </p>
-      </div> <span class="status-badge" [ngClass]="lot.status.toLowerCase()"> {{ lot.status }} </span>
-    </div>
-    <div class="card-bottom"> <span>{{ lot.factoryName }}</span> <span>By {{ lot.userName }}</span> </div>
-  </div>
+  <app-lot-card *ngFor="let lot of filteredLots" [item]="{
+    measurement_id: lot.lotNumber,
+    granite_color: lot.material,
+    quality_type: lot.size,
+    total_slabs: '-',
+    total_net_sft: '-',
+    isEditable: lot.status === 'Saved',
+    isSharedByMe: lot.status === 'Shared'
+  }" (open)="openMeasurement(lot)" [showStatus]="true" [showActions]="false">
+  </app-lot-card>
+
 </ion-content>

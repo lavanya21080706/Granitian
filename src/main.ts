@@ -8,7 +8,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 import { HttpInterceptor, withInterceptors } from '@angular/common/http';
-import { AuthInterceptor } from './app/interceptor/auth.interceptor';
+import { AuthInterceptor } from './app/core/interceptor/auth.interceptor';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -37,10 +37,11 @@ import {
   shareSocialOutline,
   receiptOutline,
   arrowBackCircleOutline,
-chevronForwardOutline,
-chevronDownCircleOutline,
-searchOutline,
-menuOutline,
+  chevronForwardOutline,
+  chevronDownCircleOutline,
+  searchOutline,
+  menuOutline,
+  callSharp
 } from 'ionicons/icons';
 
 
@@ -52,6 +53,7 @@ addIcons({
   homeOutline,
   readerOutline,
   add,
+  'call-sharp': callSharp,
   'help-circle': helpCircle,
   'chatbubble-ellipses-outline': chatbubbleEllipses,
   'people-outline': people,
@@ -72,9 +74,9 @@ addIcons({
   'cube-outline': cubeOutline,
   'share-social-outline': shareSocialOutline,
   'arrow-back-circle-outline': arrowBackCircleOutline,
-'arrow-back-outline': arrowBackOutline,
-'chevron-forward-outline': chevronForwardOutline,
-'chevron-down-outline': chevronDownCircleOutline
+  'arrow-back-outline': arrowBackOutline,
+  'chevron-forward-outline': chevronForwardOutline,
+  'chevron-down-outline': chevronDownCircleOutline
   , 'search-outline': searchOutline,
   'menu-outline': menuOutline
 });

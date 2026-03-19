@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ViewChildren, QueryList, ElementRef } from '@angular/core';
-
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { PhoneInputComponent } from 'src/app/shared/phone-input/phone-input.component';
+import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
 
 
 import {
@@ -20,7 +20,7 @@ import {
   IonSelectOption,
   IonInputPasswordToggle
 } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/services/auth';
+import { AuthService } from 'src/app/core/services/auth';
 
 
 type AuthFlow = 'LOGIN_OTP' | 'FORGOT_PASSWORD';
@@ -42,7 +42,8 @@ type AuthFlow = 'LOGIN_OTP' | 'FORGOT_PASSWORD';
     IonSelectOption,
     IonInputPasswordToggle,
     HttpClientModule,
-    PhoneInputComponent
+    PhoneInputComponent,
+    GranitianHeaderPage
 
   ]
 })
@@ -95,8 +96,6 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController
   ) { }
 
-
-  // userType: string | null = null;
   userTypes: any[] = [];
   selectedUserTypeId!: number;
 
@@ -136,7 +135,6 @@ export class LoginPage implements OnInit {
   }
 
   private validateMobile(mobile: string): boolean {
-    // Assuming 10 digits for Indian mobile
     const mobileRegex = /^\d{10}$/;
     return mobileRegex.test(mobile);
   }
@@ -176,11 +174,6 @@ export class LoginPage implements OnInit {
 
     let hasError = false;
 
-    // Validate userType
-    // if (!this.userTypes) {
-    //   this.errors.userType = 'Please select a user type';
-    //   hasError = true;
-    // }
     if (!this.selectedUserTypeId) {
       this.errors.userType = 'Please select a user type';
       hasError = true;
@@ -315,14 +308,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // onMobileBlur() {
-  //   if (!this.formData.mobile) {
-  //     this.errors.mobile = 'Please enter your mobile number';
-  //   } else if (!this.validateMobile(this.formData.mobile)) {
-  //     this.errors.mobile = 'Please enter a valid 10-digit mobile number';
-  //   }
-  // }
-
   onLoginMobileInput(event: any) {
     const value = event.target.value || '';
 
@@ -351,19 +336,6 @@ export class LoginPage implements OnInit {
 
 
     let hasError = false;
-
-    // Validate mobile
-    // if (!this.loginData.mobile.trim()) {
-    //   this.loginErrors.mobile = 'Please enter your mobile number';
-
-    //   hasError = true;
-    // } else if (!this.validateMobile(this.loginData.mobile)) {
-    //   // this.loginErrors.mobile = 'Please enter a valid 10-digit mobile number';
-    //   this.loginErrors.mobile = 'Please';
-    //   hasError = true;
-    // }
-
-
     if (!this.loginData.password.trim()) {
       this.loginErrors.password = 'Please enter your password';
       hasError = true;

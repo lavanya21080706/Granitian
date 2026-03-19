@@ -4,17 +4,10 @@
     <h1>User Directory</h1>
     <p>Search and manage user connections</p>
   </div>
-  <!-- Search Bar -->
-  <div class="search-container">
-    <div class="custom-input">
-      <ion-icon name="search-outline" class="input-icon"></ion-icon>
-      <ion-input type="text" placeholder="Search by username (min 3 characters)" [(ngModel)]="searchQuery"
-        (ionInput)="onSearchInput()"></ion-input>
-      <ion-spinner *ngIf="isLoading" name="crescent" class="search-spinner"></ion-spinner>
-    </div>
-  </div>
+  <ion-searchbar placeholder="Search by USER ID" [(ngModel)]="searchQuery" (ionInput)="onSearchInput()"
+    class="history-search" show-clear-button="focus">
+  </ion-searchbar>
 
-  <!-- Search Results -->
   <div class="results-container" *ngIf="showResults">
     <div class="results-header">
       <ion-label class="results-count">{{ searchResults.length }} users found</ion-label>
@@ -26,70 +19,51 @@
       <p>Try searching with a different username</p>
     </div>
 
-    <ion-list class="user-list" *ngIf="searchResults.length > 0">
-      <ion-item *ngFor="let user of searchResults" class="user-item">
-        <div class="avatar-minimal">
-          {{ getInitials(user.first_name + ' ' + user.last_name) }}
+    <div class="request-list" *ngIf="searchResults.length > 0">
+
+      <div class="request-card" *ngFor="let user of searchResults; trackBy: trackByUser">
+
+        <div class="card-header">
+
+          <div class="left">
+
+            <div class="avatar-placeholder">
+              {{ getInitials(user.first_name + ' ' + user.last_name) }}
+            </div>
+
+            <div class="user-info">
+              <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+
+              <p class="username">
+                @{{ user.user_name }} · {{ getUserTypeName(user.user_type_id) }}
+              </p>
+            </div>
+
+          </div>
+
+          <div class="action-buttons">
+
+            <ion-button fill="clear" class="add-btn"
+              *ngIf="!sentRequests.has(user.user_id) && user.requestStatus !== 'ACCEPTED'"
+              (click)="sendRequest(user.user_id)">
+              Add
+            </ion-button>
+
+            <div class="requested-badge" *ngIf="sentRequests.has(user.user_id) && user.requestStatus !== 'ACCEPTED'">
+              Requested
+            </div>
+
+            <div class="connected-badge" *ngIf="user.requestStatus === 'ACCEPTED'">
+              Connected
+            </div>
+
+          </div>
+
         </div>
 
+      </div>
 
-        <ion-label>
-          <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-          <p class="username">@{{ user.user_name }}</p>
-
-          <ion-badge [color]="getUserTypeColor(user.user_type_id)" class="role-badge">
-            {{ getUserTypeName(user.user_type_id) }}
-          </ion-badge>
-        </ion-label>
-
-
-
-        <!-- RIGHT SIDE ACTION AREA -->
-
-        <div slot="end" class="action-area">
-
-          <!-- Add -->
-          <ion-button class="add-btn" size="small"
-            *ngIf="!sentRequests.has(user.user_id) && user.requestStatus !== 'ACCEPTED'"
-            (click)="sendRequest(user.user_id)">
-            Add
-          </ion-button>
-
-          <!-- Added -->
-          <div class="added-badge" *ngIf="sentRequests.has(user.user_id) && user.requestStatus !== 'ACCEPTED'">
-            Added
-          </div>
-
-          <!-- Connected -->
-          <div class="connected-badge" *ngIf="user.requestStatus === 'ACCEPTED'">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            Connected
-          </div>
-
-        </div>
-        <!-- <div slot="end" class="action-area">
-          <ion-button class="add-btn" size="small" *ngIf="!sentRequests.has(user.user_id) && !user.requestStatus"
-            (click)="sendRequest(user.user_id)">
-            <ion-icon name="person-add-outline" slot="start"></ion-icon>
-            Add
-          </ion-button>
-
-
-          <ion-button class="action-btn cancel-btn" size="small" *ngIf="user.requestStatus === 'PENDING'"
-            (click)="cancelRequest(user.requestId, user.user_id)">
-            <ion-icon name="close-outline" slot="start"></ion-icon>
-            Cancel
-          </ion-button>
-
-          <div class="action-btn connected-badge" *ngIf="user.requestStatus === 'ACCEPTED'">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            Connected
-          </div>
-
-        </div> -->
-
-      </ion-item>
-    </ion-list>
+    </div>
   </div>
 
   <div class="initial-state" *ngIf="!showResults">

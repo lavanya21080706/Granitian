@@ -10,7 +10,7 @@ import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,FormsModule, IonicModule, RouterModule, HttpClientModule, BottomTabsPage, GranitianHeaderPage],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule, HttpClientModule, BottomTabsPage, GranitianHeaderPage],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -24,69 +24,82 @@ export class HomePage {
   homeTabs = [
     { label: 'Home', icon: 'home-outline', route: '/dashboard', showBack: true },
     { label: 'Measurement', icon: 'analytics-outline', route: '/assistant' },
-    { label: 'History', icon: 'reader-outline', route: '/history' },
-    { label: 'Shared', icon: 'share-social-outline', route: '/profile' }
+    { label: 'History', icon: 'reader-outline', route: '/history', mode: 'all' },
+    { label: 'Shared', icon: 'share-social-outline', route: '/history', mode: 'shared' }
   ];
 
 
   constructor(private router: Router, private http: HttpClient) { }
   ionViewWillEnter() {
-    this.loadRecentData();
+    // this.loadRecentData();
   }
 
 
   ngOnInit() {
-    this.loadRecentData();
+    // this.loadRecentData();
   }
 
+  openTab(tab:any){
 
-  loadRecentData() {
-    this.http.get<any>('https://x2f6r9dz0i.execute-api.ap-south-1.amazonaws.com/prd/measurements')
-      .subscribe({
-        next: (res) => {
-          console.log('📦 Measurements API response:', res);
+  if(tab.route === '/history'){
 
-          const data = res.measurements;
+    this.router.navigate([tab.route],{
+      queryParams:{ mode: tab.mode }
+    });
 
-          if (!data || data.length === 0) {
-            this.hasAnyMarkings = false;
-            return;
-          }
-           if (!data.length) {
-          this.hasAnyMarkings = false;
-          this.totalHistory = 0;
-          return;
-        }
-        this.totalHistory = data.length;
-
-          const sorted = data.sort((a: any, b: any) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          );
-
-          this.recentData = sorted.slice(0, 5).map((item: any) => ({
-            id: item.measurement_id,
-            name: `${item.customer_name} - ${item.granite_color}`,
-
-            date: new Date(item.created_at).toLocaleDateString()
-          }));
-
-          this.hasAnyMarkings = true;
-        },
-        error: (err) => {
-          console.error('Failed to load measurements', err);
-          this.hasAnyMarkings = false;
-          this.totalHistory = 0;
-        }
-      });
+  }else{
+    this.router.navigate([tab.route]);
   }
+
+}
+
+  // loadRecentData() {
+  //   this.http.get<any>('https://x2f6r9dz0i.execute-api.ap-south-1.amazonaws.com/prd/measurements')
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log('Measurements API response:', res);
+
+  //         const data = res.measurements;
+
+  //         if (!data || data.length === 0) {
+  //           this.hasAnyMarkings = false;
+  //           return;
+  //         }
+  //         if (!data.length) {
+  //           this.hasAnyMarkings = false;
+  //           this.totalHistory = 0;
+  //           return;
+  //         }
+  //         this.totalHistory = data.length;
+
+  //         const sorted = data.sort((a: any, b: any) =>
+  //           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  //         );
+
+  //         this.recentData = sorted.slice(0, 5).map((item: any) => ({
+  //           id: item.measurement_id,
+  //           name: `${item.customer_name} - ${item.granite_color}`,
+
+  //           date: new Date(item.created_at).toLocaleDateString()
+  //         }));
+
+  //         this.hasAnyMarkings = true;
+  //       },
+  //       error: (err) => {
+  //         console.error('Failed to load measurements', err);
+  //         this.hasAnyMarkings = false;
+  //         this.totalHistory = 0;
+  //       }
+  //     });
+  // }
 
   goToCreateSheet() {
     this.router.navigate(['/measurement']);
   }
 
-   openMeasurement(measurementId: number) {
-  this.router.navigate(['/slabs', measurementId], {
-    queryParams: { view: true }
-  });
-}
+  openMeasurement(measurementId: number) {
+    this.router.navigate(['/slabs', measurementId], {
+      queryParams: { view: true }
+    });
+  }
 }

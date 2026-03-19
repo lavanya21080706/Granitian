@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { IonModal, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InventoryServiceTs } from 'src/app/services/inventory.service';
-import { InventoryLot } from 'src/app/models/inventory.model';
-import { UserRole } from 'src/app/models/user-role.model';
+import { InventoryServiceTs } from 'src/app/core/services/inventory.service';
+import { InventoryLot } from 'src/app/core/models/inventory.model';
+import { UserRole } from 'src/app/core/models/user-role.model';
 import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
+import { LotCardComponent } from 'src/app/shared/lot-card/lot-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.page.html',
   styleUrls: ['./inventory.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, GranitianHeaderPage]
+  imports: [CommonModule, FormsModule, IonicModule, GranitianHeaderPage, LotCardComponent]
 })
 export class InventoryPage implements OnInit {
 
@@ -20,7 +22,6 @@ export class InventoryPage implements OnInit {
   filteredLots: InventoryLot[] = [];
   UserRole = UserRole;
 
-  // 🔥 Change this to simulate roles
   // currentRole: UserRole = UserRole.INDIVIDUAL;
   // currentRole: UserRole = UserRole.SUPERVISOR;
   currentRole: UserRole = UserRole.FACTORY_OWNER;
@@ -34,7 +35,7 @@ export class InventoryPage implements OnInit {
   factories: any[] = [];
   users: any[] = [];
 
-  constructor(private inventoryService: InventoryServiceTs) { }
+  constructor(private inventoryService: InventoryServiceTs, private router: Router) { }
 
   ngOnInit() {
     this.lots = this.inventoryService.getLots();
@@ -117,5 +118,15 @@ export class InventoryPage implements OnInit {
     this.applyFilters();
     await modal.dismiss();
   }
+
+   openMeasurement(item: any) {
+    this.router.navigate(['/slabs'], {
+      state: {
+        measurement: item,
+        isViewMode: !item.isEditable
+      }
+    });
+  }
+
 
 }

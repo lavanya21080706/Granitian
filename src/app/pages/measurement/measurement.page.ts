@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { MeasurementService } from 'src/app/services/measurement';
+import { MeasurementService } from 'src/app/core/services/measurement';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
 import { BottomTabsPage } from '../bottom-tabs/bottom-tabs.page';
@@ -157,7 +157,7 @@ export class MeasurementPage {
 
   loadMeasurementForView(id: number) {
     this.service.getMeasurementById(id).subscribe((res: any) => {
-      console.log('📥 LOAD LOT RESPONSE:', res);
+      console.log('LOAD LOT RESPONSE:', res);
 
       this.measurementId = res.measurement_id;
 
@@ -213,11 +213,11 @@ export class MeasurementPage {
       net_area_sqm: this.sqftToSqm(this.lot.net_area_sqft)
     };
 
-    console.log('📤 CREATE LOT REQUEST:', payload);
+    console.log('CREATE LOT REQUEST:', payload);
 
     this.service.createMeasurement(payload).subscribe({
       next: (res: any) => {
-        console.log('✅ CREATE LOT SUCCESS:', res);
+        console.log('CREATE LOT SUCCESS:', res);
 
         this.measurementId = res.measurement_id;
         this.isLotLocked = true;
@@ -227,7 +227,7 @@ export class MeasurementPage {
         });
       },
       error: err => {
-        console.error('❌ CREATE LOT ERROR:', err);
+        console.error('CREATE LOT ERROR:', err);
       }
     });
   }
@@ -263,14 +263,14 @@ export class MeasurementPage {
 
     this.service.updateMeasurement(this.measurementId, payload).subscribe({
       next: (res) => {
-        console.log('✅ UPDATE LOT SUCCESS:', res);
+        console.log('UPDATE LOT SUCCESS:', res);
 
         this.router.navigate(['/slabs'], {
           queryParams: { id: this.measurementId },
           replaceUrl: true
         });
       },
-      error: err => console.error('❌ UPDATE LOT ERROR:', err)
+      error: err => console.error('UPDATE LOT ERROR:', err)
     });
   }
 }

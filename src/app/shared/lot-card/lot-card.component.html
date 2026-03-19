@@ -1,0 +1,71 @@
+<div class="history-card card">
+
+  <div class="history-header">
+    <div>
+      <h3>LOT-{{ item.measurement_id }}</h3>
+      <p class="color">{{ item.granite_color }}</p>
+    </div>
+
+    <div *ngIf="showStatus">
+      <div class="actions" *ngIf="showActions">
+
+        <ion-icon name="share-social-outline" *ngIf="item.isEditable" (click)="openShareModal()">
+        </ion-icon>
+
+        <ion-icon name="lock-closed-outline" *ngIf="!item.isEditable" color="medium">
+        </ion-icon>
+
+        <ion-icon name="chevron-forward-outline" (click)="openMeasurement()">
+        </ion-icon>
+
+      </div>
+          <span *ngIf="item.isSharedByMe" class="status-pill shared">
+        Shared
+      </span>
+
+      <span *ngIf="item.isSharedWithMe" class="status-pill received">
+        Received
+      </span>
+
+      <span *ngIf="item.isEditable" class="status-pill editable">
+        Saved
+      </span>
+    </div>
+  </div>
+
+  <div class="history-body">
+    <div class="meta">
+      <span>Quality</span>
+      <strong>{{ item.quality_type }}</strong>
+    </div>
+
+    <div class="meta">
+      <span>Slabs</span>
+      <strong>{{ item.total_slabs }}</strong>
+    </div>
+
+    <div class="meta">
+      <span>Net SFT</span>
+      <strong>{{ item.total_net_sft }}</strong>
+    </div>
+  </div>
+
+
+  <div class="history-footer">
+
+    <div class="share-info">
+
+      <span *ngIf="item.isSharedByMe">
+        Shared with {{ item.sharedWithUser || 'Ramesh' }}
+      </span>
+
+      <span *ngIf="item.isSharedWithMe">
+        Shared by {{ item.sharedByUser || 'Anil' }}
+      </span>
+
+    </div>
+
+
+  </div>
+
+</div>

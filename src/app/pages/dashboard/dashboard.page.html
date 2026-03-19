@@ -1,42 +1,25 @@
 <app-granitian-header></app-granitian-header>
+
 <ion-content class="main-content">
   <div class="feature-grid">
-    <ion-card button class="feature-card" (click)="openSlabDashboard()">
+    <ion-card
+      *ngFor="let feature of features; trackBy: trackByFn"
+      button
+      class="feature-card"
+      (click)="navigate(feature.route)"
+      [attr.aria-label]="'Open ' + feature.label"
+    >
       <ion-card-content>
-        <ion-icon name="analytics-outline"></ion-icon>
-        <h2>Measurement</h2>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card button class="feature-card" (click)="openInventory()">
-      <ion-card-content>
-        <ion-icon name="cube-outline"></ion-icon>
-        <h2>Inventory</h2>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card button class="feature-card">
-      <ion-card-content>
-        <ion-icon name="people-outline"></ion-icon>
-        <h2>Social Media</h2>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card button class="feature-card">
-      <ion-card-content>
-        <ion-icon name="call-outline"></ion-icon>
-        <h2>Request a deal</h2>
+        <ion-icon [name]="feature.icon"></ion-icon>
+        <h2>{{ feature.label }}</h2>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <!-- <app-bottom-tabs [tabs]="dashboardTabs" activeRoute="/dashboard">
-  </app-bottom-tabs> -->
   <app-bottom-tabs
-  [tabs]="dashboardTabs"
-  activeRoute="/dashboard"
-  [showDivider]="false">
-</app-bottom-tabs>
-
+    [tabs]="dashboardTabs"
+    activeRoute="/dashboard"
+    [showDivider]="false"
+  >
+  </app-bottom-tabs>
 </ion-content>
-

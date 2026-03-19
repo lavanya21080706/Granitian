@@ -48,3 +48,27 @@ ion-header::after {
     display: none;
 }
 
+.granite-header {
+  --background: #9B0C23; /* brand red */
+}
+
+.granite-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-logo {
+  height: 28px;   /* adjust if needed */
+  width: auto;
+}
+
+ion-toolbar {
+  --min-height: 56px;
+}
+
+.header-logo {
+  height: 46px;
+  display: block;
+  margin: 0 auto;
+}

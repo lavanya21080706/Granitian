@@ -1,73 +1,73 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { IonicModule, MenuController, Platform } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BottomTabsPage } from '../bottom-tabs/bottom-tabs.page';
 import { GranitianHeaderPage } from '../granitian-header/granitian-header.page';
+import { CommonModule } from '@angular/common';
 
+interface FeatureItem {
+  label: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  imports: [
-    IonicModule, BottomTabsPage, GranitianHeaderPage]
+  imports: [IonicModule, BottomTabsPage, GranitianHeaderPage, CommonModule]
 })
-export class DashboardPage implements OnInit {
-  isDesktop = false;
-  dashboardTabs: any[] = [];
+export class DashboardPage {
 
-  constructor(
-    private platform: Platform,
-    private menuCtrl: MenuController,
-    private router: Router
-  ) { }
+  features: FeatureItem[] = [
+    {
+      label: 'Measurement',
+      icon: 'analytics-outline',
+      route: '/home'
+    },
+    {
+      label: 'Inventory',
+      icon: 'cube-outline',
+      route: '/inventory'
+    },
+    {
+      label: 'Social Media',
+      icon: 'people-outline',
+      route: '/social'
+    },
+    {
+      label: 'Request a deal',
+      icon: 'call-outline',
+      route: '/contact'
+    }
+  ];
 
-  ngOnInit() {
-    this.checkScreenSize();
+
+  dashboardTabs: FeatureItem[] = [];
+
+  constructor(private router: Router) {}
+
+  ionViewWillEnter() {
     this.initializeDashboardTabs();
-    this.setupMenuForDevice();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
-
-  checkScreenSize() {
-    this.isDesktop = window.innerWidth > 768;
   }
 
   initializeDashboardTabs() {
-    this.dashboardTabs = [
-      { label: 'Measurements', icon: 'analytics-outline', route: '/assistant' },
-      { label: 'Inventory', icon: 'cube-outline', route: '/inventory' },
-      { label: 'Social media', icon: 'people-outline', route: '/social' },
-      { label: 'Request a deal', icon: 'call-outline', route: '/contact' }
-    ];
+    this.dashboardTabs = [...this.features]; 
   }
 
-  setupMenuForDevice() {
-    if (this.platform.is('desktop') || this.platform.is('tablet')) {
-      this.menuCtrl.open('mainMenu');
-    } else {
-      this.menuCtrl.close();
+  navigate(route: string) {
+    if (!route) {
+      console.warn('Route not provided');
+      return;
     }
+
+    this.router.navigate([route]).catch(err => {
+      console.error('Navigation error:', err);
+    });
   }
 
-  openSlabDashboard() {
-    this.router.navigate(['/home']);
-  }
-
-  toggleMenu() {
-    // Toggle sidebar on desktop
-    const menu = document.querySelector('ion-menu');
-    if (menu) {
-      menu.toggle();
-    }
-  }
-
-  openInventory() {
-    this.router.navigate(['/inventory']);
+  trackByFn(index: number, item: FeatureItem): string {
+    return item.route;
   }
 }

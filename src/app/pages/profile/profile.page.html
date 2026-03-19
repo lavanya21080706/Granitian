@@ -18,7 +18,6 @@
 
 <ion-content fullscreen class="profile-bg">
 
-  <!-- TOP CARD -->
   <div class="top-card">
     <ion-avatar class="avatar">
       <img [src]="user.avatar" />
@@ -28,45 +27,38 @@
     <p class="role">{{ user.role }}</p>
   </div>
 
-  <!-- DETAILS CARD -->
   <div class="details-card">
 
-    <!-- First Name -->
     <ion-item lines="none" class="form-item">
       <ion-icon slot="start" name="people-outline"></ion-icon>
       <ion-label position="stacked">First Name</ion-label>
       <ion-input [(ngModel)]="user.firstName" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <!-- Last Name -->
     <ion-item lines="none" class="form-item">
       <ion-icon slot="start" name="people-outline"></ion-icon>
       <ion-label position="stacked">Last Name</ion-label>
       <ion-input [(ngModel)]="user.lastName" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <!-- Email -->
     <ion-item lines="none" class="form-item">
       <ion-icon slot="start" name="mail-outline"></ion-icon>
       <ion-label position="stacked">Email</ion-label>
       <ion-input type="email" [(ngModel)]="user.email" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <!-- Mobile -->
     <ion-item lines="none" class="form-item">
       <ion-icon slot="start" name="call-outline"></ion-icon>
       <ion-label position="stacked">Mobile Number</ion-label>
       <ion-input type="tel" [(ngModel)]="user.phone" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <!-- Location -->
     <ion-item lines="none" class="form-item">
       <ion-icon slot="start" name="location-outline"></ion-icon>
       <ion-label position="stacked">Location</ion-label>
       <ion-input [(ngModel)]="user.location" [readonly]="!isEdit"></ion-input>
     </ion-item>
 
-    <!-- SAVE BUTTON -->
     <div class="save-wrapper">
       <ion-button expand="block" class="save-btn" [disabled]="!isEdit">
         SAVE CHANGES

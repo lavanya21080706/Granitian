@@ -2,9 +2,14 @@ import { Routes } from '@angular/router';
 import { HomePage } from './pages/home/home.page';
 
 export const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'welcome',
+  //   pathMatch: 'full'
+  // },
   {
     path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'friend-requests',
     pathMatch: 'full'
   },
   {
@@ -12,20 +17,8 @@ export const routes: Routes = [
     component: HomePage
   },
   {
-    path: 'create-marking-sheet',
-    loadComponent: () => import('./pages/create-marking-sheet/create-marking-sheet.page').then(m => m.CreateMarkingSheetPage)
-  },
-  {
-    path: 'markings-history',
-    loadComponent: () => import('./pages/markings-history/markings-history.page').then(m => m.MarkingsHistoryPage)
-  },
-  {
     path: 'profile',
     loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage)
-  },
-  {
-    path: 'signup',
-    loadComponent: () => import('./pages/signup/signup.page').then(m => m.SignupPage)
   },
   {
     path: 'login',
@@ -36,37 +29,9 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage)
   },
   {
-    path: 'slab-dashboard',
-    loadComponent: () => import('./slab-dashboard/slab-dashboard.page').then(m => m.SlabDashboardPage)
-  },
-  {
-    path: 'help',
-    loadComponent: () => import('./pages/help/help.page').then(m => m.HelpPage)
-  },
-  {
-    path: 'feedback',
-    loadComponent: () => import('./pages/feedback/feedback.page').then(m => m.FeedbackPage)
-  },
-  {
-    path: 'invite-friend',
-    loadComponent: () => import('./pages/invite-friend/invite-friend.page').then(m => m.InviteFriendPage)
-  },
-  {
-    path: 'add-user',
-    loadComponent: () => import('./pages/add-user/add-user.page').then(m => m.AddUserPage)
-  },
-  {
-    path: 'about-us',
-    loadComponent: () => import('./pages/about-us/about-us.page').then(m => m.AboutUsPage)
-  },
-  {
     path: 'welcome',
-    loadComponent: () => import('./welcome/welcome.page').then(m => m.WelcomePage)
+    loadComponent: () => import('./pages/welcome/welcome.page').then(m => m.WelcomePage)
   },
-  // {
-  //   path: 'measurement',
-  //   loadComponent: () => import('./pages/measurement/measurement.page').then(m => m.MeasurementPage)
-  // },
   {
     path: 'bottom-tabs',
     loadComponent: () => import('./pages/bottom-tabs/bottom-tabs.page').then(m => m.BottomTabsPage)
@@ -82,41 +47,37 @@ export const routes: Routes = [
   },
   {
     path: 'slab-form',
-    loadComponent: () => import('./pages/slab-form/slab-form.page').then( m => m.SlabFormPage)
+    loadComponent: () => import('./pages/slab-form/slab-form.page').then(m => m.SlabFormPage)
   },
   {
     path: 'history',
-    loadComponent: () => import('./pages/history/history.page').then( m => m.HistoryPage)
+    loadComponent: () => import('./pages/history/history.page').then(m => m.HistoryPage)
   },
 
-{
-  path: 'measurement',
-  loadComponent: () => import('./pages/measurement/measurement.page')
-    .then(m => m.MeasurementPage)
-},
-{
-  path: 'measurement/:id',
-  loadComponent: () => import('./pages/measurement/measurement.page')
-    .then(m => m.MeasurementPage)
-},
   {
-    path: 'user-search',
-    loadComponent: () => import('./pages/user-search/user-search.page').then( m => m.UserSearchPage)
+    path: 'measurement',
+    loadComponent: () => import('./pages/measurement/measurement.page')
+      .then(m => m.MeasurementPage)
   },
   {
-    path: 'friend-requests',
-    loadComponent: () => import('./pages/friend-requests/friend-requests.page').then( m => m.FriendRequestsPage)
+    path: 'measurement/:id',
+    loadComponent: () => import('./pages/measurement/measurement.page')
+      .then(m => m.MeasurementPage)
+  },
+  {
+    path: 'user-search',
+    loadComponent: () => import('./pages/user-search/user-search.page').then(m => m.UserSearchPage)
+  },
+  {
+    path: 'handle-requests',
+    loadComponent: () => import('./pages/handle-requests/handle-requests.page').then(m => m.FriendRequestsPage)
   },
   {
     path: 'inventory',
-    loadComponent: () => import('./pages/inventory/inventory.page').then( m => m.InventoryPage)
+    loadComponent: () => import('./pages/inventory/inventory.page').then(m => m.InventoryPage)
   },
-  // {
-  //   path: 'phone-input',
-  //   loadComponent: () => import('./pages/phone-input/phone-input.page').then( m => m.PhoneInputPage)
-  // },
-  // {
-  //   path: 'share-history-modal',
-  //   loadComponent: () => import('./pages/share-history-modal/share-history-modal.page').then( m => m.ShareHistoryModalComponent)
-  // }
+  {
+    path: 'splash',
+    loadComponent: () => import('./pages/splash/splash.page').then( m => m.SplashPage)
+  },
 ];

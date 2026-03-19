@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { SlabFormPage } from '../slab-form/slab-form.page';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MeasurementService } from 'src/app/services/measurement';
+import { MeasurementService } from 'src/app/core/services/measurement';
 
 
 
@@ -54,10 +54,6 @@ export class SlabsPage {
         this.isViewMode = qp.get('view') === 'true';
         const finalId = routeId || queryId;
 
-        console.log('Route ID:', routeId);
-        console.log('Query ID:', queryId);
-        console.log('Final ID:', finalId);
-
         if (finalId) {
           this.measurementId = +finalId;
           this.loadLot();
@@ -69,7 +65,6 @@ export class SlabsPage {
 
 
   ngOnInit() {
-    console.log('SlabsPage initialized');
   }
 
 
@@ -96,17 +91,14 @@ export class SlabsPage {
       };
 
     });
-    console.log('lavanya FROM API:', details);
-
     this.updateTotals();
   }
 
   loadLot() {
     this.slabs = [];
     this.service.getMeasurementById(this.measurementId).subscribe((res: any) => {
-      console.log('📥 LOT DATA:', res);
+      console.log('LOT DATA:', res);
 
-      // LOT DATA
       this.lot = {
         customer_name: res.customer_name,
         granite_color: res.granite_color,
@@ -396,15 +388,15 @@ export class SlabsPage {
       details
     };
 
-    console.log('📤 SAVING SLABS:', payload);
+    console.log('SAVING SLABS:', payload);
 
     this.service.addMeasurementDetails(payload).subscribe({
       next: (res: any) => {
-        console.log('✅ SLABS SAVED:', res);
+        console.log('SLABS SAVED:', res);
         this.router.navigate(['/dashboard']);
       },
       error: (err: any) => {
-        console.error('❌ SAVE FAILED:', err);
+        console.error('SAVE FAILED:', err);
       }
     });
   }

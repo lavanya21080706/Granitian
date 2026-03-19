@@ -13,7 +13,6 @@
   z-index: 1000;
 }
 
-/* Normal tabs */
 .tab-item {
   display: flex;
   flex-direction: column;
@@ -53,17 +52,14 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%) translateY(-28px);
-
   width: 60px;
   height: 60px;
   border-radius: 50%;
   background: #9B0C23;
   color: #ffffff;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
   z-index: 10;
 }
@@ -84,12 +80,6 @@
   margin-right: -2px;
 }
 
-
-// .tab-item:first-child {
-//   border-right: 1px solid #d1d5db;
-//   padding-right: 18px;
-//   margin-right: 8px;
-// }
 
 .tab-item:first-child:not(.no-divider) {
   border-right: 1px solid #d1d5db;

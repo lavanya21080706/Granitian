@@ -1,0 +1,127 @@
+
+
+.history-segment {
+  margin-bottom: 18px;
+  background: #f1f5f9;
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.history-card {
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .color {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+}
+
+.status-pill {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.status-pill.shared {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.status-pill.received {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-pill.editable {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.history-body {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+
+    span {
+      color: #6b7280;
+    }
+
+    strong {
+      margin-top: 4px;
+      font-size: 14px;
+    }
+  }
+}
+
+.history-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .share-info {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .actions {
+    ion-icon {
+      font-size: 18px;
+      cursor: pointer;
+
+    }
+  }
+}
+
+
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.title{
+  display:flex;
+  flex-direction:column;
+}
+
+.header-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  padding-bottom: 5px;
+  padding-left:5px;
+}
+
+.actions ion-icon{
+  font-size:18px;
+}
